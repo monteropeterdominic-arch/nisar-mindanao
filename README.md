@@ -15,7 +15,7 @@ They were rebuilt from the original 10 m scenes (3x3 multilook to 30 m), not res
 Three files are stored as 16-bit integers to stay under GitHub's 100 MB limit. QGIS and GDAL apply the stored scale factor automatically (1/10000 for vegetation response and change, 1/1000 for the terrain z-score). Nodata is -32768.
 
 ## geotiff_30m/same_direction_subset/ : partial coverage by design
-Only pairs with the same look direction are used (Asc 20-25 Sep, Desc 23-30 Sep), so these cover a strip, about 10-17% of the boundary.
+Only pairs with the same look direction are used (Asc 20-25 Sep, Desc 23-30 Sep), so these cover a strip, about 10-17% of the boundary. Note: the two dates in each pair are on different tracks (39 vs 111, and 75 vs 3), so the viewing angle still differs. Treat these as indicative. A same-track pairing (12-day repeat) is planned.
 - `NISAR_Vegetation_Change_SameDirection_30m_...tif`
 - `NISAR_Potential_Water_Change_SameDirection_30m_...tif` (0 no change, 1 possible, 2 strong)
 - `NISAR_Surface_Change_Magnitude_SameDirection_30m_...tif` (robust Mahalanobis distance; breaks 2.448 and 3.717)
