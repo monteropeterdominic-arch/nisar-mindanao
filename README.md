@@ -8,6 +8,8 @@ The RVI-based layers are a SAR vegetation response indicator, not NDVI. Blank pi
 |---|---|
 | `NISAR_Vegetation_Response_FullCoverage_...tif` | SAR vegetation response (RVI proxy), 100% of the boundary covered |
 | `NISAR_SAR_Vegetation_Response_Class_FullCoverage_...tif` | Classified SAR vegetation response |
+| `NISAR_Water_Response_Terrain_Context_FullCoverage_...tif` | Low-backscatter water context with terrain: 1 flat sea level, 2 flat inland, 3 sloping terrain (possible radar shadow), 4 no DEM coverage |
+| `NISAR_Vegetation_Response_Terrain_Context_FullCoverage_...tif` | Vegetation response z-score within elevation x slope strata (terrain-normalised) |
 | `NISAR_Vegetation_Change_AllGeometry_FullCoverage_...tif` | Vegetation response change using all dates, ~98% covered. Mixes ascending and descending geometry, so treat as indicative |
 
 ## geotiff/same_direction_subset/ : partial coverage by design
