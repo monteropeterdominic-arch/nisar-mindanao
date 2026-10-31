@@ -4,111 +4,147 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sarangani–Davao Occidental Change Map</title>
-<meta name="description" content="Earthquake and El Niño change layers for Sarangani and Davao Occidental, 2025–2026, from NASA HLS and MODIS, built for NASA Space Apps 2026.">
+<meta name="description" content="Earthquake and El Niño change layers for Sarangani and Davao Occidental, 2025–2026, with live weather, from NASA HLS and MODIS. NASA Space Apps 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css">
-<script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
 <script src="config.js"></script>
 <style>
-/* Layout: full-bleed map, one floating instrument panel on the left (bottom sheet on phones). */
+/* Layout: full-bleed 3D map; parchment journal panel framed in navy and gold on the left (bottom sheet on phones);
+   compass and weather chip float top-right. One committed look (bright fantasy-atlas), not theme-switched. */
 :root{
-  --ink:#16201c; --muted:#56635d; --panel:#f6f8f4; --line:#d5dcd5; --accent:#0d7a5f; --quake:#c4291c; --chip:#e7ede7;
-  --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
-  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --parch:#ece5d8; --parch2:#e2d9c6; --ink:#3b4255; --ink2:#6a6f7c; --navy:#283044; --navy2:#1c2232;
+  --gold:#d3bc8e; --gold2:#b89a5e; --teal:#3fb7b0; --quake:#d0453a; --leaf:#4f9a4a;
+  --display:"Marcellus", "Palatino Linotype", Georgia, serif;
+  --body:"Nunito Sans", "Segoe UI", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
   color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root{ --ink:#e4ebe6; --muted:#9aa8a1; --panel:#141b18; --line:#2c3833; --accent:#3fc29b; --quake:#ff6a57; --chip:#1f2925; color-scheme:dark; }
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
-body{font:15px/1.45 var(--body);color:var(--ink);background:var(--panel);overflow:hidden}
+body{font:15px/1.45 var(--body);color:var(--ink);background:#9fd3e6;overflow:hidden}
 #map{position:absolute;inset:0}
-.panel{
-  position:absolute; top:max(12px, env(safe-area-inset-top)); left:max(12px, env(safe-area-inset-left)); bottom:12px;
-  width:360px; max-width:calc(100vw - 24px); background:var(--panel); border:1px solid var(--line); border-radius:10px;
-  box-shadow:0 8px 28px rgba(0,0,0,.18); display:flex; flex-direction:column; overflow:hidden; z-index:2;
-}
-.panel header{padding:16px 18px 12px;border-bottom:1px solid var(--line)}
-.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-h1{font:800 21px/1.12 var(--display);margin:6px 0 4px;text-wrap:balance;letter-spacing:-.01em}
-.sub{color:var(--muted);font-size:13px;margin:0}
-.tabs{display:flex;gap:4px;padding:10px 12px 0}
-.tabs button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 13px var(--body);padding:7px 6px;border-radius:7px;cursor:pointer}
-.tabs button[aria-selected="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
-.body{overflow-y:auto;padding:12px 18px 18px;display:flex;flex-direction:column;gap:16px;flex:1;min-height:0}
-section h2{font:700 13px var(--display);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--muted)}
-label.row{display:flex;align-items:flex-start;gap:9px;padding:5px 0;cursor:pointer;font-size:14px}
-label.row input{margin-top:3px;accent-color:var(--accent)}
-select,input[type=range]{width:100%}
-input[type=range]{accent-color:var(--accent)}
-select{font:14px var(--body);padding:7px 8px;border-radius:7px;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
-.timebar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:10px}
-.play{width:38px;height:38px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:15px;cursor:pointer}
-.when{font:500 20px var(--mono);margin-top:6px;font-variant-numeric:tabular-nums}
-.ticks{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--muted)}
-.legend .bar{height:12px;border-radius:3px;margin:6px 0 3px}
-.legend .ends{display:flex;justify-content:space-between;font:12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+#fx{position:absolute;inset:0;pointer-events:none;z-index:1}
+
+/* ---------- journal panel ---------- */
+.panel{position:absolute;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));bottom:14px;width:372px;max-width:calc(100vw - 28px);
+  z-index:3;display:flex;flex-direction:column;background:var(--parch);border-radius:6px;
+  box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 14px 40px rgba(20,25,40,.45);overflow:hidden}
+.panel::before,.panel::after{content:"";position:absolute;width:14px;height:14px;transform:rotate(45deg);background:var(--gold);border:2px solid var(--navy);z-index:4}
+.panel::before{top:-8px;left:calc(50% - 7px)} .panel::after{bottom:-8px;left:calc(50% - 7px)}
+.panel header{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#f2ead9;padding:16px 18px 14px;border-bottom:2px solid var(--gold)}
+.eyebrow{font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+h1{font:400 23px/1.12 var(--display);margin:7px 0 5px;letter-spacing:.01em;text-wrap:balance}
+.sub{color:#c9c2b2;font-size:13px;margin:0}
+.tabs{display:flex;gap:6px;padding:12px 12px 4px;background:var(--parch2);border-bottom:1px solid #cdbf9f}
+.tabs button{flex:1;border:1px solid transparent;background:transparent;color:var(--ink2);font:800 12.5px var(--body);padding:8px 4px;border-radius:999px;cursor:pointer;letter-spacing:.02em}
+.tabs button[aria-selected="true"]{background:var(--navy);color:#f2ead9;border-color:var(--gold)}
+.body{overflow-y:auto;padding:14px 18px 22px;display:flex;flex-direction:column;gap:18px;flex:1;min-height:0}
+section h2{font:400 15px var(--display);margin:0 0 8px;color:var(--navy);display:flex;align-items:center;gap:8px}
+section h2::before{content:"";width:7px;height:7px;transform:rotate(45deg);background:var(--gold2);flex:none}
+label.row{display:flex;align-items:flex-start;gap:9px;padding:4px 0;cursor:pointer;font-size:14px}
+label.row input{margin-top:3px;accent-color:var(--navy)}
+select{width:100%;font:600 14px var(--body);padding:8px 10px;border-radius:6px;border:1px solid #c7b893;background:#f6f1e6;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--gold2)}
+.when{font:400 22px var(--display);margin-top:8px;color:var(--navy)}
+.timebar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:6px}
+.play{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;font-size:14px;cursor:pointer}
+.ticks{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink2)}
+.legend .bar{height:12px;border-radius:3px;margin:6px 0 3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.legend .ends{display:flex;justify-content:space-between;font:11.5px var(--mono);color:var(--ink2);font-variant-numeric:tabular-nums}
 .legend ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px;font-size:13px}
 .legend li{display:flex;gap:8px;align-items:center}
-.sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.15)}
-.note{font-size:13px;color:var(--muted);margin:6px 0 0}
+.sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.18)}
+.note{font-size:13px;color:var(--ink2);margin:6px 0 0}
 .stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat div{background:var(--chip);border-radius:7px;padding:8px 10px}
-.stat b{display:block;font:700 19px var(--display);font-variant-numeric:tabular-nums}
-.stat span{font-size:12px;color:var(--muted)}
-svg text{fill:var(--muted);font:10px var(--mono)}
-details summary{cursor:pointer;font-weight:600}
-details p,details li{font-size:13px;color:var(--muted)}
-.mini{display:flex;gap:6px;flex-wrap:wrap}
-.mini button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:4px 10px;font:600 12px var(--body);cursor:pointer}
-.mini button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
-button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.mapboxgl-popup-content{font:13px var(--body);color:#16201c;padding:10px 12px}
-.mapboxgl-popup-content b{font-family:var(--display)}
-#token{position:absolute;inset:0;display:grid;place-items:center;background:var(--panel);z-index:5;padding:16px}
+.stat div{background:#f6f1e6;border:1px solid #d6c8a6;border-radius:6px;padding:8px 10px}
+.stat b{display:block;font:400 22px var(--display);color:var(--quake);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--ink2)}
+svg text{fill:var(--ink2);font:10px var(--mono)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1px solid #c7b893;background:#f6f1e6;color:var(--ink);border-radius:999px;padding:5px 11px;font:700 12px var(--body);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--navy);border-color:var(--gold);color:#f2ead9}
+.wx{display:grid;gap:6px}
+.wx button{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid #d6c8a6;background:#f6f1e6;border-radius:6px;padding:7px 10px;cursor:pointer;font:14px var(--body);color:var(--ink)}
+.wx b{font-weight:800}.wx small{display:block;color:var(--ink2);font-size:12px}
+.wx .t{font:400 20px var(--display);color:var(--navy);font-variant-numeric:tabular-nums}
+ul.plain{margin:0;padding-left:18px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+
+/* ---------- floating instruments ---------- */
+.compass{position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));width:84px;height:84px;z-index:3;cursor:pointer;border:none;background:none;padding:0;filter:drop-shadow(0 6px 10px rgba(20,25,40,.4))}
+.compass svg{width:100%;height:100%;transition:transform .15s linear}
+.wxchip{position:absolute;top:max(110px,calc(env(safe-area-inset-top) + 96px));right:max(16px,env(safe-area-inset-right));z-index:3;background:rgba(40,48,68,.88);color:#f2ead9;border:1px solid var(--gold);border-radius:999px;padding:6px 14px;font:700 12.5px var(--body);display:flex;gap:8px;align-items:center}
+.wxchip i{font-style:normal;color:var(--gold)}
+.mapboxgl-ctrl-group{border:1px solid var(--gold)!important;background:#f6f1e6!important}
+.mapboxgl-ctrl-top-right{top:206px!important}
+/* waypoint marker */
+.wp{width:34px;height:46px;cursor:pointer;filter:drop-shadow(0 3px 4px rgba(10,20,40,.5))}
+.wp:hover{transform:translateY(-2px)}
+.wp-label{position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;font:800 11.5px var(--body);color:#fff;text-shadow:0 1px 2px #1c2232,0 0 6px #1c2232}
+.mapboxgl-popup-content{font:13.5px var(--body);color:var(--ink);background:var(--parch);border:2px solid var(--gold);border-radius:6px;padding:12px 14px;box-shadow:0 8px 24px rgba(20,25,40,.35)}
+.mapboxgl-popup-content b{font:400 16px var(--display);color:var(--navy)}
+.mapboxgl-popup-tip{border-top-color:var(--gold)!important;border-bottom-color:var(--gold)!important}
+#token{position:absolute;inset:0;display:grid;place-items:center;background:var(--parch);z-index:9;padding:16px}
 #token form{max-width:460px;display:grid;gap:10px}
-#token input{font:14px var(--mono);padding:9px;border-radius:7px;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
-#token button{padding:9px;border-radius:7px;border:none;background:var(--accent);color:#fff;font:600 14px var(--body);cursor:pointer}
+#token input{font:14px var(--mono);padding:9px;border-radius:6px;border:1px solid #c7b893;background:#f6f1e6}
+#token button{padding:10px;border-radius:6px;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;font:800 14px var(--body);cursor:pointer}
 @media (max-width:640px){
+  .panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-width:none;height:50vh;padding-bottom:env(safe-area-inset-bottom)}
   .panel header .sub,.panel header .eyebrow{display:none}
   h1{font-size:18px;margin:0}
-  .panel{top:auto;left:0;right:0;bottom:0;width:100%;max-width:100%;height:52vh;border-radius:14px 14px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+  .compass{width:62px;height:62px}
+  .wxchip{top:max(84px,calc(env(safe-area-inset-top) + 74px))}
+  .mapboxgl-ctrl-top-right{top:126px!important}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
 </head>
 <body>
-<div id="map" role="region" aria-label="Map"></div>
+<div id="map" role="region" aria-label="3D map of Sarangani and Davao Occidental"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
 
 <div id="token" hidden>
   <form id="tokenForm">
-    <div class="eyebrow">Mapbox access token needed</div>
-    <h1>Paste your public Mapbox token</h1>
-    <p class="sub">The Standard basemap is served by Mapbox. Paste a public token (it starts with <code>pk.</code>) from account.mapbox.com. It is kept only in this browser. To skip this step for everyone, put the token in <code>config.js</code>.</p>
+    <div class="eyebrow" style="color:var(--gold2)">Mapbox access token needed</div>
+    <h1 style="color:var(--navy)">Paste your public Mapbox token</h1>
+    <p class="note">Paste a public token (starts with <code>pk.</code>) from account.mapbox.com. It is kept only in this browser.</p>
     <input id="tokenInput" placeholder="pk.eyJ1Ijoi…" autocomplete="off" spellcheck="false" required>
     <button type="submit">Open the map</button>
   </form>
 </div>
 
-<aside class="panel" aria-label="Map controls">
+<button class="compass" id="compass" aria-label="Reset to north">
+  <svg viewBox="0 0 100 100" id="rose">
+    <circle cx="50" cy="50" r="46" fill="#283044" stroke="#d3bc8e" stroke-width="3"/>
+    <circle cx="50" cy="50" r="38" fill="none" stroke="#d3bc8e" stroke-width="1" stroke-dasharray="2 4"/>
+    <polygon points="50,10 57,50 50,44 43,50" fill="#d0453a"/>
+    <polygon points="50,90 57,50 50,56 43,50" fill="#ece5d8"/>
+    <polygon points="10,50 50,45 44,50 50,55" fill="#b89a5e"/>
+    <polygon points="90,50 50,45 56,50 50,55" fill="#b89a5e"/>
+    <circle cx="50" cy="50" r="5" fill="#d3bc8e" stroke="#283044" stroke-width="2"/>
+    <text x="50" y="24" text-anchor="middle" font-family="Marcellus, Georgia, serif" font-size="11" fill="#ece5d8" style="font:11px Marcellus,Georgia,serif;fill:#ece5d8">N</text>
+  </svg>
+</button>
+<div class="wxchip" id="wxchip" aria-live="polite"><i>◆</i><span>Loading weather…</span></div>
+
+<aside class="panel" aria-label="Map journal">
   <header>
     <div class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs</div>
     <h1>Sarangani–Davao Occidental Change Map</h1>
-    <p class="sub">What the ground and its vegetation did around the M7.8 earthquake of 8 June 2026 and through the 2025–26 swing into El Niño.</p>
+    <p class="sub">The ground and its forests around the M7.8 earthquake of 8 June 2026, and the slide into El Niño.</p>
   </header>
   <div class="tabs" role="tablist">
-    <button role="tab" id="tab-quake" aria-selected="true">Earthquake</button>
+    <button role="tab" id="tab-quake" aria-selected="true">Quake</button>
     <button role="tab" id="tab-nino" aria-selected="false">El Niño</button>
+    <button role="tab" id="tab-wx" aria-selected="false">Weather</button>
     <button role="tab" id="tab-about" aria-selected="false">About</button>
   </div>
   <div class="body">
-    <!-- EARTHQUAKE -->
-    <div id="pane-quake" class="pane">
+    <div id="pane-quake">
       <section>
         <div class="stat">
           <div><b>88</b><span>possible new slides</span></div>
@@ -124,12 +160,11 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <label class="row"><input type="radio" name="qbg" value="eq_evi_post"> Vegetation after (9 Jun–Sep 2026)</label>
         <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible</label>
         <label class="row"><input type="radio" name="qbg" value="slope"> Slope</label>
-        <label class="row"><input type="radio" name="qbg" value=""> None</label>
+        <label class="row"><input type="radio" name="qbg" value=""> None (just the land)</label>
       </section>
     </div>
 
-    <!-- EL NINO -->
-    <div id="pane-nino" class="pane" hidden>
+    <div id="pane-nino" hidden>
       <section>
         <h2>Time series</h2>
         <select id="family" aria-label="Choose a time series">
@@ -153,28 +188,46 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>Area average, Jan 2025 – Oct 2026</h2>
         <svg id="chart" viewBox="0 0 320 150" width="100%" role="img" aria-label="Monthly average NDVI and land temperature"></svg>
-        <p class="note">Green line: greenness (NDVI). Red line: daytime ground temperature. April 2026 had the lowest greenness and one of the hottest months, during PAGASA's April dry spell.</p>
+        <p class="note">Green: greenness (NDVI). Red: daytime ground temperature. April 2026 had the lowest greenness and one of the hottest months, during PAGASA's April dry spell.</p>
       </section>
     </div>
 
-    <!-- ABOUT -->
-    <div id="pane-about" class="pane" hidden>
+    <div id="pane-wx" hidden>
+      <section>
+        <h2>Weather right now</h2>
+        <div class="wx" id="wxlist"><p class="note">Loading live weather from Open-Meteo…</p></div>
+        <p class="note" id="wxtime"></p>
+      </section>
+      <section>
+        <h2>Sky effects</h2>
+        <div class="chips">
+          <button id="fx-clouds" aria-pressed="true">Clouds</button>
+          <button id="fx-rain" aria-pressed="false">Rain</button>
+          <button id="fx-live" aria-pressed="true">Follow live weather</button>
+        </div>
+        <p class="note">With "Follow live weather" on, cloud cover, rain and drift direction come from the current forecast for these towns. Turn it off to set the sky yourself.</p>
+      </section>
+    </div>
+
+    <div id="pane-about" hidden>
       <section>
         <h2>Data</h2>
-        <ul class="note">
+        <ul class="note plain">
           <li>Landsat HLS L30 vegetation indices (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
           <li>MODIS MOD13Q1 NDVI (250 m) and MOD11A2 land temperature (1 km)</li>
           <li>ALOS AW3D30 elevation; 2020 regional land cover (province outlines)</li>
-          <li>Earthquake: M7.8, 8 Jun 2026, 32 km SSW of Maasim (PHIVOLCS; AHA Centre report)</li>
+          <li>Earthquake: M7.8, 8 Jun 2026, 32 km SSW of Maasim (PHIVOLCS; AHA Centre)</li>
+          <li>Live weather: Open-Meteo forecast API. Basemap, 3D buildings and terrain: Mapbox Standard.</li>
         </ul>
       </section>
       <section>
         <h2>Limits</h2>
-        <ul class="note">
+        <ul class="note plain">
           <li>The optical data stop at about 124.93°E, so western Sarangani (Maasim, Kiamba, Maitum) has no landslide check.</li>
           <li>No elevation data south of 5.9°N in the source used, so Glan, Jose Abad Santos and the islands were not checked for slides.</li>
-          <li>Heavy rain or land clearing can look like a landslide. Treat patches as places to check, not confirmed slides.</li>
-          <li>These layers show surface change, not ground uplift. That needs NISAR interferometry (GUNW) spanning 8 June.</li>
+          <li>Heavy rain or land clearing can look like a landslide. Treat patches as places to check.</li>
+          <li>Surface change only, not ground uplift. Uplift needs NISAR interferometry (GUNW) spanning 8 June.</li>
+          <li>Clouds and rain are an illustration driven by forecast numbers, not satellite cloud images.</li>
         </ul>
       </section>
     </div>
@@ -184,25 +237,25 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <div class="legend" id="legend"></div>
     </section>
     <section>
-      <h2>Fly to a town in 3D</h2>
-      <div class="mini" id="towns"></div>
-      <p class="note">Zooms to street level and tilts the view so buildings stand up. Buildings show where Mapbox has footprints; small barangays may have few.</p>
+      <h2>Travel</h2>
+      <div class="chips" id="towns"></div>
     </section>
     <section>
-      <h2>Map</h2>
+      <h2>View</h2>
       <label for="opacity" class="note" style="margin:0">Overlay opacity</label>
-      <input type="range" id="opacity" min="0" max="100" value="85">
-      <div class="mini" style="margin-top:10px">
+      <input type="range" id="opacity" min="0" max="100" value="80">
+      <div class="chips" style="margin-top:10px">
+        <button data-light="dawn" aria-pressed="false">Dawn</button>
         <button data-light="day" aria-pressed="true">Day</button>
         <button data-light="dusk" aria-pressed="false">Dusk</button>
         <button data-light="night" aria-pressed="false">Night</button>
       </div>
-      <div class="mini" style="margin-top:8px">
+      <div class="chips" style="margin-top:8px">
         <button id="b3d" aria-pressed="true">3D buildings</button>
+        <button id="terrain" aria-pressed="true">3D terrain</button>
+        <button id="tilt" aria-pressed="true">Tilted view</button>
         <button id="roadsTop" aria-pressed="true">Roads over data</button>
-        <button id="labels" aria-pressed="true">Place &amp; road names</button>
-        <button id="terrain" aria-pressed="false">3D terrain</button>
-        <button id="tilt" aria-pressed="false">Tilt view</button>
+        <button id="labels" aria-pressed="true">Names</button>
       </div>
     </section>
   </div>
@@ -220,66 +273,104 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const M=await (await fetch('data/manifest.json')).json();
   const byFam={}; M.layers.forEach(l=>{(byFam[l.family]=byFam[l.family]||[]).push(l)});
   const byId=Object.fromEntries(M.layers.map(l=>[l.id,l]));
-  const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',bounds:M.bounds,fitBoundsOptions:{padding:{top:40,bottom:40,left:window.innerWidth>640?400:20,right:40}},
-    config:{basemap:{lightPreset:'day',show3dObjects:true,showPlaceLabels:true,showRoadLabels:true,showPointOfInterestLabels:true,showTransitLabels:false}}});
-  map.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
+  const wide=window.innerWidth>640;
+  // towns: approximate town-centre coordinates, for navigation and weather points
+  const TOWNS=[['Maasim',125.0017,5.8608],['Kiamba',124.6247,5.9894],['Alabel',125.2903,6.1017],['Glan',125.2047,5.8222],['Malita',125.6111,6.4133],['General Santos',125.1716,6.1164]];
+  const HOME={center:[125.12,6.02],zoom:wide?8.7:8.0,pitch:62,bearing:-28,padding:{left:wide?380:0,top:0,right:0,bottom:wide?0:window.innerHeight*0.45}};
+
+  const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',center:HOME.center,zoom:HOME.zoom,pitch:HOME.pitch,bearing:HOME.bearing,maxPitch:80,antialias:true,
+    config:{basemap:{lightPreset:'day',show3dObjects:true,showPlaceLabels:true,showRoadLabels:true,showPointOfInterestLabels:true,showTransitLabels:false,
+      colorWater:'#56c3d6',colorGreenspace:'#8fd178',colorLand:'#efe6cf',colorMotorways:'#f2c46d',colorTrunks:'#f5d58f',colorRoads:'#fbf3df'}}});
+  map.addControl(new mapboxgl.NavigationControl({showCompass:false}),'top-right');
   map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-right');
-  let opacity=0.85, mode='quake';
-  let rasterSlot='bottom';   // 'bottom' = under roads and 3D buildings; 'middle' = over roads
-  function rasterLayer(id){return {id, type:'raster', source:id, slot:rasterSlot, paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
+
+  let opacity=0.8, mode='quake', rasterSlot='bottom';
+  function rasterLayer(id){return {id,type:'raster',source:id,slot:rasterSlot,paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
+  function painterlySky(){
+    try{ map.setFog({range:[0.8,9],color:'#f6eadf','high-color':'#8cc6ee','horizon-blend':0.18,'space-color':'#bfe3ff','star-intensity':0}); }catch(e){}
+  }
+  map.on('style.load',()=>{
+    if(!map.getSource('dem')) map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+    map.setTerrain({source:'dem',exaggeration:1.5});
+    painterlySky();
+    map.jumpTo(HOME);
+  });
   map.on('load',()=>{
-    map.addSource('series',{type:'image',url:byFam.ndvi[0].file,coordinates:M.image_corners});
-    map.addLayer(rasterLayer('series'));
-    map.addSource('static',{type:'image',url:byId.eq_evi_excess.file,coordinates:M.image_corners});
-    map.addLayer(rasterLayer('static'));
+    map.addSource('series',{type:'image',url:byFam.ndvi[0].file,coordinates:M.image_corners}); map.addLayer(rasterLayer('series'));
+    map.addSource('static',{type:'image',url:byId.eq_evi_excess.file,coordinates:M.image_corners}); map.addLayer(rasterLayer('static'));
     map.addSource('aoi',{type:'geojson',data:'data/boundary.geojson'});
-    map.addLayer({id:'aoi-line',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#111','line-width':1.6}});
+    map.addLayer({id:'aoi-glow',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#fff6d8','line-width':6,'line-opacity':0.55,'line-blur':3}});
+    map.addLayer({id:'aoi-line',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#b8902f','line-width':2,'line-dasharray':[3,1.5]}});
     map.addSource('cand',{type:'geojson',data:'data/landslide_candidates.geojson'});
-    map.addLayer({id:'cand-fill',type:'fill',source:'cand',slot:'top',paint:{'fill-color':'#e31a1c','fill-opacity':0.85}});
-    map.addLayer({id:'cand-halo',type:'circle',source:'cand',slot:'top',minzoom:0,maxzoom:11,paint:{'circle-radius':4,'circle-color':'#e31a1c','circle-stroke-color':'#fff','circle-stroke-width':1}});
-    map.addSource('epi',{type:'geojson',data:{type:'Feature',geometry:{type:'Point',coordinates:[M.epicentre.lng,M.epicentre.lat]},properties:{}}});
-    map.addLayer({id:'epi-ring',type:'circle',source:'epi',slot:'top',paint:{'circle-radius':18,'circle-color':'rgba(196,41,28,0.15)','circle-stroke-color':'#c4291c','circle-stroke-width':2}});
-    map.addLayer({id:'epi-dot',type:'circle',source:'epi',slot:'top',paint:{'circle-radius':5,'circle-color':'#c4291c'}});
-    map.on('click','epi-dot',e=>new mapboxgl.Popup().setLngLat(e.lngLat).setHTML('<b>'+M.epicentre.label+'</b><br>32 km SSW of Maasim, Sarangani').addTo(map));
-    const pop=e=>{const p=e.features[0].properties;new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(
+    map.addLayer({id:'cand-fill',type:'fill',source:'cand',slot:'top',paint:{'fill-color':'#d0453a','fill-opacity':0.9}});
+    map.addLayer({id:'cand-halo',type:'circle',source:'cand',slot:'top',maxzoom:12,paint:{'circle-radius':['interpolate',['linear'],['zoom'],7,3,11,6],'circle-color':'#d0453a','circle-stroke-color':'#fff6d8','circle-stroke-width':1.5}});
+    const pop=e=>{const p=e.features[0].properties;new mapboxgl.Popup({maxWidth:'260px'}).setLngLat(e.lngLat).setHTML(
       `<b>Possible landslide</b><br>${p.province||''}<br>Area ${(+p.area_ha).toFixed(2)} ha · slope ${(+p.slope_mean).toFixed(0)}°<br>`+
       `Elevation ${(+p.elev_mean).toFixed(0)} m · ${(+p.dist_epi_km).toFixed(0)} km from epicentre<br>Vegetation (EVI) ${(+p.evipre_mean).toFixed(2)} → ${(+p.evipost_mean).toFixed(2)}`).addTo(map)};
     map.on('click','cand-fill',pop); map.on('click','cand-halo',pop);
-    ['cand-fill','cand-halo','epi-dot'].forEach(id=>{map.on('mouseenter',id,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',id,()=>map.getCanvas().style.cursor='')});
-    setMode('quake');
+    ['cand-fill','cand-halo'].forEach(id=>{map.on('mouseenter',id,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',id,()=>map.getCanvas().style.cursor='')});
+    addMarkers(); setMode('quake'); loadWeather();
   });
 
-  // ---- legend
+  // ---------- waypoint markers (towns) and epicentre sigil ----------
+  function wpSVG(fill){return `<svg class="wp" viewBox="0 0 34 46"><defs><radialGradient id="g${fill.slice(1)}" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="${fill}"/><stop offset="1" stop-color="#1c2232"/></radialGradient></defs>
+    <path d="M17 2 L31 17 L17 32 L3 17 Z" fill="url(#g${fill.slice(1)})" stroke="#d3bc8e" stroke-width="2.2"/><path d="M17 8 L25 17 L17 26 L9 17 Z" fill="none" stroke="#fff6d8" stroke-width="1.2" opacity=".8"/>
+    <path d="M17 32 L17 44" stroke="#d3bc8e" stroke-width="2"/><circle cx="17" cy="44" r="2" fill="#d3bc8e"/></svg>`}
+  const townWx={};
+  function addMarkers(){
+    TOWNS.forEach(([n,x,y])=>{
+      const el=document.createElement('div'); el.style.position='relative'; el.innerHTML=wpSVG('#3fb7b0')+`<span class="wp-label">${n}</span>`; el.setAttribute('role','button'); el.setAttribute('aria-label','Fly to '+n);
+      el.addEventListener('click',ev=>{ev.stopPropagation();flyTown(n,x,y)});
+      new mapboxgl.Marker({element:el,anchor:'bottom'}).setLngLat([x,y]).addTo(map);
+    });
+    const ep=document.createElement('div'); ep.innerHTML=`<svg width="58" height="58" viewBox="0 0 58 58" style="cursor:pointer;overflow:visible"><circle cx="29" cy="29" r="26" fill="rgba(208,69,58,.16)" stroke="#d0453a" stroke-width="2" stroke-dasharray="5 4"><animateTransform attributeName="transform" type="rotate" from="0 29 29" to="360 29 29" dur="18s" repeatCount="indefinite"/></circle><circle cx="29" cy="29" r="15" fill="none" stroke="#d3bc8e" stroke-width="2"/><path d="M29 17 L33 29 L29 41 L25 29Z" fill="#d0453a" stroke="#fff6d8" stroke-width="1"/></svg>`;
+    ep.setAttribute('role','button'); ep.setAttribute('aria-label','Earthquake epicentre');
+    const epPop=new mapboxgl.Popup({offset:24,maxWidth:'260px'}).setHTML(`<b>Epicentre · M7.8</b><br>8 June 2026, 7:37 am, 33 km deep<br>32 km SSW of Maasim, Sarangani. Strike-slip. 92 deaths, 113,000+ houses damaged (AHA Centre).`);
+    new mapboxgl.Marker({element:ep}).setLngLat([M.epicentre.lng,M.epicentre.lat]).setPopup(epPop).addTo(map);
+  }
+  function flyTown(n,x,y){
+    map.flyTo({center:[x,y],zoom:15.8,pitch:65,bearing:-30,duration:3000,padding:{left:wide?380:0,top:0,right:0,bottom:wide?0:window.innerHeight*0.45}});
+    setPressed('tilt',true);
+    const w=townWx[n]; new mapboxgl.Popup({offset:44,maxWidth:'240px'}).setLngLat([x,y]).setHTML(`<b>${n}</b><br>`+(w?`${w.desc}, ${Math.round(w.t)} °C<br>Clouds ${w.cc}% · rain ${w.p} mm · wind ${Math.round(w.ws)} km/h`:'Weather not loaded')).addTo(map);
+  }
+  const tw=document.getElementById('towns');
+  TOWNS.forEach(([n,x,y])=>{const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>flyTown(n,x,y));tw.appendChild(b)});
+  const hb=document.createElement('button');hb.textContent='Whole area';hb.addEventListener('click',()=>{map.flyTo({...HOME,duration:2200});setPressed('tilt',true)});tw.appendChild(hb);
+
+  // ---------- compass ----------
+  const rose=document.getElementById('rose');
+  map.on('rotate',()=>rose.style.transform=`rotate(${-map.getBearing()}deg)`); rose.style.transform=`rotate(${-HOME.bearing}deg)`;
+  document.getElementById('compass').addEventListener('click',()=>map.easeTo({bearing:0,duration:900}));
+
+  // ---------- legend / modes ----------
   function legend(l){
     const el=document.getElementById('legend'); if(!l){el.innerHTML='<p class="note">No overlay selected.</p>';return}
     const g=l.legend;
     if(g.type==='ramp'){
-      el.innerHTML=`<div class="note" style="margin:0 0 2px;color:var(--ink)">${l.label}</div><div class="bar" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div>`+
-      `<div class="ends"><span>${g.min}${g.unit||''}</span><span>${((g.min+g.max)/2)}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`+(l.family.endsWith('anom')||l.id==='eq_evi_excess'?'<p class="note">'+(l.family==='lst_anom'?'Blue cooler, red hotter than 2025.':'Brown = lost greenness, teal = gained.')+'</p>':'');
+      el.innerHTML=`<div style="font-weight:700;font-size:13px">${l.label}</div><div class="bar" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div>`+
+      `<div class="ends"><span>${g.min}${g.unit||''}</span><span>${((g.min+g.max)/2)}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`+
+      (l.family.endsWith('anom')||l.id==='eq_evi_excess'?'<p class="note">'+(l.family==='lst_anom'?'Blue cooler, red hotter than 2025.':'Brown = lost greenness, teal = gained.')+'</p>':'');
     }else{
-      el.innerHTML=`<div class="note" style="margin:0;color:var(--ink)">${l.label}</div><ul>`+g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')+'</ul>';
+      el.innerHTML=`<div style="font-weight:700;font-size:13px">${l.label}</div><ul>`+g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')+'</ul>';
     }
   }
-  // ---- modes
-  const panes={quake:'pane-quake',nino:'pane-nino',about:'pane-about'};
+  const panes=['quake','nino','wx','about'];
   function setMode(m){
-    mode=m==='about'?mode:m;
-    Object.entries(panes).forEach(([k,id])=>{document.getElementById(id).hidden=k!==m;document.getElementById('tab-'+k).setAttribute('aria-selected',k===m)});
+    if(m==='quake'||m==='nino') mode=m;
+    panes.forEach(k=>{document.getElementById('pane-'+k).hidden=k!==m;document.getElementById('tab-'+k).setAttribute('aria-selected',k===m)});
     if(!map.getLayer('series'))return;
-    const quake=mode==='quake';
+    const quake=mode==='quake', sel=document.querySelector('input[name=qbg]:checked').value;
     map.setLayoutProperty('series','visibility',quake?'none':'visible');
-    const sel=document.querySelector('input[name=qbg]:checked').value;
     map.setLayoutProperty('static','visibility',quake&&sel?'visible':'none');
     const cand=document.getElementById('q-cand').checked&&quake;
     ['cand-fill','cand-halo'].forEach(id=>map.setLayoutProperty(id,'visibility',cand?'visible':'none'));
     legend(quake?(sel?byId[sel]:null):current());
   }
-  Object.keys(panes).forEach(k=>document.getElementById('tab-'+k).addEventListener('click',()=>setMode(k)));
-  document.querySelectorAll('input[name=qbg]').forEach(r=>r.addEventListener('change',()=>{
-    const v=r.value; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); setMode('quake');}));
+  panes.forEach(k=>document.getElementById('tab-'+k).addEventListener('click',()=>setMode(k)));
+  document.querySelectorAll('input[name=qbg]').forEach(r=>r.addEventListener('change',()=>{const v=r.value; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); setMode('quake');}));
   document.getElementById('q-cand').addEventListener('change',()=>setMode('quake'));
 
-  // ---- time series
+  // ---------- time series ----------
   const fam=document.getElementById('family'), slider=document.getElementById('slider');
   function list(){return byFam[fam.value]||[]}
   function current(){return list()[+slider.value]}
@@ -292,49 +383,117 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   fam.addEventListener('change',resetFam); slider.addEventListener('input',showSeries);
   let timer=null; const play=document.getElementById('play');
   play.addEventListener('click',()=>{ if(timer){clearInterval(timer);timer=null;play.textContent='▶';play.setAttribute('aria-label','Play');return}
-    play.textContent='❚❚'; play.setAttribute('aria-label','Pause');
-    timer=setInterval(()=>{slider.value=(+slider.value+1)%list().length;showSeries()},1100)});
+    play.textContent='❚❚'; play.setAttribute('aria-label','Pause'); timer=setInterval(()=>{slider.value=(+slider.value+1)%list().length;showSeries()},1100)});
   resetFam();
 
-  // ---- chart (area means)
   function drawChart(l){
     const rows=M.aoi_monthly.filter(r=>r.ndvi_mean||r.lst_day_mean_C), svg=document.getElementById('chart');
     const W=320,H=150,P={l:30,r:30,t:10,b:22}, n=rows.length, x=i=>P.l+i*(W-P.l-P.r)/(n-1);
     const yN=v=>H-P.b-(v-0.75)/(0.87-0.75)*(H-P.t-P.b), yT=v=>H-P.b-(v-23)/(28-23)*(H-P.t-P.b);
     const path=(k,f)=>rows.map((r,i)=>r[k]?`${i&&rows[i-1][k]?'L':'M'}${x(i).toFixed(1)},${f(+r[k]).toFixed(1)}`:'').join('');
-    let s=`<line x1="${P.l}" x2="${W-P.r}" y1="${H-P.b}" y2="${H-P.b}" stroke="var(--line)"/>`;
-    [0.75,0.81,0.87].forEach(v=>s+=`<text x="${P.l-4}" y="${yN(v)+3}" text-anchor="end">${v.toFixed(2)}</text><line x1="${P.l}" x2="${W-P.r}" y1="${yN(v)}" y2="${yN(v)}" stroke="var(--line)" stroke-dasharray="2 3"/>`);
+    let s=`<line x1="${P.l}" x2="${W-P.r}" y1="${H-P.b}" y2="${H-P.b}" stroke="#c7b893"/>`;
+    [0.75,0.81,0.87].forEach(v=>s+=`<text x="${P.l-4}" y="${yN(v)+3}" text-anchor="end">${v.toFixed(2)}</text><line x1="${P.l}" x2="${W-P.r}" y1="${yN(v)}" y2="${yN(v)}" stroke="#d6c8a6" stroke-dasharray="2 3"/>`);
     [23,28].forEach(v=>s+=`<text x="${W-P.r+4}" y="${yT(v)+3}">${v}°</text>`);
     rows.forEach((r,i)=>{if(r.month.endsWith('-01')||i===n-1)s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${r.month.slice(2).replace('-','/')}</text>`});
-    s+=`<path d="${path('ndvi_mean',yN)}" fill="none" stroke="#2e9a5e" stroke-width="2"/><path d="${path('lst_day_mean_C',yT)}" fill="none" stroke="#d2412f" stroke-width="2"/>`;
+    s+=`<path d="${path('ndvi_mean',yN)}" fill="none" stroke="#4f9a4a" stroke-width="2.2"/><path d="${path('lst_day_mean_C',yT)}" fill="none" stroke="#d0453a" stroke-width="2.2"/>`;
     const k=l&&l.start?l.start.slice(0,7):null, i=rows.findIndex(r=>r.month===k);
-    if(i>=0) s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${P.t}" y2="${H-P.b}" stroke="var(--ink)" stroke-width="1"/>`;
-    const a=rows.findIndex(r=>r.month==='2026-04'); if(a>=0) s+=`<circle cx="${x(a)}" cy="${yN(+rows[a].ndvi_mean)}" r="3.5" fill="#2e9a5e"/><text x="${x(a)}" y="${yN(+rows[a].ndvi_mean)+14}" text-anchor="middle">Apr dry spell</text>`;
+    if(i>=0) s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${P.t}" y2="${H-P.b}" stroke="#283044" stroke-width="1"/>`;
+    const a=rows.findIndex(r=>r.month==='2026-04'); if(a>=0) s+=`<circle cx="${x(a)}" cy="${yN(+rows[a].ndvi_mean)}" r="3.5" fill="#4f9a4a"/><text x="${x(a)}" y="${yN(+rows[a].ndvi_mean)+14}" text-anchor="middle">Apr dry spell</text>`;
     svg.innerHTML=s;
   }
 
-  // ---- map controls
-  document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;['series','static'].forEach(id=>map.getLayer(id)&&map.setPaintProperty(id,'raster-opacity',opacity))});
-  document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b))}));
-  const tb=document.getElementById('terrain');
-  tb.addEventListener('click',()=>{const on=tb.getAttribute('aria-pressed')!=='true'; tb.setAttribute('aria-pressed',on);
-    if(on){ if(!map.getSource('dem')) map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
-      map.setTerrain({source:'dem',exaggeration:1.6}); map.easeTo({pitch:60,bearing:-20,duration:1200}); }
-    else { map.setTerrain(null); map.easeTo({pitch:0,bearing:0,duration:800}); }});
-
-  // ---- 3D buildings, roads, labels, tilt
+  // ---------- view controls ----------
+  function setPressed(id,on){document.getElementById(id).setAttribute('aria-pressed',on)}
   function toggle(id,fn){const b=document.getElementById(id);b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);fn(on)})}
+  document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;['series','static'].forEach(id=>map.getLayer(id)&&map.setPaintProperty(id,'raster-opacity',opacity))});
+  document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b));if(b.dataset.light==='day')painterlySky();}));
   toggle('b3d',on=>map.setConfigProperty('basemap','show3dObjects',on));
   toggle('labels',on=>['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)));
+  toggle('terrain',on=>map.setTerrain(on?{source:'dem',exaggeration:1.5}:null));
+  toggle('tilt',on=>map.easeTo({pitch:on?62:0,bearing:on?-28:0,duration:900}));
   toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle';
-    ['series','static'].forEach(id=>{if(!map.getLayer(id))return;const vis=map.getLayoutProperty(id,'visibility');map.removeLayer(id);map.addLayer(rasterLayer(id),'aoi-line');if(vis)map.setLayoutProperty(id,'visibility',vis)})});
-  toggle('tilt',on=>map.easeTo({pitch:on?62:0,bearing:on?-25:0,duration:900}));
-  // towns: approximate town-centre coordinates, for navigation only
-  const TOWNS=[['Maasim',125.0017,5.8608],['Kiamba',124.6247,5.9894],['Alabel',125.2903,6.1017],['Glan',125.2047,5.8222],['Malita',125.6111,6.4133],['General Santos (next door)',125.1716,6.1164]];
-  const tw=document.getElementById('towns');
-  TOWNS.forEach(([n,x,y])=>{const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>{
-    map.flyTo({center:[x,y],zoom:16.2,pitch:62,bearing:-25,duration:2500});document.getElementById('tilt').setAttribute('aria-pressed','true');});tw.appendChild(b)});
-  const ov=document.createElement('button');ov.textContent='Whole area';ov.addEventListener('click',()=>{map.fitBounds(M.bounds,{padding:{top:40,bottom:40,left:window.innerWidth>640?400:20,right:40},pitch:0,bearing:0});document.getElementById('tilt').setAttribute('aria-pressed','false')});tw.appendChild(ov);
+    ['series','static'].forEach(id=>{if(!map.getLayer(id))return;const vis=map.getLayoutProperty(id,'visibility');map.removeLayer(id);map.addLayer(rasterLayer(id),'aoi-glow');if(vis)map.setLayoutProperty(id,'visibility',vis)})});
+
+  // ---------- live weather (Open-Meteo) ----------
+  const WMO={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',80:'Rain showers',81:'Rain showers',82:'Violent showers',95:'Thunderstorm',96:'Thunderstorm, hail',99:'Thunderstorm, hail'};
+  function wxIcon(code){
+    const sun='<circle cx="14" cy="14" r="6" fill="#f2c46d" stroke="#b89a5e"/>', cloud='<path d="M7 20h14a4 4 0 0 0 0-8 6 6 0 0 0-11-1 4.5 4.5 0 0 0-3 9z" fill="#f6f1e6" stroke="#6a6f7c" stroke-width="1.2"/>';
+    const rain='<path d="M10 23l-1.5 3M15 23l-1.5 3M20 23l-1.5 3" stroke="#3fb7b0" stroke-width="1.6" stroke-linecap="round"/>', bolt='<path d="M15 21l-3 5h3l-2 4" stroke="#d0453a" stroke-width="1.6" fill="none"/>';
+    let b=code<=1?sun:code===2?sun+cloud:cloud; if(code>=51) b=cloud+rain; if(code>=95) b=cloud+bolt;
+    return `<svg width="28" height="30" viewBox="0 0 28 30">${b}</svg>`;
+  }
+  const sky={cloud:0.45,rain:0,windDir:90,windSpeed:12,live:true,clouds:true,rainOn:false};
+  async function loadWeather(){
+    const chip=document.getElementById('wxchip').querySelector('span');
+    try{
+      const lat=TOWNS.map(t=>t[2]).join(','), lon=TOWNS.map(t=>t[1]).join(',');
+      const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,cloud_cover,weather_code,wind_speed_10m,wind_direction_10m&timezone=Asia%2FManila`);
+      const d=await r.json(); const arr=Array.isArray(d)?d:[d];
+      const list=document.getElementById('wxlist'); list.innerHTML='';
+      let cc=0,pr=0,wsx=0,wsy=0,wsp=0;
+      arr.forEach((o,i)=>{const c=o.current,[n,x,y]=TOWNS[i];
+        const w={t:c.temperature_2m,p:c.precipitation,cc:c.cloud_cover,code:c.weather_code,ws:c.wind_speed_10m,wd:c.wind_direction_10m,desc:WMO[c.weather_code]||'—'}; townWx[n]=w;
+        cc+=w.cc; pr=Math.max(pr,w.p); wsp+=w.ws; wsx+=Math.sin(w.wd*Math.PI/180); wsy+=Math.cos(w.wd*Math.PI/180);
+        const b=document.createElement('button'); b.innerHTML=`${wxIcon(w.code)}<span><b>${n}</b><small>${w.desc} · clouds ${w.cc}% · ${w.p} mm</small></span><span class="t">${Math.round(w.t)}°</span>`;
+        b.addEventListener('click',()=>flyTown(n,x,y)); list.appendChild(b);});
+      const N=arr.length; sky.cloud=cc/N/100; sky.rain=pr; sky.windSpeed=wsp/N; sky.windDir=(Math.atan2(wsx,wsy)*180/Math.PI+360)%360;
+      const t=arr[0].current.time; document.getElementById('wxtime').textContent=`Updated ${t.replace('T',' ')} (Philippine time) from Open-Meteo.`;
+      const avgT=arr.reduce((s,o)=>s+o.current.temperature_2m,0)/N;
+      chip.textContent=`${Math.round(avgT)} °C · clouds ${Math.round(sky.cloud*100)}% · ${pr>0?'rain '+pr+' mm':'no rain'}`;
+      if(sky.live){ sky.rainOn=pr>0; setPressed('fx-rain',sky.rainOn); }
+      seedClouds();
+    }catch(e){ chip.textContent='Weather unavailable'; document.getElementById('wxlist').innerHTML='<p class="note">Could not reach the weather service. Sky effects use default values.</p>'; }
+  }
+  toggle('fx-clouds',on=>{sky.clouds=on});
+  toggle('fx-rain',on=>{sky.rainOn=on; sky.live=false; setPressed('fx-live',false)});
+  toggle('fx-live',on=>{sky.live=on; if(on) loadWeather()});
+
+  // ---------- clouds and rain (canvas over the map, anchored to the ground) ----------
+  const cv=document.getElementById('fx'), ctx=cv.getContext('2d'); let DPR=Math.min(window.devicePixelRatio||1,2);
+  function resize(){cv.width=innerWidth*DPR;cv.height=innerHeight*DPR;cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px'} resize(); addEventListener('resize',resize);
+  const B=M.bounds, PAD=0.35, minX=B[0][0]-PAD, maxX=B[1][0]+PAD, minY=B[0][1]-PAD, maxY=B[1][1]+PAD;
+  let rnd=(s=>()=>(s=(s*16807)%2147483647)/2147483647)(20260608);
+  function sprite(){const c=document.createElement('canvas'),S=256;c.width=S;c.height=S/1.6;const g=c.getContext('2d');
+    const n=6+Math.floor(rnd()*5);
+    for(let k=0;k<2;k++) for(let i=0;i<n;i++){const x=S*(0.18+0.64*rnd()),y=c.height*(0.45+0.2*(rnd()-0.5)),r=S*(0.12+0.13*rnd());
+      const gr=g.createRadialGradient(x,y-(k?0:r*0.25),0,x,y,r);
+      if(k===0){gr.addColorStop(0,'rgba(196,208,224,.55)');gr.addColorStop(1,'rgba(196,208,224,0)')} else {gr.addColorStop(0,'rgba(255,255,255,.95)');gr.addColorStop(.55,'rgba(255,255,255,.6)');gr.addColorStop(1,'rgba(255,255,255,0)')}
+      g.fillStyle=gr; g.beginPath(); g.arc(x,k?y-r*0.18:y+r*0.12,r,0,Math.PI*2); g.fill();}
+    return c}
+  let clouds=[];
+  function seedClouds(){rnd=(s=>()=>(s=(s*16807)%2147483647)/2147483647)(20260608); const N=Math.round(10+46*sky.cloud);
+    clouds=Array.from({length:N},()=>({lng:minX+(maxX-minX)*rnd(),lat:minY+(maxY-minY)*rnd(),km:6+12*rnd(),alt:1.5+1.5*rnd(),img:sprite(),a:0.75+0.25*rnd()}))}
+  seedClouds();
+  const drops=Array.from({length:420},()=>({x:Math.random(),y:Math.random(),l:0.5+Math.random()}));
+  let last=performance.now(); const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(now){
+    const dt=Math.min(0.1,(now-last)/1000); last=now; ctx.setTransform(DPR,0,0,DPR,0,0); ctx.clearRect(0,0,innerWidth,innerHeight);
+    const z=map.getZoom(), pitch=map.getPitch()*Math.PI/180;
+    // wind blows FROM windDir; clouds move toward windDir+180. Visual speed exaggerated for readability.
+    const mv=reduce?0:(0.004+sky.windSpeed*0.0006)*dt, ang=(sky.windDir+180)*Math.PI/180;
+    if(sky.clouds){
+      const fade=Math.max(0,Math.min(1,(14-z)/2.5));
+      if(fade>0){
+        const c0=map.project([125.15,6.0]), c1=map.project([125.15+0.009,6.0]); const pxkm=Math.max(0.5,Math.hypot(c1.x-c0.x,c1.y-c0.y));
+        clouds.forEach(c=>{c.lng+=Math.sin(ang)*mv; c.lat+=Math.cos(ang)*mv;
+          if(c.lng>maxX)c.lng=minX; if(c.lng<minX)c.lng=maxX; if(c.lat>maxY)c.lat=minY; if(c.lat<minY)c.lat=maxY;
+          const p=map.project([c.lng,c.lat]); const w=c.km*pxkm*2.2, h=w/1.6, lift=c.alt*pxkm*Math.sin(pitch)*3.2;
+          if(p.x<-w||p.x>innerWidth+w||p.y<-h-lift||p.y>innerHeight+h) return;
+          ctx.globalAlpha=0.09*fade*(0.5+sky.cloud); ctx.fillStyle='#283044'; ctx.beginPath(); ctx.ellipse(p.x+w*0.12,p.y+h*0.08,w*0.3,h*0.18*Math.max(0.35,Math.cos(pitch)),0,0,Math.PI*2); ctx.fill();
+          ctx.globalAlpha=c.a*fade*(0.55+0.45*sky.cloud); ctx.drawImage(c.img,p.x-w/2,p.y-h/2-lift,w,h);});
+        ctx.globalAlpha=1;
+      }
+    }
+    if(sky.rainOn){
+      const n=Math.round(drops.length*Math.min(1,0.35+(sky.rain||1)/6)), dx=Math.sin(ang)*0.35;
+      ctx.strokeStyle='rgba(222,236,248,.55)'; ctx.lineWidth=1.1; ctx.beginPath();
+      for(let i=0;i<n;i++){const d=drops[i]; d.y+=(reduce?0:1.4*dt*d.l); d.x+=reduce?0:dx*dt*0.2; if(d.y>1){d.y-=1;d.x=Math.random()} if(d.x>1)d.x-=1; if(d.x<0)d.x+=1;
+        const X=d.x*innerWidth,Y=d.y*innerHeight,L=14*d.l; ctx.moveTo(X,Y); ctx.lineTo(X+dx*L*2,Y+L);}
+      ctx.stroke(); ctx.fillStyle='rgba(90,110,140,.10)'; ctx.fillRect(0,0,innerWidth,innerHeight);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
