@@ -71,6 +71,16 @@ svg text{fill:var(--ink2);font:10px var(--mono)}
 .wx button{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid #d6c8a6;background:#f6f1e6;border-radius:6px;padding:7px 10px;cursor:pointer;font:14px var(--body);color:var(--ink)}
 .wx b{font-weight:800}.wx small{display:block;color:var(--ink2);font-size:12px}
 .wx .t{font:400 20px var(--display);color:var(--navy);font-variant-numeric:tabular-nums}
+.file{display:grid;grid-template-columns:62px 1fr;gap:5px 10px;margin:0;font-size:13.5px}
+.file dt{font:400 13px var(--display);color:var(--gold2);text-transform:uppercase;letter-spacing:.06em;padding-top:1px}
+.file dd{margin:0}
+.xsec{width:100%;height:auto;margin-top:10px;border:1px solid #d6c8a6;border-radius:6px}
+.xsec text{font:9.5px var(--mono);fill:#3b4255}
+.news{display:grid;gap:6px}
+.news a{display:block;text-decoration:none;color:var(--ink);background:#f6f1e6;border:1px solid #d6c8a6;border-left:3px solid var(--gold2);border-radius:6px;padding:7px 10px}
+.news a:hover{border-color:var(--gold2)}
+.news span{display:block;font:11px var(--mono);color:var(--ink2)}
+.news b{font-weight:700;font-size:13.5px}
 ul.plain{margin:0;padding-left:18px}
 button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 
@@ -146,11 +156,40 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   <div class="body">
     <div id="pane-quake">
       <section>
+        <h2>Event file · 8 June 2026</h2>
+        <dl class="file">
+          <dt>When</dt><dd>Monday 8 June 2026, 7:37 am, the first day of classes</dd>
+          <dt>Where</dt><dd>Offshore, about 32 km south of Maasim, Sarangani (5.60°N, 125.06°E)</dd>
+          <dt>Size</dt><dd>Magnitude 7.8. Shaking up to Intensity VIII (PHIVOLCS) and IX (USGS)</dd>
+          <dt>Depth</dt><dd>33 km (PHIVOLCS) · 57 km (USGS)</dd>
+          <dt>Type</dt><dd>Tectonic, thrust faulting (USGS)</dd>
+          <dt>Cause</dt><dd>The Celebes Sea floor slipping down beneath Mindanao at the <b>Cotabato Trench</b>, a subduction zone (PHIVOLCS). The rupture may also have reached the northern Sangihe Trench.</dd>
+        </dl>
+        <svg class="xsec" viewBox="0 0 320 132" role="img" aria-label="Cross-section: the Celebes Sea plate sinks eastward under Mindanao at the Cotabato Trench; the quake started where the plates are locked.">
+          <rect x="0" y="0" width="320" height="132" fill="#f6f1e6"/>
+          <path d="M0 40 H120 L132 46" fill="none" stroke="#56c3d6" stroke-width="2"/>
+          <path d="M0 40 H118 L140 52 L320 128" fill="none"/>
+          <path d="M0 44 L118 44 L136 54 L320 120 L320 132 L0 132 Z" fill="#c9b78f"/>
+          <path d="M0 44 L118 44 L136 54 L320 120" fill="none" stroke="#7c6a45" stroke-width="2"/>
+          <path d="M136 54 L150 38 L200 26 L260 20 L320 18 L320 120 Z" fill="#9fc98a" opacity=".9"/>
+          <path d="M150 38 L200 26 L260 20 L320 18" fill="none" stroke="#4f9a4a" stroke-width="2"/>
+          <path d="M0 40 H132" stroke="#56c3d6" stroke-width="5" opacity=".5"/>
+          <polygon points="186,74 189,82 197,82 191,87 193,95 186,90 179,95 181,87 175,82 183,82" fill="#d0453a" stroke="#fff6d8"/>
+          <path d="M60 60 L100 70" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
+          <path d="M214 34 V22" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
+          <defs><marker id="ar" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#283044"/></marker></defs>
+          <text x="6" y="34">Celebes Sea</text><text x="104" y="35">Cotabato Trench</text><text x="246" y="13">Mindanao</text>
+          <text x="20" y="80">plate sinks east</text><text x="200" y="104">quake ~33–57 km deep</text><text x="220" y="38">coast lifted</text>
+        </svg>
+        <p class="note">Effects: tsunami 1.48 m on the Kiamba tide gauge and up to 2.5 m run-up at Lebak; coast lifted up to 2 m along about 100 km; many landslides, mainly in Glan and Jose Abad Santos (PhilSA estimate about 138 ha); at least 106 deaths and about 138,500 homes damaged (NDRRMC, 21 July). More than 8,500 aftershocks, including M6.6 on 26 June and M6.4 on 8 October.</p>
+      </section>
+      <section>
+        <h2>What this map found</h2>
         <div class="stat">
           <div><b>88</b><span>possible new slides</span></div>
           <div><b>40 ha</b><span>bare ground on slopes ≥ 20°</span></div>
         </div>
-        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. More common on steeper slopes and closer to the epicentre. Not yet field-checked.</p>
+        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. These are found more often on steeper slopes. The hardest-hit areas, Glan and Jose Abad Santos, lie south of 5.9°N where this map had no elevation data, so they were not checked. Not field-checked.</p>
       </section>
       <section>
         <h2>Layers</h2>
@@ -161,6 +200,19 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible</label>
         <label class="row"><input type="radio" name="qbg" value="slope"> Slope</label>
         <label class="row"><input type="radio" name="qbg" value=""> None (just the land)</label>
+      </section>
+      <section>
+        <h2>In the news</h2>
+        <p class="note" style="margin:0 0 8px">Photos and videos are on the original pages. Each opens in a new tab.</p>
+        <div class="news">
+          <a href="https://www.phivolcs.dost.gov.ph/primer-on-the-08-june-2026-magnitude-mw-7-8-offshore-sarangani-earthquake/" target="_blank" rel="noopener"><span>PHIVOLCS · 8 Jun 2026</span><b>Primer on the Mw 7.8 offshore Sarangani earthquake</b></a>
+          <a href="https://www.pbs.org/newshour/world/a-7-8-magnitude-quake-in-the-philippines-kills-at-least-32-collapses-buildings-and-triggers-tsun" target="_blank" rel="noopener"><span>PBS NewsHour / AP · 8 Jun 2026</span><b>A 7.8 magnitude quake in the Philippines collapses buildings and triggers tsunami</b></a>
+          <a href="https://www.sunstar.com.ph/manila/magnitude-78-quake-jolts-sarangani-shakes-large-parts-of-mindanao" target="_blank" rel="noopener"><span>SunStar · 8 Jun 2026</span><b>Magnitude 7.8 quake jolts Sarangani, shakes large parts of Mindanao</b></a>
+          <a href="https://newswav.com/article/phivolcs-trench-movement-may-be-behind-deadly-quake-A2606_wqShiY" target="_blank" rel="noopener"><span>The Manila Times · 8 Jun 2026</span><b>Phivolcs: Trench movement may be behind deadly quake</b></a>
+          <a href="https://www.gmanetwork.com/regionaltv/news/114348/first-day-of-classes-marred-by-m78-quake-off-gensan/story/" target="_blank" rel="noopener"><span>GMA Regional TV · Jun 2026</span><b>First day of classes marred by M7.8 quake off GenSan</b></a>
+          <a href="https://adinet.ahacentre.org/report/philippines-m78-earthquake-in-regions-ix-xi-xii-and-barmm-20260608" target="_blank" rel="noopener"><span>AHA Centre · situation report</span><b>Philippines, M7.8 earthquake in Regions IX, XI, XII and BARMM</b></a>
+          <a href="https://en.wikipedia.org/wiki/2026_Mindanao_earthquake" target="_blank" rel="noopener"><span>Wikipedia · summary with sources</span><b>2026 Mindanao earthquake</b></a>
+        </div>
       </section>
     </div>
 
@@ -216,7 +268,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
           <li>Landsat HLS L30 vegetation indices (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
           <li>MODIS MOD13Q1 NDVI (250 m) and MOD11A2 land temperature (1 km)</li>
           <li>ALOS AW3D30 elevation; 2020 regional land cover (province outlines)</li>
-          <li>Earthquake: M7.8, 8 Jun 2026, 32 km SSW of Maasim (PHIVOLCS; AHA Centre)</li>
+          <li>Earthquake facts: PHIVOLCS, USGS (via Wikipedia), NDRRMC, AHA Centre, AP</li>
           <li>Live weather: Open-Meteo forecast API. Basemap, 3D buildings and terrain: Mapbox Standard.</li>
         </ul>
       </section>
@@ -325,7 +377,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     });
     const ep=document.createElement('div'); ep.innerHTML=`<svg width="58" height="58" viewBox="0 0 58 58" style="cursor:pointer;overflow:visible"><circle cx="29" cy="29" r="26" fill="rgba(208,69,58,.16)" stroke="#d0453a" stroke-width="2" stroke-dasharray="5 4"><animateTransform attributeName="transform" type="rotate" from="0 29 29" to="360 29 29" dur="18s" repeatCount="indefinite"/></circle><circle cx="29" cy="29" r="15" fill="none" stroke="#d3bc8e" stroke-width="2"/><path d="M29 17 L33 29 L29 41 L25 29Z" fill="#d0453a" stroke="#fff6d8" stroke-width="1"/></svg>`;
     ep.setAttribute('role','button'); ep.setAttribute('aria-label','Earthquake epicentre');
-    const epPop=new mapboxgl.Popup({offset:24,maxWidth:'260px'}).setHTML(`<b>Epicentre · M7.8</b><br>8 June 2026, 7:37 am, 33 km deep<br>32 km SSW of Maasim, Sarangani. Strike-slip. 92 deaths, 113,000+ houses damaged (AHA Centre).`);
+    const epPop=new mapboxgl.Popup({offset:24,maxWidth:'260px'}).setHTML(`<b>Epicentre · M7.8</b><br>8 June 2026, 7:37 am · 33 km deep (PHIVOLCS)<br>About 32 km south of Maasim, Sarangani. Thrust faulting at the Cotabato Trench subduction zone. At least 106 deaths (NDRRMC).`);
     new mapboxgl.Marker({element:ep}).setLngLat([M.epicentre.lng,M.epicentre.lat]).setPopup(epPop).addTo(map);
   }
   function flyTown(n,x,y){
