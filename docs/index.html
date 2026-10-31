@@ -184,6 +184,11 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <div class="legend" id="legend"></div>
     </section>
     <section>
+      <h2>Fly to a town in 3D</h2>
+      <div class="mini" id="towns"></div>
+      <p class="note">Zooms to street level and tilts the view so buildings stand up. Buildings show where Mapbox has footprints; small barangays may have few.</p>
+    </section>
+    <section>
       <h2>Map</h2>
       <label for="opacity" class="note" style="margin:0">Overlay opacity</label>
       <input type="range" id="opacity" min="0" max="100" value="85">
@@ -191,7 +196,13 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <button data-light="day" aria-pressed="true">Day</button>
         <button data-light="dusk" aria-pressed="false">Dusk</button>
         <button data-light="night" aria-pressed="false">Night</button>
+      </div>
+      <div class="mini" style="margin-top:8px">
+        <button id="b3d" aria-pressed="true">3D buildings</button>
+        <button id="roadsTop" aria-pressed="true">Roads over data</button>
+        <button id="labels" aria-pressed="true">Place &amp; road names</button>
         <button id="terrain" aria-pressed="false">3D terrain</button>
+        <button id="tilt" aria-pressed="false">Tilt view</button>
       </div>
     </section>
   </div>
@@ -210,11 +221,12 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const byFam={}; M.layers.forEach(l=>{(byFam[l.family]=byFam[l.family]||[]).push(l)});
   const byId=Object.fromEntries(M.layers.map(l=>[l.id,l]));
   const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',bounds:M.bounds,fitBoundsOptions:{padding:{top:40,bottom:40,left:window.innerWidth>640?400:20,right:40}},
-    config:{basemap:{lightPreset:'day',showPointOfInterestLabels:false,showTransitLabels:false}}});
+    config:{basemap:{lightPreset:'day',show3dObjects:true,showPlaceLabels:true,showRoadLabels:true,showPointOfInterestLabels:true,showTransitLabels:false}}});
   map.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
   map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-right');
   let opacity=0.85, mode='quake';
-  function rasterLayer(id){return {id, type:'raster', source:id, slot:'middle', paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
+  let rasterSlot='bottom';   // 'bottom' = under roads and 3D buildings; 'middle' = over roads
+  function rasterLayer(id){return {id, type:'raster', source:id, slot:rasterSlot, paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
   map.on('load',()=>{
     map.addSource('series',{type:'image',url:byFam.ndvi[0].file,coordinates:M.image_corners});
     map.addLayer(rasterLayer('series'));
@@ -309,6 +321,20 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     if(on){ if(!map.getSource('dem')) map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
       map.setTerrain({source:'dem',exaggeration:1.6}); map.easeTo({pitch:60,bearing:-20,duration:1200}); }
     else { map.setTerrain(null); map.easeTo({pitch:0,bearing:0,duration:800}); }});
+
+  // ---- 3D buildings, roads, labels, tilt
+  function toggle(id,fn){const b=document.getElementById(id);b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);fn(on)})}
+  toggle('b3d',on=>map.setConfigProperty('basemap','show3dObjects',on));
+  toggle('labels',on=>['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)));
+  toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle';
+    ['series','static'].forEach(id=>{if(!map.getLayer(id))return;const vis=map.getLayoutProperty(id,'visibility');map.removeLayer(id);map.addLayer(rasterLayer(id),'aoi-line');if(vis)map.setLayoutProperty(id,'visibility',vis)})});
+  toggle('tilt',on=>map.easeTo({pitch:on?62:0,bearing:on?-25:0,duration:900}));
+  // towns: approximate town-centre coordinates, for navigation only
+  const TOWNS=[['Maasim',125.0017,5.8608],['Kiamba',124.6247,5.9894],['Alabel',125.2903,6.1017],['Glan',125.2047,5.8222],['Malita',125.6111,6.4133],['General Santos (next door)',125.1716,6.1164]];
+  const tw=document.getElementById('towns');
+  TOWNS.forEach(([n,x,y])=>{const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>{
+    map.flyTo({center:[x,y],zoom:16.2,pitch:62,bearing:-25,duration:2500});document.getElementById('tilt').setAttribute('aria-pressed','true');});tw.appendChild(b)});
+  const ov=document.createElement('button');ov.textContent='Whole area';ov.addEventListener('click',()=>{map.fitBounds(M.bounds,{padding:{top:40,bottom:40,left:window.innerWidth>640?400:20,right:40},pitch:0,bearing:0});document.getElementById('tilt').setAttribute('aria-pressed','false')});tw.appendChild(ov);
 })();
 </script>
 </body>
