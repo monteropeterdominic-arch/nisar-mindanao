@@ -1,0 +1,2280 @@
+{
+ "bounds": [
+  [
+   124.35696324532,
+   5.36548162067567
+  ],
+  [
+   125.715262872886,
+   6.63304566997051
+  ]
+ ],
+ "image_corners": [
+  [
+   124.330014,
+   6.659814
+  ],
+  [
+   125.742212,
+   6.659814
+  ],
+  [
+   125.742212,
+   5.33865
+  ],
+  [
+   124.330014,
+   5.33865
+  ]
+ ],
+ "layers": [
+  {
+   "id": "ndvi_2025-01",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-01",
+   "file": "data/img/ndvi_2025-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-01-01",
+   "end": "2025-01-31"
+  },
+  {
+   "id": "ndvi_2025-02",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-02",
+   "file": "data/img/ndvi_2025-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-02-01",
+   "end": "2025-02-28"
+  },
+  {
+   "id": "ndvi_2025-03",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-03",
+   "file": "data/img/ndvi_2025-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-03-01",
+   "end": "2025-03-31"
+  },
+  {
+   "id": "ndvi_2025-04",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-04",
+   "file": "data/img/ndvi_2025-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-04-01",
+   "end": "2025-04-30"
+  },
+  {
+   "id": "ndvi_2025-05",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-05",
+   "file": "data/img/ndvi_2025-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-05-01",
+   "end": "2025-05-31"
+  },
+  {
+   "id": "ndvi_2025-06",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-06",
+   "file": "data/img/ndvi_2025-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-06-01",
+   "end": "2025-06-30"
+  },
+  {
+   "id": "ndvi_2025-07",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-07",
+   "file": "data/img/ndvi_2025-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-07-01",
+   "end": "2025-07-31"
+  },
+  {
+   "id": "ndvi_2025-08",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-08",
+   "file": "data/img/ndvi_2025-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-08-01",
+   "end": "2025-08-31"
+  },
+  {
+   "id": "ndvi_2025-09",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-09",
+   "file": "data/img/ndvi_2025-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-09-01",
+   "end": "2025-09-30"
+  },
+  {
+   "id": "ndvi_2025-10",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-10",
+   "file": "data/img/ndvi_2025-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-10-01",
+   "end": "2025-10-31"
+  },
+  {
+   "id": "ndvi_2025-11",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-11",
+   "file": "data/img/ndvi_2025-11.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-11-01",
+   "end": "2025-11-30"
+  },
+  {
+   "id": "ndvi_2025-12",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2025-12",
+   "file": "data/img/ndvi_2025-12.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2025-12-01",
+   "end": "2025-12-31"
+  },
+  {
+   "id": "ndvi_2026-01",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-01",
+   "file": "data/img/ndvi_2026-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-01-01",
+   "end": "2026-01-31"
+  },
+  {
+   "id": "ndvi_2026-02",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-02",
+   "file": "data/img/ndvi_2026-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-02-01",
+   "end": "2026-02-28"
+  },
+  {
+   "id": "ndvi_2026-03",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-03",
+   "file": "data/img/ndvi_2026-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-03-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "ndvi_2026-04",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-04",
+   "file": "data/img/ndvi_2026-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-04-01",
+   "end": "2026-04-30"
+  },
+  {
+   "id": "ndvi_2026-05",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-05",
+   "file": "data/img/ndvi_2026-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-05-01",
+   "end": "2026-05-31"
+  },
+  {
+   "id": "ndvi_2026-06",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-06",
+   "file": "data/img/ndvi_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "ndvi_2026-07",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-07",
+   "file": "data/img/ndvi_2026-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-07-01",
+   "end": "2026-07-31"
+  },
+  {
+   "id": "ndvi_2026-08",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-08",
+   "file": "data/img/ndvi_2026-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-08-01",
+   "end": "2026-08-31"
+  },
+  {
+   "id": "ndvi_2026-09",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-09",
+   "file": "data/img/ndvi_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ndvi_2026-10",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2026-10",
+   "file": "data/img/ndvi_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
+  },
+  {
+   "id": "lst_2025-01",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-01",
+   "file": "data/img/lst_2025-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-01-01",
+   "end": "2025-01-31"
+  },
+  {
+   "id": "lst_2025-02",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-02",
+   "file": "data/img/lst_2025-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-02-01",
+   "end": "2025-02-28"
+  },
+  {
+   "id": "lst_2025-03",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-03",
+   "file": "data/img/lst_2025-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-03-01",
+   "end": "2025-03-31"
+  },
+  {
+   "id": "lst_2025-04",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-04",
+   "file": "data/img/lst_2025-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-04-01",
+   "end": "2025-04-30"
+  },
+  {
+   "id": "lst_2025-05",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-05",
+   "file": "data/img/lst_2025-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-05-01",
+   "end": "2025-05-31"
+  },
+  {
+   "id": "lst_2025-06",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-06",
+   "file": "data/img/lst_2025-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-06-01",
+   "end": "2025-06-30"
+  },
+  {
+   "id": "lst_2025-07",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-07",
+   "file": "data/img/lst_2025-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-07-01",
+   "end": "2025-07-31"
+  },
+  {
+   "id": "lst_2025-08",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-08",
+   "file": "data/img/lst_2025-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-08-01",
+   "end": "2025-08-31"
+  },
+  {
+   "id": "lst_2025-09",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-09",
+   "file": "data/img/lst_2025-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-09-01",
+   "end": "2025-09-30"
+  },
+  {
+   "id": "lst_2025-10",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-10",
+   "file": "data/img/lst_2025-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-10-01",
+   "end": "2025-10-31"
+  },
+  {
+   "id": "lst_2025-11",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-11",
+   "file": "data/img/lst_2025-11.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-11-01",
+   "end": "2025-11-30"
+  },
+  {
+   "id": "lst_2025-12",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2025-12",
+   "file": "data/img/lst_2025-12.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2025-12-01",
+   "end": "2025-12-31"
+  },
+  {
+   "id": "lst_2026-01",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-01",
+   "file": "data/img/lst_2026-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-01-01",
+   "end": "2026-01-31"
+  },
+  {
+   "id": "lst_2026-02",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-02",
+   "file": "data/img/lst_2026-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-02-01",
+   "end": "2026-02-28"
+  },
+  {
+   "id": "lst_2026-03",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-03",
+   "file": "data/img/lst_2026-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-03-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "lst_2026-04",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-04",
+   "file": "data/img/lst_2026-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-04-01",
+   "end": "2026-04-30"
+  },
+  {
+   "id": "lst_2026-05",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-05",
+   "file": "data/img/lst_2026-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-05-01",
+   "end": "2026-05-31"
+  },
+  {
+   "id": "lst_2026-06",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-06",
+   "file": "data/img/lst_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "lst_2026-07",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-07",
+   "file": "data/img/lst_2026-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-07-01",
+   "end": "2026-07-31"
+  },
+  {
+   "id": "lst_2026-08",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-08",
+   "file": "data/img/lst_2026-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-08-01",
+   "end": "2026-08-31"
+  },
+  {
+   "id": "lst_2026-09",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-09",
+   "file": "data/img/lst_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "lst_2026-10",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2026-10",
+   "file": "data/img/lst_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
+  },
+  {
+   "id": "ndvianom_2026-01",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-01 vs same month 2025",
+   "file": "data/img/ndvianom_2026-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-01-01",
+   "end": "2026-01-31"
+  },
+  {
+   "id": "ndvianom_2026-02",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-02 vs same month 2025",
+   "file": "data/img/ndvianom_2026-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-02-01",
+   "end": "2026-02-28"
+  },
+  {
+   "id": "ndvianom_2026-03",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-03 vs same month 2025",
+   "file": "data/img/ndvianom_2026-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-03-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "ndvianom_2026-04",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-04 vs same month 2025",
+   "file": "data/img/ndvianom_2026-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-04-01",
+   "end": "2026-04-30"
+  },
+  {
+   "id": "ndvianom_2026-05",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-05 vs same month 2025",
+   "file": "data/img/ndvianom_2026-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-05-01",
+   "end": "2026-05-31"
+  },
+  {
+   "id": "ndvianom_2026-06",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-06 vs same month 2025",
+   "file": "data/img/ndvianom_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "ndvianom_2026-07",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-07 vs same month 2025",
+   "file": "data/img/ndvianom_2026-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-07-01",
+   "end": "2026-07-31"
+  },
+  {
+   "id": "ndvianom_2026-08",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-08 vs same month 2025",
+   "file": "data/img/ndvianom_2026-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-08-01",
+   "end": "2026-08-31"
+  },
+  {
+   "id": "ndvianom_2026-09",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-09 vs same month 2025",
+   "file": "data/img/ndvianom_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ndvianom_2026-10",
+   "family": "ndvi_anom",
+   "group": "ndvi_anom",
+   "label": "NDVI 2026-10 vs same month 2025",
+   "file": "data/img/ndvianom_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.15,
+    "max": 0.15,
+    "unit": ""
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
+  },
+  {
+   "id": "lstanom_2026-01",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-01 vs same month 2025",
+   "file": "data/img/lstanom_2026-01.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-01-01",
+   "end": "2026-01-31"
+  },
+  {
+   "id": "lstanom_2026-02",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-02 vs same month 2025",
+   "file": "data/img/lstanom_2026-02.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-02-01",
+   "end": "2026-02-28"
+  },
+  {
+   "id": "lstanom_2026-03",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-03 vs same month 2025",
+   "file": "data/img/lstanom_2026-03.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-03-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "lstanom_2026-04",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-04 vs same month 2025",
+   "file": "data/img/lstanom_2026-04.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-04-01",
+   "end": "2026-04-30"
+  },
+  {
+   "id": "lstanom_2026-05",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-05 vs same month 2025",
+   "file": "data/img/lstanom_2026-05.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-05-01",
+   "end": "2026-05-31"
+  },
+  {
+   "id": "lstanom_2026-06",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-06 vs same month 2025",
+   "file": "data/img/lstanom_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "lstanom_2026-07",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-07 vs same month 2025",
+   "file": "data/img/lstanom_2026-07.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-07-01",
+   "end": "2026-07-31"
+  },
+  {
+   "id": "lstanom_2026-08",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-08 vs same month 2025",
+   "file": "data/img/lstanom_2026-08.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-08-01",
+   "end": "2026-08-31"
+  },
+  {
+   "id": "lstanom_2026-09",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-09 vs same month 2025",
+   "file": "data/img/lstanom_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "lstanom_2026-10",
+   "family": "lst_anom",
+   "group": "lst_anom",
+   "label": "Land temperature 2026-10 vs same month 2025",
+   "file": "data/img/lstanom_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#2166ac",
+     "#67a9cf",
+     "#d1e5f0",
+     "#f7f7f7",
+     "#fddbc7",
+     "#ef8a62",
+     "#b2182b"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " \u00b0C"
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
+  },
+  {
+   "id": "evi_2025Q1",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2025 Q1",
+   "file": "data/img/evi_2025Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2025-01-01",
+   "end": "2025-03-31"
+  },
+  {
+   "id": "evi_2025Q2",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2025 Q2",
+   "file": "data/img/evi_2025Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2025-04-01",
+   "end": "2025-06-30"
+  },
+  {
+   "id": "evi_2025Q3",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2025 Q3",
+   "file": "data/img/evi_2025Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2025-07-01",
+   "end": "2025-09-30"
+  },
+  {
+   "id": "evi_2025Q4",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2025 Q4",
+   "file": "data/img/evi_2025Q4.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2025-10-01",
+   "end": "2025-12-31"
+  },
+  {
+   "id": "evi_2026Q1",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2026 Q1",
+   "file": "data/img/evi_2026Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-01-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "evi_2026Q2",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2026 Q2",
+   "file": "data/img/evi_2026Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-04-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "evi_2026Q3",
+   "family": "evi",
+   "group": "evi",
+   "label": "EVI 2026 Q3",
+   "file": "data/img/evi_2026Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-07-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ndmi_2025Q1",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2025 Q1",
+   "file": "data/img/ndmi_2025Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2025-01-01",
+   "end": "2025-03-31"
+  },
+  {
+   "id": "ndmi_2025Q2",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2025 Q2",
+   "file": "data/img/ndmi_2025Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2025-04-01",
+   "end": "2025-06-30"
+  },
+  {
+   "id": "ndmi_2025Q3",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2025 Q3",
+   "file": "data/img/ndmi_2025Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2025-07-01",
+   "end": "2025-09-30"
+  },
+  {
+   "id": "ndmi_2025Q4",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2025 Q4",
+   "file": "data/img/ndmi_2025Q4.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2025-10-01",
+   "end": "2025-12-31"
+  },
+  {
+   "id": "ndmi_2026Q1",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2026 Q1",
+   "file": "data/img/ndmi_2026Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-01-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "ndmi_2026Q2",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2026 Q2",
+   "file": "data/img/ndmi_2026Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-04-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "ndmi_2026Q3",
+   "family": "ndmi",
+   "group": "ndmi",
+   "label": "NDMI 2026 Q3",
+   "file": "data/img/ndmi_2026Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-07-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ndwi_2025Q1",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2025 Q1",
+   "file": "data/img/ndwi_2025Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2025-01-01",
+   "end": "2025-03-31"
+  },
+  {
+   "id": "ndwi_2025Q2",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2025 Q2",
+   "file": "data/img/ndwi_2025Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2025-04-01",
+   "end": "2025-06-30"
+  },
+  {
+   "id": "ndwi_2025Q3",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2025 Q3",
+   "file": "data/img/ndwi_2025Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2025-07-01",
+   "end": "2025-09-30"
+  },
+  {
+   "id": "ndwi_2025Q4",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2025 Q4",
+   "file": "data/img/ndwi_2025Q4.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2025-10-01",
+   "end": "2025-12-31"
+  },
+  {
+   "id": "ndwi_2026Q1",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2026 Q1",
+   "file": "data/img/ndwi_2026Q1.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2026-01-01",
+   "end": "2026-03-31"
+  },
+  {
+   "id": "ndwi_2026Q2",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2026 Q2",
+   "file": "data/img/ndwi_2026Q2.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2026-04-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "ndwi_2026Q3",
+   "family": "ndwi",
+   "group": "ndwi",
+   "label": "NDWI 2026 Q3",
+   "file": "data/img/ndwi_2026Q3.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fbff",
+     "#c6dbef",
+     "#6baed6",
+     "#2171b5",
+     "#08306b"
+    ],
+    "min": -0.8,
+    "max": 0.3,
+    "unit": ""
+   },
+   "start": "2026-07-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "eq_classes",
+   "family": "static",
+   "group": "earthquake",
+   "label": "Landslide check coverage",
+   "file": "data/img/eq_classes.webp",
+   "legend": {
+    "type": "classes",
+    "items": [
+     [
+      "#e31a1c",
+      "Landslide / vegetation-loss candidate"
+     ],
+     [
+      "#d9d9d9",
+      "Checked, no candidate"
+     ],
+     [
+      "#9ecae1",
+      "No usable optical pair (cloud or outside data)"
+     ],
+     [
+      "#fdd0a2",
+      "No elevation data (south of 5.9\u00b0N)"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "eq_evi_excess",
+   "family": "static",
+   "group": "earthquake",
+   "label": "Vegetation change after the quake, beyond normal seasonal change (EVI)",
+   "file": "data/img/eq_evi_excess.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.3,
+    "max": 0.3,
+    "unit": ""
+   }
+  },
+  {
+   "id": "eq_evi_pre",
+   "family": "static",
+   "group": "earthquake",
+   "label": "Vegetation before the quake (EVI, 1 Mar\u20137 Jun 2026)",
+   "file": "data/img/eq_evi_pre.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   }
+  },
+  {
+   "id": "eq_evi_post",
+   "family": "static",
+   "group": "earthquake",
+   "label": "Vegetation after the quake (EVI, 9 Jun\u201325 Sep 2026)",
+   "file": "data/img/eq_evi_post.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   }
+  },
+  {
+   "id": "slope",
+   "family": "static",
+   "group": "terrain",
+   "label": "Slope (ALOS AW3D30)",
+   "file": "data/img/slope.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#fd8d3c",
+     "#e31a1c",
+     "#800026"
+    ],
+    "min": 0,
+    "max": 45,
+    "unit": "\u00b0"
+   }
+  }
+ ],
+ "aoi_monthly": [
+  {
+   "month": "2025-01",
+   "ndvi_mean": "0.7884",
+   "ndvi_cover_pct": "11.7",
+   "lst_day_mean_C": "24.26",
+   "lst_cover_pct": "46.5"
+  },
+  {
+   "month": "2025-02",
+   "ndvi_mean": "0.8088",
+   "ndvi_cover_pct": "68.6",
+   "lst_day_mean_C": "26.78",
+   "lst_cover_pct": "73.6"
+  },
+  {
+   "month": "2025-03",
+   "ndvi_mean": "0.8137",
+   "ndvi_cover_pct": "68.6",
+   "lst_day_mean_C": "26.24",
+   "lst_cover_pct": "76.1"
+  },
+  {
+   "month": "2025-04",
+   "ndvi_mean": "0.8127",
+   "ndvi_cover_pct": "67.8",
+   "lst_day_mean_C": "26.41",
+   "lst_cover_pct": "79.7"
+  },
+  {
+   "month": "2025-05",
+   "ndvi_mean": "0.8249",
+   "ndvi_cover_pct": "72.1",
+   "lst_day_mean_C": "26.45",
+   "lst_cover_pct": "79.3"
+  },
+  {
+   "month": "2025-06",
+   "ndvi_mean": "0.8356",
+   "ndvi_cover_pct": "82.1",
+   "lst_day_mean_C": "26.05",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2025-07",
+   "ndvi_mean": "0.8309",
+   "ndvi_cover_pct": "71.4",
+   "lst_day_mean_C": "27.01",
+   "lst_cover_pct": "74.9"
+  },
+  {
+   "month": "2025-08",
+   "ndvi_mean": "0.8351",
+   "ndvi_cover_pct": "82.7",
+   "lst_day_mean_C": "26.62",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2025-09",
+   "ndvi_mean": "0.8468",
+   "ndvi_cover_pct": "80.1",
+   "lst_day_mean_C": "26.4",
+   "lst_cover_pct": "80.2"
+  },
+  {
+   "month": "2025-10",
+   "ndvi_mean": "0.8449",
+   "ndvi_cover_pct": "81.2",
+   "lst_day_mean_C": "26.2",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2025-11",
+   "ndvi_mean": "0.8436",
+   "ndvi_cover_pct": "79.5",
+   "lst_day_mean_C": "26.74",
+   "lst_cover_pct": "80.0"
+  },
+  {
+   "month": "2025-12",
+   "ndvi_mean": "0.8376",
+   "ndvi_cover_pct": "79.2",
+   "lst_day_mean_C": "25.14",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-01",
+   "ndvi_mean": "0.8306",
+   "ndvi_cover_pct": "81.9",
+   "lst_day_mean_C": "24.87",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-02",
+   "ndvi_mean": "0.8186",
+   "ndvi_cover_pct": "80.3",
+   "lst_day_mean_C": "25.32",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-03",
+   "ndvi_mean": "0.8024",
+   "ndvi_cover_pct": "83.4",
+   "lst_day_mean_C": "24.83",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-04",
+   "ndvi_mean": "0.7716",
+   "ndvi_cover_pct": "79.7",
+   "lst_day_mean_C": "27.23",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-05",
+   "ndvi_mean": "0.8333",
+   "ndvi_cover_pct": "82.5",
+   "lst_day_mean_C": "26.59",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-06",
+   "ndvi_mean": "0.8535",
+   "ndvi_cover_pct": "83.1",
+   "lst_day_mean_C": "25.28",
+   "lst_cover_pct": "80.3"
+  },
+  {
+   "month": "2026-07",
+   "ndvi_mean": "0.8334",
+   "ndvi_cover_pct": "70.6",
+   "lst_day_mean_C": "23.88",
+   "lst_cover_pct": "79.1"
+  },
+  {
+   "month": "2026-08",
+   "ndvi_mean": "0.8349",
+   "ndvi_cover_pct": "70.6",
+   "lst_day_mean_C": "24.72",
+   "lst_cover_pct": "79.4"
+  },
+  {
+   "month": "2026-09",
+   "ndvi_mean": "0.8224",
+   "ndvi_cover_pct": "75.1",
+   "lst_day_mean_C": "26.36",
+   "lst_cover_pct": "79.7"
+  },
+  {
+   "month": "2026-10",
+   "ndvi_mean": "0.8141",
+   "ndvi_cover_pct": "70.6",
+   "lst_day_mean_C": "26.35",
+   "lst_cover_pct": "77.7"
+  }
+ ],
+ "epicentre": {
+  "lng": 125.14699,
+  "lat": 6.02153,
+  "label": "M7.8 epicentre, 8 Jun 2026, 7:37 am, 33 km deep"
+ }
+}

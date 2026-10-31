@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sarangani–Davao Occidental Change Map</title>
+<meta name="description" content="Earthquake and El Niño change layers for Sarangani and Davao Occidental, 2025–2026, from NASA HLS and MODIS, built for NASA Space Apps 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+<script src="config.js"></script>
+<style>
+/* Layout: full-bleed map, one floating instrument panel on the left (bottom sheet on phones). */
+:root{
+  --ink:#16201c; --muted:#56635d; --panel:#f6f8f4; --line:#d5dcd5; --accent:#0d7a5f; --quake:#c4291c; --chip:#e7ede7;
+  --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --ink:#e4ebe6; --muted:#9aa8a1; --panel:#141b18; --line:#2c3833; --accent:#3fc29b; --quake:#ff6a57; --chip:#1f2925; color-scheme:dark; }
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{font:15px/1.45 var(--body);color:var(--ink);background:var(--panel);overflow:hidden}
+#map{position:absolute;inset:0}
+.panel{
+  position:absolute; top:max(12px, env(safe-area-inset-top)); left:max(12px, env(safe-area-inset-left)); bottom:12px;
+  width:360px; max-width:calc(100vw - 24px); background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  box-shadow:0 8px 28px rgba(0,0,0,.18); display:flex; flex-direction:column; overflow:hidden; z-index:2;
+}
+.panel header{padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:800 21px/1.12 var(--display);margin:6px 0 4px;text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13px;margin:0}
+.tabs{display:flex;gap:4px;padding:10px 12px 0}
+.tabs button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 13px var(--body);padding:7px 6px;border-radius:7px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.body{overflow-y:auto;padding:12px 18px 18px;display:flex;flex-direction:column;gap:16px;flex:1;min-height:0}
+section h2{font:700 13px var(--display);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--muted)}
+label.row{display:flex;align-items:flex-start;gap:9px;padding:5px 0;cursor:pointer;font-size:14px}
+label.row input{margin-top:3px;accent-color:var(--accent)}
+select,input[type=range]{width:100%}
+input[type=range]{accent-color:var(--accent)}
+select{font:14px var(--body);padding:7px 8px;border-radius:7px;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
+.timebar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:10px}
+.play{width:38px;height:38px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:15px;cursor:pointer}
+.when{font:500 20px var(--mono);margin-top:6px;font-variant-numeric:tabular-nums}
+.ticks{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--muted)}
+.legend .bar{height:12px;border-radius:3px;margin:6px 0 3px}
+.legend .ends{display:flex;justify-content:space-between;font:12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.legend ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px;font-size:13px}
+.legend li{display:flex;gap:8px;align-items:center}
+.sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.15)}
+.note{font-size:13px;color:var(--muted);margin:6px 0 0}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat div{background:var(--chip);border-radius:7px;padding:8px 10px}
+.stat b{display:block;font:700 19px var(--display);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+svg text{fill:var(--muted);font:10px var(--mono)}
+details summary{cursor:pointer;font-weight:600}
+details p,details li{font-size:13px;color:var(--muted)}
+.mini{display:flex;gap:6px;flex-wrap:wrap}
+.mini button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:4px 10px;font:600 12px var(--body);cursor:pointer}
+.mini button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mapboxgl-popup-content{font:13px var(--body);color:#16201c;padding:10px 12px}
+.mapboxgl-popup-content b{font-family:var(--display)}
+#token{position:absolute;inset:0;display:grid;place-items:center;background:var(--panel);z-index:5;padding:16px}
+#token form{max-width:460px;display:grid;gap:10px}
+#token input{font:14px var(--mono);padding:9px;border-radius:7px;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
+#token button{padding:9px;border-radius:7px;border:none;background:var(--accent);color:#fff;font:600 14px var(--body);cursor:pointer}
+@media (max-width:640px){
+  .panel header .sub,.panel header .eyebrow{display:none}
+  h1{font-size:18px;margin:0}
+  .panel{top:auto;left:0;right:0;bottom:0;width:100%;max-width:100%;height:52vh;border-radius:14px 14px 0 0;padding-bottom:env(safe-area-inset-bottom)}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div id="map" role="region" aria-label="Map"></div>
+
+<div id="token" hidden>
+  <form id="tokenForm">
+    <div class="eyebrow">Mapbox access token needed</div>
+    <h1>Paste your public Mapbox token</h1>
+    <p class="sub">The Standard basemap is served by Mapbox. Paste a public token (it starts with <code>pk.</code>) from account.mapbox.com. It is kept only in this browser. To skip this step for everyone, put the token in <code>config.js</code>.</p>
+    <input id="tokenInput" placeholder="pk.eyJ1Ijoi…" autocomplete="off" spellcheck="false" required>
+    <button type="submit">Open the map</button>
+  </form>
+</div>
+
+<aside class="panel" aria-label="Map controls">
+  <header>
+    <div class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs</div>
+    <h1>Sarangani–Davao Occidental Change Map</h1>
+    <p class="sub">What the ground and its vegetation did around the M7.8 earthquake of 8 June 2026 and through the 2025–26 swing into El Niño.</p>
+  </header>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-quake" aria-selected="true">Earthquake</button>
+    <button role="tab" id="tab-nino" aria-selected="false">El Niño</button>
+    <button role="tab" id="tab-about" aria-selected="false">About</button>
+  </div>
+  <div class="body">
+    <!-- EARTHQUAKE -->
+    <div id="pane-quake" class="pane">
+      <section>
+        <div class="stat">
+          <div><b>88</b><span>possible new slides</span></div>
+          <div><b>40 ha</b><span>bare ground on slopes ≥ 20°</span></div>
+        </div>
+        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. More common on steeper slopes and closer to the epicentre. Not yet field-checked.</p>
+      </section>
+      <section>
+        <h2>Layers</h2>
+        <label class="row"><input type="checkbox" id="q-cand" checked> Possible landslides (click a patch)</label>
+        <label class="row"><input type="radio" name="qbg" value="eq_evi_excess" checked> Vegetation loss beyond normal season</label>
+        <label class="row"><input type="radio" name="qbg" value="eq_evi_pre"> Vegetation before (Mar–7 Jun 2026)</label>
+        <label class="row"><input type="radio" name="qbg" value="eq_evi_post"> Vegetation after (9 Jun–Sep 2026)</label>
+        <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible</label>
+        <label class="row"><input type="radio" name="qbg" value="slope"> Slope</label>
+        <label class="row"><input type="radio" name="qbg" value=""> None</label>
+      </section>
+    </div>
+
+    <!-- EL NINO -->
+    <div id="pane-nino" class="pane" hidden>
+      <section>
+        <h2>Time series</h2>
+        <select id="family" aria-label="Choose a time series">
+          <option value="ndvi">Vegetation greenness, monthly (MODIS NDVI, 250 m)</option>
+          <option value="ndvi_anom">Greenness vs same month 2025</option>
+          <option value="lst">Daytime ground temperature, monthly (MODIS, 1 km)</option>
+          <option value="lst_anom">Ground temperature vs same month 2025</option>
+          <option value="evi">Vegetation, quarterly (Landsat HLS EVI, 30 m)</option>
+          <option value="ndmi">Plant moisture, quarterly (HLS NDMI)</option>
+          <option value="ndwi">Surface water, quarterly (HLS NDWI)</option>
+        </select>
+        <div class="when" id="when">—</div>
+        <div class="timebar">
+          <button class="play" id="play" aria-label="Play">▶</button>
+          <div>
+            <input type="range" id="slider" min="0" max="0" value="0" aria-label="Date">
+            <div class="ticks"><span id="t0"></span><span id="t1"></span></div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Area average, Jan 2025 – Oct 2026</h2>
+        <svg id="chart" viewBox="0 0 320 150" width="100%" role="img" aria-label="Monthly average NDVI and land temperature"></svg>
+        <p class="note">Green line: greenness (NDVI). Red line: daytime ground temperature. April 2026 had the lowest greenness and one of the hottest months, during PAGASA's April dry spell.</p>
+      </section>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="pane-about" class="pane" hidden>
+      <section>
+        <h2>Data</h2>
+        <ul class="note">
+          <li>Landsat HLS L30 vegetation indices (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
+          <li>MODIS MOD13Q1 NDVI (250 m) and MOD11A2 land temperature (1 km)</li>
+          <li>ALOS AW3D30 elevation; 2020 regional land cover (province outlines)</li>
+          <li>Earthquake: M7.8, 8 Jun 2026, 32 km SSW of Maasim (PHIVOLCS; AHA Centre report)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Limits</h2>
+        <ul class="note">
+          <li>The optical data stop at about 124.93°E, so western Sarangani (Maasim, Kiamba, Maitum) has no landslide check.</li>
+          <li>No elevation data south of 5.9°N in the source used, so Glan, Jose Abad Santos and the islands were not checked for slides.</li>
+          <li>Heavy rain or land clearing can look like a landslide. Treat patches as places to check, not confirmed slides.</li>
+          <li>These layers show surface change, not ground uplift. That needs NISAR interferometry (GUNW) spanning 8 June.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section>
+      <h2>Legend</h2>
+      <div class="legend" id="legend"></div>
+    </section>
+    <section>
+      <h2>Map</h2>
+      <label for="opacity" class="note" style="margin:0">Overlay opacity</label>
+      <input type="range" id="opacity" min="0" max="100" value="85">
+      <div class="mini" style="margin-top:10px">
+        <button data-light="day" aria-pressed="true">Day</button>
+        <button data-light="dusk" aria-pressed="false">Dusk</button>
+        <button data-light="night" aria-pressed="false">Night</button>
+        <button id="terrain" aria-pressed="false">3D terrain</button>
+      </div>
+    </section>
+  </div>
+</aside>
+
+<script>
+(async function(){
+  const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  let token=(window.MAPBOX_TOKEN||'').trim()||store.get('mbtoken')||'';
+  if(!token){
+    const t=document.getElementById('token'); t.hidden=false;
+    token=await new Promise(res=>document.getElementById('tokenForm').addEventListener('submit',e=>{e.preventDefault();const v=document.getElementById('tokenInput').value.trim();store.set('mbtoken',v);t.hidden=true;res(v);}));
+  }
+  mapboxgl.accessToken=token;
+  const M=await (await fetch('data/manifest.json')).json();
+  const byFam={}; M.layers.forEach(l=>{(byFam[l.family]=byFam[l.family]||[]).push(l)});
+  const byId=Object.fromEntries(M.layers.map(l=>[l.id,l]));
+  const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',bounds:M.bounds,fitBoundsOptions:{padding:{top:40,bottom:40,left:window.innerWidth>640?400:20,right:40}},
+    config:{basemap:{lightPreset:'day',showPointOfInterestLabels:false,showTransitLabels:false}}});
+  map.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),'top-right');
+  map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-right');
+  let opacity=0.85, mode='quake';
+  function rasterLayer(id){return {id, type:'raster', source:id, slot:'middle', paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
+  map.on('load',()=>{
+    map.addSource('series',{type:'image',url:byFam.ndvi[0].file,coordinates:M.image_corners});
+    map.addLayer(rasterLayer('series'));
+    map.addSource('static',{type:'image',url:byId.eq_evi_excess.file,coordinates:M.image_corners});
+    map.addLayer(rasterLayer('static'));
+    map.addSource('aoi',{type:'geojson',data:'data/boundary.geojson'});
+    map.addLayer({id:'aoi-line',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#111','line-width':1.6}});
+    map.addSource('cand',{type:'geojson',data:'data/landslide_candidates.geojson'});
+    map.addLayer({id:'cand-fill',type:'fill',source:'cand',slot:'top',paint:{'fill-color':'#e31a1c','fill-opacity':0.85}});
+    map.addLayer({id:'cand-halo',type:'circle',source:'cand',slot:'top',minzoom:0,maxzoom:11,paint:{'circle-radius':4,'circle-color':'#e31a1c','circle-stroke-color':'#fff','circle-stroke-width':1}});
+    map.addSource('epi',{type:'geojson',data:{type:'Feature',geometry:{type:'Point',coordinates:[M.epicentre.lng,M.epicentre.lat]},properties:{}}});
+    map.addLayer({id:'epi-ring',type:'circle',source:'epi',slot:'top',paint:{'circle-radius':18,'circle-color':'rgba(196,41,28,0.15)','circle-stroke-color':'#c4291c','circle-stroke-width':2}});
+    map.addLayer({id:'epi-dot',type:'circle',source:'epi',slot:'top',paint:{'circle-radius':5,'circle-color':'#c4291c'}});
+    map.on('click','epi-dot',e=>new mapboxgl.Popup().setLngLat(e.lngLat).setHTML('<b>'+M.epicentre.label+'</b><br>32 km SSW of Maasim, Sarangani').addTo(map));
+    const pop=e=>{const p=e.features[0].properties;new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(
+      `<b>Possible landslide</b><br>${p.province||''}<br>Area ${(+p.area_ha).toFixed(2)} ha · slope ${(+p.slope_mean).toFixed(0)}°<br>`+
+      `Elevation ${(+p.elev_mean).toFixed(0)} m · ${(+p.dist_epi_km).toFixed(0)} km from epicentre<br>Vegetation (EVI) ${(+p.evipre_mean).toFixed(2)} → ${(+p.evipost_mean).toFixed(2)}`).addTo(map)};
+    map.on('click','cand-fill',pop); map.on('click','cand-halo',pop);
+    ['cand-fill','cand-halo','epi-dot'].forEach(id=>{map.on('mouseenter',id,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',id,()=>map.getCanvas().style.cursor='')});
+    setMode('quake');
+  });
+
+  // ---- legend
+  function legend(l){
+    const el=document.getElementById('legend'); if(!l){el.innerHTML='<p class="note">No overlay selected.</p>';return}
+    const g=l.legend;
+    if(g.type==='ramp'){
+      el.innerHTML=`<div class="note" style="margin:0 0 2px;color:var(--ink)">${l.label}</div><div class="bar" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div>`+
+      `<div class="ends"><span>${g.min}${g.unit||''}</span><span>${((g.min+g.max)/2)}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`+(l.family.endsWith('anom')||l.id==='eq_evi_excess'?'<p class="note">'+(l.family==='lst_anom'?'Blue cooler, red hotter than 2025.':'Brown = lost greenness, teal = gained.')+'</p>':'');
+    }else{
+      el.innerHTML=`<div class="note" style="margin:0;color:var(--ink)">${l.label}</div><ul>`+g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')+'</ul>';
+    }
+  }
+  // ---- modes
+  const panes={quake:'pane-quake',nino:'pane-nino',about:'pane-about'};
+  function setMode(m){
+    mode=m==='about'?mode:m;
+    Object.entries(panes).forEach(([k,id])=>{document.getElementById(id).hidden=k!==m;document.getElementById('tab-'+k).setAttribute('aria-selected',k===m)});
+    if(!map.getLayer('series'))return;
+    const quake=mode==='quake';
+    map.setLayoutProperty('series','visibility',quake?'none':'visible');
+    const sel=document.querySelector('input[name=qbg]:checked').value;
+    map.setLayoutProperty('static','visibility',quake&&sel?'visible':'none');
+    const cand=document.getElementById('q-cand').checked&&quake;
+    ['cand-fill','cand-halo'].forEach(id=>map.setLayoutProperty(id,'visibility',cand?'visible':'none'));
+    legend(quake?(sel?byId[sel]:null):current());
+  }
+  Object.keys(panes).forEach(k=>document.getElementById('tab-'+k).addEventListener('click',()=>setMode(k)));
+  document.querySelectorAll('input[name=qbg]').forEach(r=>r.addEventListener('change',()=>{
+    const v=r.value; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); setMode('quake');}));
+  document.getElementById('q-cand').addEventListener('change',()=>setMode('quake'));
+
+  // ---- time series
+  const fam=document.getElementById('family'), slider=document.getElementById('slider');
+  function list(){return byFam[fam.value]||[]}
+  function current(){return list()[+slider.value]}
+  function fmt(l){if(!l)return'—';const d=new Date(l.start+'T00:00:00');const q=l.label.match(/Q\d/);
+    return q?`${d.getFullYear()} ${q[0]} (${d.toLocaleString('en',{month:'short'})}–${new Date(l.end+'T00:00:00').toLocaleString('en',{month:'short'})})`:d.toLocaleString('en',{month:'long',year:'numeric'})}
+  function showSeries(){const l=current(); document.getElementById('when').textContent=fmt(l);
+    if(l&&map.getSource('series')) map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners});
+    if(mode==='nino') legend(l); drawChart(l);}
+  function resetFam(){const L=list(); slider.max=L.length-1; slider.value=L.length-1; document.getElementById('t0').textContent=fmt(L[0]).replace(/\s\(.*/,''); document.getElementById('t1').textContent=fmt(L[L.length-1]).replace(/\s\(.*/,''); showSeries()}
+  fam.addEventListener('change',resetFam); slider.addEventListener('input',showSeries);
+  let timer=null; const play=document.getElementById('play');
+  play.addEventListener('click',()=>{ if(timer){clearInterval(timer);timer=null;play.textContent='▶';play.setAttribute('aria-label','Play');return}
+    play.textContent='❚❚'; play.setAttribute('aria-label','Pause');
+    timer=setInterval(()=>{slider.value=(+slider.value+1)%list().length;showSeries()},1100)});
+  resetFam();
+
+  // ---- chart (area means)
+  function drawChart(l){
+    const rows=M.aoi_monthly.filter(r=>r.ndvi_mean||r.lst_day_mean_C), svg=document.getElementById('chart');
+    const W=320,H=150,P={l:30,r:30,t:10,b:22}, n=rows.length, x=i=>P.l+i*(W-P.l-P.r)/(n-1);
+    const yN=v=>H-P.b-(v-0.75)/(0.87-0.75)*(H-P.t-P.b), yT=v=>H-P.b-(v-23)/(28-23)*(H-P.t-P.b);
+    const path=(k,f)=>rows.map((r,i)=>r[k]?`${i&&rows[i-1][k]?'L':'M'}${x(i).toFixed(1)},${f(+r[k]).toFixed(1)}`:'').join('');
+    let s=`<line x1="${P.l}" x2="${W-P.r}" y1="${H-P.b}" y2="${H-P.b}" stroke="var(--line)"/>`;
+    [0.75,0.81,0.87].forEach(v=>s+=`<text x="${P.l-4}" y="${yN(v)+3}" text-anchor="end">${v.toFixed(2)}</text><line x1="${P.l}" x2="${W-P.r}" y1="${yN(v)}" y2="${yN(v)}" stroke="var(--line)" stroke-dasharray="2 3"/>`);
+    [23,28].forEach(v=>s+=`<text x="${W-P.r+4}" y="${yT(v)+3}">${v}°</text>`);
+    rows.forEach((r,i)=>{if(r.month.endsWith('-01')||i===n-1)s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${r.month.slice(2).replace('-','/')}</text>`});
+    s+=`<path d="${path('ndvi_mean',yN)}" fill="none" stroke="#2e9a5e" stroke-width="2"/><path d="${path('lst_day_mean_C',yT)}" fill="none" stroke="#d2412f" stroke-width="2"/>`;
+    const k=l&&l.start?l.start.slice(0,7):null, i=rows.findIndex(r=>r.month===k);
+    if(i>=0) s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${P.t}" y2="${H-P.b}" stroke="var(--ink)" stroke-width="1"/>`;
+    const a=rows.findIndex(r=>r.month==='2026-04'); if(a>=0) s+=`<circle cx="${x(a)}" cy="${yN(+rows[a].ndvi_mean)}" r="3.5" fill="#2e9a5e"/><text x="${x(a)}" y="${yN(+rows[a].ndvi_mean)+14}" text-anchor="middle">Apr dry spell</text>`;
+    svg.innerHTML=s;
+  }
+
+  // ---- map controls
+  document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;['series','static'].forEach(id=>map.getLayer(id)&&map.setPaintProperty(id,'raster-opacity',opacity))});
+  document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b))}));
+  const tb=document.getElementById('terrain');
+  tb.addEventListener('click',()=>{const on=tb.getAttribute('aria-pressed')!=='true'; tb.setAttribute('aria-pressed',on);
+    if(on){ if(!map.getSource('dem')) map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
+      map.setTerrain({source:'dem',exaggeration:1.6}); map.easeTo({pitch:60,bearing:-20,duration:1200}); }
+    else { map.setTerrain(null); map.easeTo({pitch:0,bearing:0,duration:800}); }});
+})();
+</script>
+</body>
+</html>

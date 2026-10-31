@@ -3,6 +3,11 @@
 Key outputs from the QGIS project `nasa2` (NASA NISAR L2 GCOV, SAR-based monitoring). All files are **EPSG:4326, ~30 m (0.00027 deg)** and clipped to `boundary/R12_Davao_Regions_EPSG4326.shp`.
 They were rebuilt from the original 10 m scenes (3x3 multilook to 30 m), not resampled from the earlier 100 m layers. Blank pixels are genuine coverage gaps. RVI-based layers are a SAR vegetation indicator, not NDVI.
 
+## Web map: Sarangani and Davao Occidental (docs/)
+An interactive Mapbox GL JS map on the Mapbox Standard style, with an earthquake view (possible landslides after the M7.8 of 8 June 2026), El Niño time series with a play slider (monthly MODIS NDVI and land temperature, quarterly Landsat HLS EVI, NDMI and NDWI, and 2026-vs-2025 anomalies), 3D terrain and day/dusk/night lighting.
+
+To publish it: Settings > Pages > Deploy from a branch > `main` / `/docs`. The map needs a public Mapbox token: put it in `docs/config.js`, or paste it when the page asks. Restrict the token to your Pages URL in your Mapbox account.
+
 ## geotiff_30m/ : full coverage of the boundary
 | File | Meaning |
 |---|---|
