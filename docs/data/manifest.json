@@ -2499,11 +2499,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2521,11 +2521,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2543,11 +2543,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2565,11 +2565,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2587,11 +2587,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2609,11 +2609,11 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
@@ -2631,17 +2631,39 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#0b1d2e",
-     "#1f4e5f",
-     "#4f8a5b",
-     "#a9c97f",
-     "#f0f3d6"
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
     ],
     "min": -22,
     "max": -8,
     "unit": " dB"
    },
    "start": "2026-10-17",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "nisar_hv_sepoct",
+   "family": "nisar_hv_combined",
+   "group": "nisar_hv_combined",
+   "label": "NISAR HV backscatter, all passes 20 Sep \u2013 17 Oct 2026 combined",
+   "file": "data/img/nisar_hv_sepoct.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-20",
    "end": "2026-10-17"
   },
   {
@@ -2653,10 +2675,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2675,10 +2697,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2697,10 +2719,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2719,10 +2741,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2741,10 +2763,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2763,10 +2785,10 @@
    "legend": {
     "type": "ramp",
     "colors": [
-     "#1c1f33",
-     "#3d4f7a",
-     "#6f8fb0",
-     "#c7d6c0",
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
      "#fbf5e3"
     ],
     "min": -14,
@@ -2774,6 +2796,107 @@
     "unit": " dB"
    },
    "start": "2026-10-17",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "nisar_hh_sepoct",
+   "family": "nisar_hh_combined",
+   "group": "nisar_hh_combined",
+   "label": "NISAR HH backscatter, all passes 20 Sep \u2013 17 Oct 2026 combined",
+   "file": "data/img/nisar_hh_sepoct.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-20",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "nisar_passes",
+   "family": "static",
+   "group": "nisar_cov",
+   "label": "Number of NISAR passes, 20 Sep \u2013 17 Oct 2026",
+   "file": "data/img/nisar_passes.webp",
+   "legend": {
+    "type": "classes",
+    "items": [
+     [
+      "#fdd0a2",
+      "1 pass"
+     ],
+     [
+      "#fdae6b",
+      "2 passes"
+     ],
+     [
+      "#f16913",
+      "3 passes"
+     ],
+     [
+      "#d94801",
+      "4 passes"
+     ],
+     [
+      "#8c2d04",
+      "5 passes"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml_evi_sepoct",
+   "family": "ml_evi_combined",
+   "group": "ml_evi_combined",
+   "label": "NISAR-estimated vegetation (EVI), Sep\u2013Oct 2026 average",
+   "file": "data/img/ml_evi_sepoct.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-20",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "ml_ndmi_sepoct",
+   "family": "ml_ndmi_combined",
+   "group": "ml_ndmi_combined",
+   "label": "NISAR-estimated plant moisture (NDMI), Sep\u2013Oct 2026 average",
+   "file": "data/img/ml_ndmi_sepoct.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-20",
    "end": "2026-10-17"
   },
   {
@@ -2863,6 +2986,232 @@
     "max": 4,
     "unit": " dB"
    }
+  },
+  {
+   "id": "nisarm_hv_2026-06",
+   "family": "nisarm_hv",
+   "group": "nisarm_hv",
+   "label": "NISAR HV backscatter, June 2026 (1 pass)",
+   "file": "data/img/nisarm_hv_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "nisarm_hh_2026-06",
+   "family": "nisarm_hh",
+   "group": "nisarm_hh",
+   "label": "NISAR HH backscatter, June 2026 (1 pass)",
+   "file": "data/img/nisarm_hh_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "mlm_evi_2026-06",
+   "family": "mlm_evi",
+   "group": "mlm_evi",
+   "label": "NISAR-estimated vegetation (EVI), June 2026",
+   "file": "data/img/mlm_evi_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "mlm_ndmi_2026-06",
+   "family": "mlm_ndmi",
+   "group": "mlm_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI), June 2026",
+   "file": "data/img/mlm_ndmi_2026-06.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-06-01",
+   "end": "2026-06-30"
+  },
+  {
+   "id": "nisarm_hv_2026-09",
+   "family": "nisarm_hv",
+   "group": "nisarm_hv",
+   "label": "NISAR HV backscatter, September 2026 (4 passes)",
+   "file": "data/img/nisarm_hv_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "nisarm_hh_2026-09",
+   "family": "nisarm_hh",
+   "group": "nisarm_hh",
+   "label": "NISAR HH backscatter, September 2026 (4 passes)",
+   "file": "data/img/nisarm_hh_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "mlm_evi_2026-09",
+   "family": "mlm_evi",
+   "group": "mlm_evi",
+   "label": "NISAR-estimated vegetation (EVI), September 2026",
+   "file": "data/img/mlm_evi_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "mlm_ndmi_2026-09",
+   "family": "mlm_ndmi",
+   "group": "mlm_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI), September 2026",
+   "file": "data/img/mlm_ndmi_2026-09.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-01",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "nisarm_hv_2026-10",
+   "family": "nisarm_hv",
+   "group": "nisarm_hv",
+   "label": "NISAR HV backscatter, October 2026 (3 passes)",
+   "file": "data/img/nisarm_hv_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#33505f",
+     "#3f7f73",
+     "#73ad6c",
+     "#b8d58c",
+     "#f1f0cf"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
+  },
+  {
+   "id": "nisarm_hh_2026-10",
+   "family": "nisarm_hh",
+   "group": "nisarm_hh",
+   "label": "NISAR HH backscatter, October 2026 (3 passes)",
+   "file": "data/img/nisarm_hh_2026-10.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#47507a",
+     "#5f7fa3",
+     "#8fb1bd",
+     "#d3dfc4",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-10-01",
+   "end": "2026-10-31"
   },
   {
    "id": "ml_lc_change",

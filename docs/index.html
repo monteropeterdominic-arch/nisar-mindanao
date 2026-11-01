@@ -160,24 +160,24 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>Radar through the clouds</h2>
         <p class="note" style="margin-top:0">NISAR's L-band radar sees through cloud, day and night. HV (cross-pol) brightens with leafy, woody vegetation; HH (co-pol) reacts to soil moisture, rough ground and flooding. Brighter means stronger echo.</p>
-        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By date</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button><button id="n-lc" aria-pressed="false">AI: land-cover change</button></div>
+        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By month</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button><button id="n-lc" aria-pressed="false">AI: land-cover change</button></div>
       </section>
       <section id="n-date-box">
-        <h2>Radar by date</h2>
-        <select id="nfam" aria-label="Radar polarisation"><option value="nisar_hv">HV backscatter (vegetation)</option><option value="nisar_hh">HH backscatter (moisture, roughness)</option></select>
+        <h2>Radar by month</h2>
+        <select id="nfam" aria-label="Radar polarisation"><option value="nisarm_hv">HV backscatter (vegetation)</option><option value="nisarm_hh">HH backscatter (moisture, roughness)</option></select>
         <div class="when" id="nwhen">—</div>
         <div class="timebar">
           <button class="play" id="nplay" aria-label="Play">▶</button>
           <div><input type="range" id="nslider" min="0" max="0" value="0" aria-label="Radar date"><div class="ticks"><span id="nt0"></span><span id="nt1"></span></div></div>
         </div>
-        <p class="note">Each date shows the frames NISAR imaged that day, so the covered area moves between dates; together they cover both provinces.</p>
+        <p class="note">Each month combines every NISAR pass in that month (averaged in power), so September covers the whole of both provinces and October about 87% (HV). June has a single pass (28 June), so it covers about a third. October HH covers less because two October HH files are still missing. Your downloads have no July or August passes. Dark slate shows very weak echoes: water, smooth bare ground, or slopes facing away from the satellite (radar shadow).</p>
       </section>
       <section id="n-ml-box" hidden>
         <h2>Radar sees through clouds</h2>
-        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation on every NISAR date, including places hidden by cloud. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
-        <select id="mlfam" aria-label="Estimated variable"><option value="ml_evi">Estimated vegetation (EVI)</option><option value="ml_ndmi">Estimated plant moisture (NDMI)</option></select>
+        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation for June (one pass) and September (all of both provinces), including places hidden by cloud. October is left out until its missing HH files are downloaded. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
+        <select id="mlfam" aria-label="Estimated variable"><option value="mlm_evi">Estimated vegetation (EVI)</option><option value="mlm_ndmi">Estimated plant moisture (NDMI)</option></select>
         <div class="when" id="mlwhen">—</div>
-        <input type="range" id="mlslider" min="0" max="0" value="0" aria-label="NISAR date">
+        <input type="range" id="mlslider" min="0" max="0" value="0" aria-label="Month">
         <div class="ticks"><span id="mlt0"></span><span id="mlt1"></span></div>
         <table class="mlt" id="mltable"></table>
         <p class="note">Scores come from 5 km block cross-validation: the model is graded only on areas it never trained on. R² 0.37 means radar plus terrain explain about a third of what Landsat sees, good for broad patterns under clouds, not exact field values. Terrain alone barely predicts moisture (R² 0.01); the moisture signal comes from the radar.</p>
@@ -497,9 +497,9 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const nfam=document.getElementById('nfam'), nsl=document.getElementById('nslider');
   function nlist(){return byFam[nfam.value]||[]}
   function ncurrent(){return nlist()[+nsl.value]}
-  const dfmt=l=>l?new Date(l.start+'T00:00:00').toLocaleString('en',{day:'numeric',month:'long',year:'numeric'}):'—';
+  const dfmt=l=>{ if(!l) return '—'; const d=new Date(l.start+'T00:00:00'); if(/^(nisarm|mlm)_/.test(l.id)){ const p=(l.label.match(/\((\d+ pass(?:es)?)\)/)||[])[1]; return d.toLocaleString('en',{month:'long',year:'numeric'})+(p?' · '+p:''); } return d.toLocaleString('en',{day:'numeric',month:'long',year:'numeric'}); };
   function nshow(){const l=ncurrent(); document.getElementById('nwhen').textContent=dfmt(l); if(mode==='nisar'&&nsub==='date') setMode('nisar');}
-  function nreset(){const L=nlist(); if(!L.length)return; nsl.max=L.length-1; nsl.value=0; document.getElementById('nt0').textContent=dfmt(L[0]).replace(/,? 2026/,''); document.getElementById('nt1').textContent=dfmt(L[L.length-1]).replace(/,? 2026/,''); nshow()}
+  function nreset(){const L=nlist(); if(!L.length)return; nsl.max=L.length-1; nsl.value=Math.min(1,L.length-1); document.getElementById('nt0').textContent=dfmt(L[0]).replace(/ 2026.*/,''); document.getElementById('nt1').textContent=dfmt(L[L.length-1]).replace(/ 2026.*/,''); nshow()}
   nfam.addEventListener('change',nreset); nsl.addEventListener('input',nshow);
   let ntimer=null; const nplay=document.getElementById('nplay');
   nplay.addEventListener('click',()=>{ if(ntimer){clearInterval(ntimer);ntimer=null;nplay.textContent='▶';nplay.setAttribute('aria-label','Play');return}
@@ -520,7 +520,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   function mllist(){return byFam[mlfam.value]||[]}
   function mlcurrent(){return mllist()[+mlsl.value]}
   function mlshow(){document.getElementById('mlwhen').textContent=dfmt(mlcurrent()); if(mode==='nisar'&&nsub==='ml') setMode('nisar')}
-  function mlreset(){const L=mllist(); if(!L.length){document.getElementById('n-ml').hidden=true;return} mlsl.max=L.length-1; mlsl.value=0; document.getElementById('mlt0').textContent=dfmt(L[0]).replace(/,? 2026/,''); document.getElementById('mlt1').textContent=dfmt(L[L.length-1]).replace(/,? 2026/,''); mlshow()}
+  function mlreset(){const L=mllist(); if(!L.length){document.getElementById('n-ml').hidden=true;return} mlsl.max=L.length-1; mlsl.value=Math.min(1,L.length-1); document.getElementById('mlt0').textContent=dfmt(L[0]).replace(/ 2026.*/,''); document.getElementById('mlt1').textContent=dfmt(L[L.length-1]).replace(/ 2026.*/,''); mlshow()}
   mlfam.addEventListener('change',mlreset); mlsl.addEventListener('input',mlshow);
   if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td><td class="n">±${v.MAE.toFixed(3)}</td>`:'<td>–</td><td>–</td>'};
     document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>EVI error</th><th>NDMI R²</th><th>NDMI error</th></tr>'+
