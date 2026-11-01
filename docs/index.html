@@ -76,6 +76,7 @@ svg text{fill:var(--ink2);font:10px var(--mono)}
 .file dd{margin:0}
 .xsec{width:100%;height:auto;margin-top:10px;border:1px solid #d6c8a6;border-radius:6px}
 .xsec text{font:9.5px var(--mono);fill:#3b4255}
+.mlt{width:100%;border-collapse:collapse;margin-top:10px;font-size:12.5px}.mlt th,.mlt td{border-bottom:1px solid #d6c8a6;padding:4px 6px;text-align:left}.mlt td.n{text-align:right;font-variant-numeric:tabular-nums}.mlt tr.best td{font-weight:800;color:var(--navy)}
 .news{display:grid;gap:6px}
 .news a{display:block;text-decoration:none;color:var(--ink);background:#f6f1e6;border:1px solid #d6c8a6;border-left:3px solid var(--gold2);border-radius:6px;padding:7px 10px}
 .news a:hover{border-color:var(--gold2)}
@@ -159,7 +160,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>Radar through the clouds</h2>
         <p class="note" style="margin-top:0">NISAR's L-band radar sees through cloud, day and night. HV (cross-pol) brightens with leafy, woody vegetation; HH (co-pol) reacts to soil moisture, rough ground and flooding. Brighter means stronger echo.</p>
-        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By date</button><button id="n-chg" aria-pressed="false">Change between passes</button></div>
+        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By date</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button></div>
       </section>
       <section id="n-date-box">
         <h2>Radar by date</h2>
@@ -170,6 +171,16 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
           <div><input type="range" id="nslider" min="0" max="0" value="0" aria-label="Radar date"><div class="ticks"><span id="nt0"></span><span id="nt1"></span></div></div>
         </div>
         <p class="note">Each date shows the frames NISAR imaged that day, so the covered area moves between dates; together they cover both provinces.</p>
+      </section>
+      <section id="n-ml-box" hidden>
+        <h2>Radar sees through clouds</h2>
+        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation on every NISAR date, including places hidden by cloud. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
+        <select id="mlfam" aria-label="Estimated variable"><option value="ml_evi">Estimated vegetation (EVI)</option><option value="ml_ndmi">Estimated plant moisture (NDMI)</option></select>
+        <div class="when" id="mlwhen">—</div>
+        <input type="range" id="mlslider" min="0" max="0" value="0" aria-label="NISAR date">
+        <div class="ticks"><span id="mlt0"></span><span id="mlt1"></span></div>
+        <table class="mlt" id="mltable"></table>
+        <p class="note">Scores come from 5 km block cross-validation: the model is graded only on areas it never trained on. R² 0.37 means radar plus terrain explain about a third of what Landsat sees, good for broad patterns under clouds, not exact field values. Terrain alone barely predicts moisture (R² 0.01); the moisture signal comes from the radar.</p>
       </section>
       <section id="n-chg-box" hidden>
         <h2>Same-track change</h2>
@@ -210,10 +221,10 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>What this map found</h2>
         <div class="stat">
-          <div><b>88</b><span>possible new slides</span></div>
-          <div><b>40 ha</b><span>bare ground on slopes ≥ 20°</span></div>
+          <div><b>305</b><span>possible new slides</span></div>
+          <div><b>165 ha</b><span>bare ground on slopes ≥ 20°</span></div>
         </div>
-        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. These are found more often on steeper slopes. The hardest-hit areas, Glan and Jose Abad Santos, lie south of 5.9°N where this map had no elevation data, so they were not checked. Not field-checked.</p>
+        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. Two thirds of it (121 ha) is south of 5.9°N, clustered around Glan (about 31 ha) and Jose Abad Santos (about 63 ha), the two towns news reports named as worst hit; PhilSA estimated about 138 ha of landslides in total. Patches become far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). Not field-checked; area figures for the two towns use rough map boxes.</p>
       </section>
       <section>
         <h2>Layers</h2>
@@ -221,7 +232,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <label class="row"><input type="radio" name="qbg" value="eq_evi_excess" checked> Vegetation loss beyond normal season</label>
         <label class="row"><input type="radio" name="qbg" value="eq_evi_pre"> Vegetation before (Mar–7 Jun 2026)</label>
         <label class="row"><input type="radio" name="qbg" value="eq_evi_post"> Vegetation after (9 Jun–Sep 2026)</label>
-        <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible</label>
+        <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible (70% of the area)</label>
         <label class="row"><input type="radio" name="qbg" value="slope"> Slope</label>
         <label class="row"><input type="radio" name="qbg" value=""> None (just the land)</label>
       </section>
@@ -291,7 +302,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <ul class="note plain">
           <li>Landsat HLS L30 vegetation indices (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
           <li>MODIS MOD13Q1 NDVI (250 m) and MOD11A2 land temperature (1 km)</li>
-          <li>ALOS AW3D30 elevation; 2020 regional land cover (province outlines)</li>
+          <li>SRTM 30 m elevation; 2020 regional land cover (province outlines)</li>
           <li>Earthquake facts: PHIVOLCS, USGS (via Wikipedia), NDRRMC, AHA Centre, AP</li>
           <li>NISAR L2 GCOV (NASA-ISRO, provisional), HH and HV, multilooked from 10 m to 30 m; 8 dates, 28 Jun – 19 Oct 2026</li>
           <li>Live weather: Open-Meteo forecast API. Basemap, 3D buildings and terrain: Mapbox Standard.</li>
@@ -300,8 +311,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>Limits</h2>
         <ul class="note plain">
-          <li>The optical data stop at about 124.93°E, so western Sarangani (Maasim, Kiamba, Maitum) has no landslide check.</li>
-          <li>No elevation data south of 5.9°N in the source used, so Glan, Jose Abad Santos and the islands were not checked for slides.</li>
+          <li>NISAR's earliest scene here is 28 June, after the earthquake, so radar cannot show the quake itself; it shows the months after.</li>
+          <li>About 30% of the area could not be checked for slides because every Landsat view in the before or after window was cloudy.</li>
           <li>Heavy rain or land clearing can look like a landslide. Treat patches as places to check.</li>
           <li>Surface change only, not ground uplift. Uplift needs NISAR interferometry (GUNW) spanning 8 June.</li>
           <li>Clouds and rain are an illustration driven by forecast numbers, not satellite cloud images.</li>
@@ -443,6 +454,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     if(mode==='quake'){ staticOn=!!sel; lg=sel?byId[sel]:null; if(sel) map.getSource('static').updateImage({url:byId[sel].file,coordinates:M.image_corners}); }
     if(mode==='nisar'){
       if(nsub==='date'){ seriesOn=true; lg=ncurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
+      else if(nsub==='ml'){ seriesOn=true; lg=mlcurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
       else { const v=(document.querySelector('input[name=nchg]:checked')||{}).value; staticOn=!!v; lg=v?byId[v]:null; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); }
     }
     if(mode==='nino'){ const l=current(); if(l) map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners}); }
@@ -477,7 +489,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   function ncurrent(){return nlist()[+nsl.value]}
   const dfmt=l=>l?new Date(l.start+'T00:00:00').toLocaleString('en',{day:'numeric',month:'long',year:'numeric'}):'—';
   function nshow(){const l=ncurrent(); document.getElementById('nwhen').textContent=dfmt(l); if(mode==='nisar'&&nsub==='date') setMode('nisar');}
-  function nreset(){const L=nlist(); if(!L.length)return; nsl.max=L.length-1; nsl.value=0; document.getElementById('nt0').textContent=dfmt(L[0]).replace(/ 2026/,''); document.getElementById('nt1').textContent=dfmt(L[L.length-1]).replace(/ 2026/,''); nshow()}
+  function nreset(){const L=nlist(); if(!L.length)return; nsl.max=L.length-1; nsl.value=0; document.getElementById('nt0').textContent=dfmt(L[0]).replace(/,? 2026/,''); document.getElementById('nt1').textContent=dfmt(L[L.length-1]).replace(/,? 2026/,''); nshow()}
   nfam.addEventListener('change',nreset); nsl.addEventListener('input',nshow);
   let ntimer=null; const nplay=document.getElementById('nplay');
   nplay.addEventListener('click',()=>{ if(ntimer){clearInterval(ntimer);ntimer=null;nplay.textContent='▶';nplay.setAttribute('aria-label','Play');return}
@@ -485,8 +497,18 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const chgL=M.layers.filter(l=>l.group==='nisar'), box=document.getElementById('nchglist');
   chgL.forEach((l,i)=>{const lab=document.createElement('label');lab.className='row';lab.innerHTML=`<input type="radio" name="nchg" value="${l.id}" ${i===0?'checked':''}> ${l.label.replace('NISAR ','')}`;box.appendChild(lab);
     lab.querySelector('input').addEventListener('change',()=>setMode('nisar'))});
-  function nsubset(v){nsub=v; document.getElementById('n-date').setAttribute('aria-pressed',v==='date'); document.getElementById('n-chg').setAttribute('aria-pressed',v==='chg');
-    document.getElementById('n-date-box').hidden=v!=='date'; document.getElementById('n-chg-box').hidden=v!=='chg'; setMode('nisar')}
+  function nsubset(v){nsub=v; ['date','chg','ml'].forEach(k=>{document.getElementById('n-'+k).setAttribute('aria-pressed',v===k); document.getElementById('n-'+k+'-box').hidden=v!==k}); setMode('nisar')}
+  document.getElementById('n-ml').addEventListener('click',()=>nsubset('ml'));
+  const mlfam=document.getElementById('mlfam'), mlsl=document.getElementById('mlslider');
+  function mllist(){return byFam[mlfam.value]||[]}
+  function mlcurrent(){return mllist()[+mlsl.value]}
+  function mlshow(){document.getElementById('mlwhen').textContent=dfmt(mlcurrent()); if(mode==='nisar'&&nsub==='ml') setMode('nisar')}
+  function mlreset(){const L=mllist(); if(!L.length){document.getElementById('n-ml').hidden=true;return} mlsl.max=L.length-1; mlsl.value=0; document.getElementById('mlt0').textContent=dfmt(L[0]).replace(/,? 2026/,''); document.getElementById('mlt1').textContent=dfmt(L[L.length-1]).replace(/,? 2026/,''); mlshow()}
+  mlfam.addEventListener('change',mlreset); mlsl.addEventListener('input',mlshow);
+  if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td><td class="n">±${v.MAE.toFixed(3)}</td>`:'<td>–</td><td>–</td>'};
+    document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>EVI error</th><th>NDMI R²</th><th>NDMI error</th></tr>'+
+      ['Terrain only','NISAR only','NISAR + terrain'].map(k=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td>${row('EVI',k)}${row('NDMI',k)}</tr>`).join(''); }
+  mlreset();
   document.getElementById('n-date').addEventListener('click',()=>nsubset('date')); document.getElementById('n-chg').addEventListener('click',()=>nsubset('chg'));
   nreset();
 

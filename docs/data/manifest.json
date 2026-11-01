@@ -29,6 +29,29 @@
  ],
  "layers": [
   {
+   "id": "ndvi_2024-12",
+   "family": "ndvi",
+   "group": "ndvi",
+   "label": "NDVI 2024-12",
+   "file": "data/img/ndvi_2024-12.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0.3,
+    "max": 0.95,
+    "unit": ""
+   },
+   "start": "2024-12-01",
+   "end": "2024-12-31"
+  },
+  {
    "id": "ndvi_2025-01",
    "family": "ndvi",
    "group": "ndvi",
@@ -533,6 +556,29 @@
    },
    "start": "2026-10-01",
    "end": "2026-10-31"
+  },
+  {
+   "id": "lst_2024-12",
+   "family": "lst",
+   "group": "lst",
+   "label": "Day land temperature 2024-12",
+   "file": "data/img/lst_2024-12.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#ffffcc",
+     "#fed976",
+     "#feb24c",
+     "#fd8d3c",
+     "#f03b20",
+     "#bd0026"
+    ],
+    "min": 20,
+    "max": 36,
+    "unit": " \u00b0C"
+   },
+   "start": "2024-12-01",
+   "end": "2024-12-31"
   },
   {
    "id": "lst_2025-01",
@@ -2026,7 +2072,7 @@
      ],
      [
       "#fdd0a2",
-      "No elevation data (south of 5.9\u00b0N)"
+      "No elevation data"
      ]
     ]
    }
@@ -2099,7 +2145,7 @@
    "id": "slope",
    "family": "static",
    "group": "terrain",
-   "label": "Slope (ALOS AW3D30)",
+   "label": "Slope (SRTM 30 m)",
    "file": "data/img/slope.webp",
    "legend": {
     "type": "ramp",
@@ -2114,6 +2160,335 @@
     "max": 45,
     "unit": "\u00b0"
    }
+  },
+  {
+   "id": "ml_evi_20260628",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-06-28",
+   "file": "data/img/ml_evi_20260628.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-06-28",
+   "end": "2026-06-28"
+  },
+  {
+   "id": "ml_evi_20260920",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-09-20",
+   "file": "data/img/ml_evi_20260920.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-20",
+   "end": "2026-09-20"
+  },
+  {
+   "id": "ml_evi_20260923",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-09-23",
+   "file": "data/img/ml_evi_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-23",
+   "end": "2026-09-23"
+  },
+  {
+   "id": "ml_evi_20260925",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-09-25",
+   "file": "data/img/ml_evi_20260925.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-25",
+   "end": "2026-09-25"
+  },
+  {
+   "id": "ml_evi_20260930",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-09-30",
+   "file": "data/img/ml_evi_20260930.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-09-30",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ml_evi_20261014",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-10-14",
+   "file": "data/img/ml_evi_20261014.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-10-14",
+   "end": "2026-10-14"
+  },
+  {
+   "id": "ml_evi_20261017",
+   "family": "ml_evi",
+   "group": "ml_evi",
+   "label": "NISAR-estimated vegetation (EVI) 2026-10-17",
+   "file": "data/img/ml_evi_20261017.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#f7fcb9",
+     "#d9f0a3",
+     "#addd8e",
+     "#78c679",
+     "#31a354",
+     "#006837"
+    ],
+    "min": 0,
+    "max": 0.8,
+    "unit": ""
+   },
+   "start": "2026-10-17",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "ml_ndmi_20260628",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-06-28",
+   "file": "data/img/ml_ndmi_20260628.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-06-28",
+   "end": "2026-06-28"
+  },
+  {
+   "id": "ml_ndmi_20260920",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-09-20",
+   "file": "data/img/ml_ndmi_20260920.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-20",
+   "end": "2026-09-20"
+  },
+  {
+   "id": "ml_ndmi_20260923",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-09-23",
+   "file": "data/img/ml_ndmi_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-23",
+   "end": "2026-09-23"
+  },
+  {
+   "id": "ml_ndmi_20260925",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-09-25",
+   "file": "data/img/ml_ndmi_20260925.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-25",
+   "end": "2026-09-25"
+  },
+  {
+   "id": "ml_ndmi_20260930",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-09-30",
+   "file": "data/img/ml_ndmi_20260930.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-09-30",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "ml_ndmi_20261014",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-10-14",
+   "file": "data/img/ml_ndmi_20261014.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-10-14",
+   "end": "2026-10-14"
+  },
+  {
+   "id": "ml_ndmi_20261017",
+   "family": "ml_ndmi",
+   "group": "ml_ndmi",
+   "label": "NISAR-estimated plant moisture (NDMI) 2026-10-17",
+   "file": "data/img/ml_ndmi_20261017.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -0.2,
+    "max": 0.6,
+    "unit": ""
+   },
+   "start": "2026-10-17",
+   "end": "2026-10-17"
   },
   {
    "id": "nisar_hv_20260628",
@@ -2492,163 +2867,317 @@
  ],
  "aoi_monthly": [
   {
+   "month": "2024-12",
+   "ndvi_mean": "0.8098",
+   "ndvi_cover_pct": "74.8",
+   "lst_day_mean_C": "27.08",
+   "lst_cover_pct": "2.2"
+  },
+  {
    "month": "2025-01",
-   "ndvi_mean": "0.7884",
-   "ndvi_cover_pct": "11.7",
-   "lst_day_mean_C": "24.26",
-   "lst_cover_pct": "46.5"
+   "ndvi_mean": "0.8135",
+   "ndvi_cover_pct": "91.2",
+   "lst_day_mean_C": "25.2",
+   "lst_cover_pct": "94.2"
   },
   {
    "month": "2025-02",
-   "ndvi_mean": "0.8088",
-   "ndvi_cover_pct": "68.6",
-   "lst_day_mean_C": "26.78",
-   "lst_cover_pct": "73.6"
+   "ndvi_mean": "0.8134",
+   "ndvi_cover_pct": "81.9",
+   "lst_day_mean_C": "26.91",
+   "lst_cover_pct": "87.6"
   },
   {
    "month": "2025-03",
-   "ndvi_mean": "0.8137",
-   "ndvi_cover_pct": "68.6",
-   "lst_day_mean_C": "26.24",
-   "lst_cover_pct": "76.1"
+   "ndvi_mean": "0.8175",
+   "ndvi_cover_pct": "81.4",
+   "lst_day_mean_C": "26.32",
+   "lst_cover_pct": "90.2"
   },
   {
    "month": "2025-04",
-   "ndvi_mean": "0.8127",
-   "ndvi_cover_pct": "67.8",
-   "lst_day_mean_C": "26.41",
-   "lst_cover_pct": "79.7"
+   "ndvi_mean": "0.8165",
+   "ndvi_cover_pct": "80.1",
+   "lst_day_mean_C": "26.4",
+   "lst_cover_pct": "93.7"
   },
   {
    "month": "2025-05",
-   "ndvi_mean": "0.8249",
-   "ndvi_cover_pct": "72.1",
-   "lst_day_mean_C": "26.45",
-   "lst_cover_pct": "79.3"
+   "ndvi_mean": "0.8277",
+   "ndvi_cover_pct": "85.0",
+   "lst_day_mean_C": "26.48",
+   "lst_cover_pct": "93.4"
   },
   {
    "month": "2025-06",
-   "ndvi_mean": "0.8356",
-   "ndvi_cover_pct": "82.1",
-   "lst_day_mean_C": "26.05",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8379",
+   "ndvi_cover_pct": "96.0",
+   "lst_day_mean_C": "25.98",
+   "lst_cover_pct": "94.3"
   },
   {
    "month": "2025-07",
-   "ndvi_mean": "0.8309",
-   "ndvi_cover_pct": "71.4",
-   "lst_day_mean_C": "27.01",
-   "lst_cover_pct": "74.9"
+   "ndvi_mean": "0.8378",
+   "ndvi_cover_pct": "85.2",
+   "lst_day_mean_C": "26.9",
+   "lst_cover_pct": "88.8"
   },
   {
    "month": "2025-08",
-   "ndvi_mean": "0.8351",
-   "ndvi_cover_pct": "82.7",
-   "lst_day_mean_C": "26.62",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8385",
+   "ndvi_cover_pct": "96.5",
+   "lst_day_mean_C": "26.53",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2025-09",
-   "ndvi_mean": "0.8468",
-   "ndvi_cover_pct": "80.1",
-   "lst_day_mean_C": "26.4",
-   "lst_cover_pct": "80.2"
+   "ndvi_mean": "0.8511",
+   "ndvi_cover_pct": "94.1",
+   "lst_day_mean_C": "26.37",
+   "lst_cover_pct": "94.2"
   },
   {
    "month": "2025-10",
-   "ndvi_mean": "0.8449",
-   "ndvi_cover_pct": "81.2",
-   "lst_day_mean_C": "26.2",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8478",
+   "ndvi_cover_pct": "94.6",
+   "lst_day_mean_C": "26.24",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2025-11",
-   "ndvi_mean": "0.8436",
-   "ndvi_cover_pct": "79.5",
-   "lst_day_mean_C": "26.74",
-   "lst_cover_pct": "80.0"
+   "ndvi_mean": "0.8463",
+   "ndvi_cover_pct": "92.7",
+   "lst_day_mean_C": "26.6",
+   "lst_cover_pct": "94.1"
   },
   {
    "month": "2025-12",
-   "ndvi_mean": "0.8376",
-   "ndvi_cover_pct": "79.2",
-   "lst_day_mean_C": "25.14",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8414",
+   "ndvi_cover_pct": "93.1",
+   "lst_day_mean_C": "25.2",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-01",
-   "ndvi_mean": "0.8306",
-   "ndvi_cover_pct": "81.9",
-   "lst_day_mean_C": "24.87",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8349",
+   "ndvi_cover_pct": "95.8",
+   "lst_day_mean_C": "24.74",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-02",
-   "ndvi_mean": "0.8186",
-   "ndvi_cover_pct": "80.3",
-   "lst_day_mean_C": "25.32",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8246",
+   "ndvi_cover_pct": "94.2",
+   "lst_day_mean_C": "25.23",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-03",
-   "ndvi_mean": "0.8024",
-   "ndvi_cover_pct": "83.4",
-   "lst_day_mean_C": "24.83",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8105",
+   "ndvi_cover_pct": "97.3",
+   "lst_day_mean_C": "24.88",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-04",
-   "ndvi_mean": "0.7716",
-   "ndvi_cover_pct": "79.7",
-   "lst_day_mean_C": "27.23",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.7821",
+   "ndvi_cover_pct": "93.2",
+   "lst_day_mean_C": "27.06",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-05",
-   "ndvi_mean": "0.8333",
-   "ndvi_cover_pct": "82.5",
-   "lst_day_mean_C": "26.59",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8402",
+   "ndvi_cover_pct": "96.5",
+   "lst_day_mean_C": "26.48",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-06",
-   "ndvi_mean": "0.8535",
-   "ndvi_cover_pct": "83.1",
-   "lst_day_mean_C": "25.28",
-   "lst_cover_pct": "80.3"
+   "ndvi_mean": "0.8576",
+   "ndvi_cover_pct": "97.0",
+   "lst_day_mean_C": "25.2",
+   "lst_cover_pct": "94.4"
   },
   {
    "month": "2026-07",
-   "ndvi_mean": "0.8334",
-   "ndvi_cover_pct": "70.6",
-   "lst_day_mean_C": "23.88",
-   "lst_cover_pct": "79.1"
+   "ndvi_mean": "0.8417",
+   "ndvi_cover_pct": "84.5",
+   "lst_day_mean_C": "24.0",
+   "lst_cover_pct": "93.1"
   },
   {
    "month": "2026-08",
-   "ndvi_mean": "0.8349",
-   "ndvi_cover_pct": "70.6",
-   "lst_day_mean_C": "24.72",
-   "lst_cover_pct": "79.4"
+   "ndvi_mean": "0.8395",
+   "ndvi_cover_pct": "84.6",
+   "lst_day_mean_C": "24.76",
+   "lst_cover_pct": "93.5"
   },
   {
    "month": "2026-09",
-   "ndvi_mean": "0.8224",
-   "ndvi_cover_pct": "75.1",
+   "ndvi_mean": "0.8277",
+   "ndvi_cover_pct": "88.9",
    "lst_day_mean_C": "26.36",
-   "lst_cover_pct": "79.7"
+   "lst_cover_pct": "93.8"
   },
   {
    "month": "2026-10",
-   "ndvi_mean": "0.8141",
-   "ndvi_cover_pct": "70.6",
-   "lst_day_mean_C": "26.35",
-   "lst_cover_pct": "77.7"
+   "ndvi_mean": "0.8197",
+   "ndvi_cover_pct": "83.6",
+   "lst_day_mean_C": "25.86",
+   "lst_cover_pct": "94.4"
   }
  ],
  "epicentre": {
   "lng": 125.0561,
   "lat": 5.5989,
   "label": "M7.8 epicentre, 8 Jun 2026, 7:37 am"
+ },
+ "ml": {
+  "pairs_20260628": {
+   "hls_scenes": 5,
+   "matched_px": 977467
+  },
+  "pairs_20260920": {
+   "hls_scenes": 5,
+   "matched_px": 422958
+  },
+  "pairs_20260923": {
+   "hls_scenes": 6,
+   "matched_px": 627590
+  },
+  "pairs_20260925": {
+   "hls_scenes": 5,
+   "matched_px": 17858
+  },
+  "pairs_20260930": {
+   "hls_scenes": 5,
+   "matched_px": 44384
+  },
+  "pairs_20261014": {
+   "hls_scenes": 6,
+   "matched_px": 0
+  },
+  "pairs_20261017": {
+   "hls_scenes": 7,
+   "matched_px": 117551
+  },
+  "n_samples": 167858,
+  "n_blocks_5km": 210,
+  "EVI | NISAR only": {
+   "R2": 0.244,
+   "RMSE": 0.1215,
+   "MAE": 0.0949
+  },
+  "EVI | Terrain only": {
+   "R2": 0.116,
+   "RMSE": 0.1314,
+   "MAE": 0.1034
+  },
+  "EVI | NISAR + terrain": {
+   "R2": 0.367,
+   "RMSE": 0.1112,
+   "MAE": 0.0873
+  },
+  "NDMI | NISAR only": {
+   "R2": 0.242,
+   "RMSE": 0.1174,
+   "MAE": 0.0899
+  },
+  "NDMI | Terrain only": {
+   "R2": 0.014,
+   "RMSE": 0.1339,
+   "MAE": 0.1056
+  },
+  "NDMI | NISAR + terrain": {
+   "R2": 0.316,
+   "RMSE": 0.1115,
+   "MAE": 0.085
+  },
+  "importance_EVI": [
+   [
+    "HV_mean3x3",
+    0.1887
+   ],
+   [
+    "elev",
+    0.1491
+   ],
+   [
+    "aspect_sin",
+    0.076
+   ],
+   [
+    "HV_mean7x7",
+    0.0489
+   ],
+   [
+    "slope",
+    0.0486
+   ],
+   [
+    "HV_std3x3",
+    0.0474
+   ],
+   [
+    "HVminusHH_dB",
+    0.0313
+   ],
+   [
+    "ascending",
+    0.031
+   ],
+   [
+    "HV_dB",
+    0.0139
+   ],
+   [
+    "HH_dB",
+    0.0128
+   ],
+   [
+    "aspect_cos",
+    0.0103
+   ],
+   [
+    "RVI",
+    0.0
+   ]
+  ],
+  "gapfill_20260628": {
+   "nisar_px": 2098503,
+   "hls_clear_pct_of_those": 61.8,
+   "cloud_gap_filled_px": 801158
+  },
+  "gapfill_20260920": {
+   "nisar_px": 2595501,
+   "hls_clear_pct_of_those": 23.2,
+   "cloud_gap_filled_px": 1993729
+  },
+  "gapfill_20260923": {
+   "nisar_px": 5201709,
+   "hls_clear_pct_of_those": 14.9,
+   "cloud_gap_filled_px": 4427704
+  },
+  "gapfill_20260925": {
+   "nisar_px": 3783062,
+   "hls_clear_pct_of_those": 0.5,
+   "cloud_gap_filled_px": 3765204
+  },
+  "gapfill_20260930": {
+   "nisar_px": 1136627,
+   "hls_clear_pct_of_those": 6.5,
+   "cloud_gap_filled_px": 1062340
+  },
+  "gapfill_20261014": {
+   "nisar_px": 0,
+   "hls_clear_pct_of_those": null,
+   "cloud_gap_filled_px": 0
+  },
+  "gapfill_20261017": {
+   "nisar_px": 603738,
+   "hls_clear_pct_of_those": 19.5,
+   "cloud_gap_filled_px": 486187
+  }
  }
 }
