@@ -160,7 +160,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       <section>
         <h2>Radar through the clouds</h2>
         <p class="note" style="margin-top:0">NISAR's L-band radar sees through cloud, day and night. HV (cross-pol) brightens with leafy, woody vegetation; HH (co-pol) reacts to soil moisture, rough ground and flooding. Brighter means stronger echo.</p>
-        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By date</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button></div>
+        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By date</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button><button id="n-lc" aria-pressed="false">AI: land-cover change</button></div>
       </section>
       <section id="n-date-box">
         <h2>Radar by date</h2>
@@ -181,6 +181,15 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
         <div class="ticks"><span id="mlt0"></span><span id="mlt1"></span></div>
         <table class="mlt" id="mltable"></table>
         <p class="note">Scores come from 5 km block cross-validation: the model is graded only on areas it never trained on. R² 0.37 means radar plus terrain explain about a third of what Landsat sees, good for broad patterns under clouds, not exact field values. Terrain alone barely predicts moisture (R² 0.01); the moisture signal comes from the radar.</p>
+      </section>
+      <section id="n-lc-box" hidden>
+        <h2>What covers the land now, by radar</h2>
+        <p class="note" style="margin-top:0">A second model learned the 2020 land-cover map (forest, brush, grassland, crops, built-up, water) from NISAR's June–October radar, then mapped 2026 land cover on its own. Where it confidently disagrees with 2020, something may have changed.</p>
+        <label class="row"><input type="radio" name="nlc" value="ml_lc_change" checked> Possible change since 2020</label>
+        <label class="row"><input type="radio" name="nlc" value="ml_lc_2026"> NISAR land cover 2026</label>
+        <label class="row"><input type="radio" name="nlc" value="ml_lc_2020"> 2020 land-cover map (training labels)</label>
+        <table class="mlt" id="lctable"></table>
+        <p class="note" id="lcnote"></p>
       </section>
       <section id="n-chg-box" hidden>
         <h2>Same-track change</h2>
@@ -454,6 +463,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     if(mode==='quake'){ staticOn=!!sel; lg=sel?byId[sel]:null; if(sel) map.getSource('static').updateImage({url:byId[sel].file,coordinates:M.image_corners}); }
     if(mode==='nisar'){
       if(nsub==='date'){ seriesOn=true; lg=ncurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
+      else if(nsub==='lc'){ const v=(document.querySelector('input[name=nlc]:checked')||{}).value; staticOn=!!(v&&byId[v]); lg=v?byId[v]:null; if(staticOn) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); }
       else if(nsub==='ml'){ seriesOn=true; lg=mlcurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
       else { const v=(document.querySelector('input[name=nchg]:checked')||{}).value; staticOn=!!v; lg=v?byId[v]:null; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); }
     }
@@ -497,8 +507,15 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const chgL=M.layers.filter(l=>l.group==='nisar'), box=document.getElementById('nchglist');
   chgL.forEach((l,i)=>{const lab=document.createElement('label');lab.className='row';lab.innerHTML=`<input type="radio" name="nchg" value="${l.id}" ${i===0?'checked':''}> ${l.label.replace('NISAR ','')}`;box.appendChild(lab);
     lab.querySelector('input').addEventListener('change',()=>setMode('nisar'))});
-  function nsubset(v){nsub=v; ['date','chg','ml'].forEach(k=>{document.getElementById('n-'+k).setAttribute('aria-pressed',v===k); document.getElementById('n-'+k+'-box').hidden=v!==k}); setMode('nisar')}
+  function nsubset(v){nsub=v; ['date','chg','ml','lc'].forEach(k=>{document.getElementById('n-'+k).setAttribute('aria-pressed',v===k); document.getElementById('n-'+k+'-box').hidden=v!==k}); setMode('nisar')}
   document.getElementById('n-ml').addEventListener('click',()=>nsubset('ml'));
+  document.getElementById('n-lc').addEventListener('click',()=>nsubset('lc'));
+  document.querySelectorAll('input[name=nlc]').forEach(r=>r.addEventListener('change',()=>setMode('nisar')));
+  if(!byId.ml_lc_change) document.getElementById('n-lc').hidden=true;
+  if(M.ml_lc){ const r=M.ml_lc, a=r['NISAR only'], b=r['NISAR + terrain'];
+    document.getElementById('lctable').innerHTML='<tr><th>Inputs</th><th>Accuracy</th><th>Kappa</th><th>Macro F1</th></tr>'+
+      [['NISAR only',a],['NISAR + terrain',b]].filter(x=>x[1]).map(([k,v])=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td><td class="n">${Math.round(v.overall_accuracy*100)}%</td><td class="n">${v.kappa.toFixed(2)}</td><td class="n">${v.macro_F1.toFixed(2)}</td></tr>`).join('');
+    if(b&&b.F1_per_class) document.getElementById('lcnote').textContent='Per-class F1 (NISAR + terrain): '+Object.entries(b.F1_per_class).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(' · ')+'. Scores from 5 km block cross-validation. Disagreement can also come from errors in the 2020 map, so treat change pixels as places to check.'+(r.note?' '+r.note:''); }
   const mlfam=document.getElementById('mlfam'), mlsl=document.getElementById('mlslider');
   function mllist(){return byFam[mlfam.value]||[]}
   function mlcurrent(){return mllist()[+mlsl.value]}

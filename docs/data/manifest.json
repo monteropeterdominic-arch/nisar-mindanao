@@ -2863,6 +2863,126 @@
     "max": 4,
     "unit": " dB"
    }
+  },
+  {
+   "id": "ml_lc_change",
+   "family": "static",
+   "group": "ml_lc",
+   "label": "Possible land-cover change since 2020 (NISAR model)",
+   "file": "data/img/ml_lc_change.webp",
+   "legend": {
+    "type": "classes",
+    "items": [
+     [
+      "#7b2d26",
+      "Forest \u2192 non-forest"
+     ],
+     [
+      "#d0453a",
+      "Vegetation \u2192 built-up/bare"
+     ],
+     [
+      "#3a86c8",
+      "Land \u2192 water"
+     ],
+     [
+      "#f2c46d",
+      "Other class change"
+     ],
+     [
+      "#e8e4d8",
+      "Agrees with 2020 (or low confidence)"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml_lc_2026",
+   "family": "static",
+   "group": "ml_lc",
+   "label": "NISAR land cover 2026 (model)",
+   "file": "data/img/ml_lc_2026.webp",
+   "legend": {
+    "type": "classes",
+    "items": [
+     [
+      "#1b5e20",
+      "Closed forest"
+     ],
+     [
+      "#4caf50",
+      "Open forest & mangrove"
+     ],
+     [
+      "#a5d66f",
+      "Brush/shrubs"
+     ],
+     [
+      "#e6d77a",
+      "Grassland"
+     ],
+     [
+      "#f4a259",
+      "Annual crop"
+     ],
+     [
+      "#c58b3c",
+      "Perennial crop (coconut, banana\u2026)"
+     ],
+     [
+      "#d0453a",
+      "Built-up & barren"
+     ],
+     [
+      "#3a86c8",
+      "Water & fishpond"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml_lc_2020",
+   "family": "static",
+   "group": "ml_lc",
+   "label": "2020 land-cover map (training labels)",
+   "file": "data/img/ml_lc_2020.webp",
+   "legend": {
+    "type": "classes",
+    "items": [
+     [
+      "#1b5e20",
+      "Closed forest"
+     ],
+     [
+      "#4caf50",
+      "Open forest & mangrove"
+     ],
+     [
+      "#a5d66f",
+      "Brush/shrubs"
+     ],
+     [
+      "#e6d77a",
+      "Grassland"
+     ],
+     [
+      "#f4a259",
+      "Annual crop"
+     ],
+     [
+      "#c58b3c",
+      "Perennial crop (coconut, banana\u2026)"
+     ],
+     [
+      "#d0453a",
+      "Built-up & barren"
+     ],
+     [
+      "#3a86c8",
+      "Water & fishpond"
+     ]
+    ]
+   }
   }
  ],
  "aoi_monthly": [
@@ -3179,5 +3299,236 @@
    "hls_clear_pct_of_those": 19.5,
    "cloud_gap_filled_px": 486187
   }
+ },
+ "ml_lc": {
+  "NISAR only": {
+   "overall_accuracy": 0.494,
+   "kappa": 0.422,
+   "macro_F1": 0.495,
+   "F1_per_class": {
+    "Closed forest": 0.56,
+    "Open forest & mangrove": 0.41,
+    "Brush/shrubs": 0.33,
+    "Grassland": 0.43,
+    "Annual crop": 0.39,
+    "Perennial crop": 0.45,
+    "Built-up & barren": 0.51,
+    "Water & fishpond": 0.9
+   },
+   "confusion": [
+    [
+     8736,
+     4415,
+     1330,
+     94,
+     48,
+     85,
+     292,
+     0
+    ],
+    [
+     5020,
+     6244,
+     2457,
+     197,
+     202,
+     375,
+     498,
+     7
+    ],
+    [
+     1509,
+     2974,
+     4977,
+     965,
+     1103,
+     2202,
+     1252,
+     18
+    ],
+    [
+     191,
+     444,
+     1521,
+     6041,
+     3047,
+     2131,
+     1241,
+     384
+    ],
+    [
+     51,
+     236,
+     1307,
+     3578,
+     5599,
+     2388,
+     1287,
+     554
+    ],
+    [
+     116,
+     583,
+     2598,
+     1067,
+     2013,
+     6920,
+     1606,
+     97
+    ],
+    [
+     657,
+     749,
+     1280,
+     1093,
+     1356,
+     1791,
+     7336,
+     738
+    ],
+    [
+     0,
+     1,
+     1,
+     282,
+     475,
+     139,
+     295,
+     13094
+    ]
+   ],
+   "labels": [
+    "Closed forest",
+    "Open forest & mangrove",
+    "Brush/shrubs",
+    "Grassland",
+    "Annual crop",
+    "Perennial crop",
+    "Built-up & barren",
+    "Water & fishpond"
+   ]
+  },
+  "NISAR + terrain": {
+   "overall_accuracy": 0.627,
+   "kappa": 0.574,
+   "macro_F1": 0.63,
+   "F1_per_class": {
+    "Closed forest": 0.67,
+    "Open forest & mangrove": 0.52,
+    "Brush/shrubs": 0.43,
+    "Grassland": 0.55,
+    "Annual crop": 0.49,
+    "Perennial crop": 0.62,
+    "Built-up & barren": 0.83,
+    "Water & fishpond": 0.93
+   },
+   "confusion": [
+    [
+     10018,
+     4168,
+     684,
+     86,
+     26,
+     17,
+     1,
+     0
+    ],
+    [
+     4093,
+     7865,
+     2310,
+     237,
+     270,
+     182,
+     31,
+     12
+    ],
+    [
+     695,
+     2506,
+     6418,
+     1562,
+     1415,
+     2286,
+     115,
+     3
+    ],
+    [
+     131,
+     331,
+     1851,
+     8256,
+     3047,
+     1192,
+     145,
+     47
+    ],
+    [
+     38,
+     288,
+     1373,
+     3854,
+     7271,
+     1307,
+     528,
+     341
+    ],
+    [
+     10,
+     199,
+     2038,
+     921,
+     1231,
+     9584,
+     946,
+     71
+    ],
+    [
+     2,
+     44,
+     197,
+     228,
+     725,
+     1036,
+     12212,
+     556
+    ],
+    [
+     0,
+     1,
+     1,
+     105,
+     412,
+     92,
+     464,
+     13212
+    ]
+   ],
+   "labels": [
+    "Closed forest",
+    "Open forest & mangrove",
+    "Brush/shrubs",
+    "Grassland",
+    "Annual crop",
+    "Perennial crop",
+    "Built-up & barren",
+    "Water & fishpond"
+   ]
+  },
+  "change_km2": {
+   "agrees": 4530.3,
+   "forest_to_nonforest": 22.8,
+   "veg_to_builtup_bare": 103.9,
+   "land_to_water": 15.3,
+   "other": 582.4
+  },
+  "landslide_overlap": {
+   "candidate_px": 1833,
+   "with_nisar": 1833,
+   "flagged_as_change": 511,
+   "pct": 27.9,
+   "background_change_pct": 13.8
+  },
+  "note": "Grouped into 4 classes (forest, other vegetation, built-up/bare, water) the NISAR + terrain model is right 88% of the time (kappa 0.82), and separates forest from non-forest 93% of the time (89% from NISAR alone); accuracies are on class-balanced test samples. Of 5,255 km2 mapped, 86% agrees with 2020; possible changes: forest to non-forest 23 km2, vegetation to built-up/bare 104 km2, land to water 15 km2. Optical landslide pixels were flagged as radar change twice as often as average land (28% vs 14%)."
  }
 }

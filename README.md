@@ -8,6 +8,10 @@ An interactive Mapbox GL JS map on the Mapbox Standard style, with an earthquake
 
 To publish it: Settings > Pages > Deploy from a branch > `main` / `/docs`. The map needs a public Mapbox token: put it in `docs/config.js`, or paste it when the page asks. Restrict the token to your Pages URL in your Mapbox account.
 
+### Machine learning (NISAR at the centre)
+1. **Radar to vegetation**: gradient-boosted trees predict Landsat HLS EVI and NDMI from NISAR HH/HV (plus texture) and SRTM terrain, trained on 168k pixels where both sensors saw the ground within 8 days. 5 km spatial block cross-validation: EVI R2 0.37 (NISAR only 0.24, terrain only 0.12); NDMI R2 0.32 (NISAR only 0.24, terrain only 0.01). Used to map vegetation and moisture on every NISAR date under cloud.
+2. **Land-cover change**: a classifier learns the 2020 land-cover map (8 classes) from June-October NISAR statistics plus terrain. Block CV: 63% (8 classes, kappa 0.57), 88% when grouped into forest / other vegetation / built-up-bare / water, 93% forest vs non-forest (89% NISAR only). Confident disagreement with 2020 is mapped as possible change; optical landslide pixels are flagged as radar change at twice the background rate (28% vs 14%).
+
 ## geotiff_30m/ : full coverage of the boundary
 | File | Meaning |
 |---|---|
