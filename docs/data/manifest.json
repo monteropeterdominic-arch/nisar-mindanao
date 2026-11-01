@@ -2114,6 +2114,380 @@
     "max": 45,
     "unit": "\u00b0"
    }
+  },
+  {
+   "id": "nisar_hv_20260628",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-06-28",
+   "file": "data/img/nisar_hv_20260628.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-06-28",
+   "end": "2026-06-28"
+  },
+  {
+   "id": "nisar_hv_20260920",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-09-20",
+   "file": "data/img/nisar_hv_20260920.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-20",
+   "end": "2026-09-20"
+  },
+  {
+   "id": "nisar_hv_20260923",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-09-23",
+   "file": "data/img/nisar_hv_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-23",
+   "end": "2026-09-23"
+  },
+  {
+   "id": "nisar_hv_20260925",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-09-25",
+   "file": "data/img/nisar_hv_20260925.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-25",
+   "end": "2026-09-25"
+  },
+  {
+   "id": "nisar_hv_20260930",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-09-30",
+   "file": "data/img/nisar_hv_20260930.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-09-30",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "nisar_hv_20261014",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-10-14",
+   "file": "data/img/nisar_hv_20261014.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-10-14",
+   "end": "2026-10-14"
+  },
+  {
+   "id": "nisar_hv_20261017",
+   "family": "nisar_hv",
+   "group": "nisar_hv",
+   "label": "NISAR HV backscatter 2026-10-17",
+   "file": "data/img/nisar_hv_20261017.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#0b1d2e",
+     "#1f4e5f",
+     "#4f8a5b",
+     "#a9c97f",
+     "#f0f3d6"
+    ],
+    "min": -22,
+    "max": -8,
+    "unit": " dB"
+   },
+   "start": "2026-10-17",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "nisar_hh_20260628",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-06-28",
+   "file": "data/img/nisar_hh_20260628.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-06-28",
+   "end": "2026-06-28"
+  },
+  {
+   "id": "nisar_hh_20260920",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-09-20",
+   "file": "data/img/nisar_hh_20260920.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-20",
+   "end": "2026-09-20"
+  },
+  {
+   "id": "nisar_hh_20260923",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-09-23",
+   "file": "data/img/nisar_hh_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-23",
+   "end": "2026-09-23"
+  },
+  {
+   "id": "nisar_hh_20260925",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-09-25",
+   "file": "data/img/nisar_hh_20260925.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-25",
+   "end": "2026-09-25"
+  },
+  {
+   "id": "nisar_hh_20260930",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-09-30",
+   "file": "data/img/nisar_hh_20260930.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-09-30",
+   "end": "2026-09-30"
+  },
+  {
+   "id": "nisar_hh_20261017",
+   "family": "nisar_hh",
+   "group": "nisar_hh",
+   "label": "NISAR HH backscatter 2026-10-17",
+   "file": "data/img/nisar_hh_20261017.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#1c1f33",
+     "#3d4f7a",
+     "#6f8fb0",
+     "#c7d6c0",
+     "#fbf5e3"
+    ],
+    "min": -14,
+    "max": -2,
+    "unit": " dB"
+   },
+   "start": "2026-10-17",
+   "end": "2026-10-17"
+  },
+  {
+   "id": "nisar_chg_hh_039A005_20260628",
+   "family": "static",
+   "group": "nisar",
+   "label": "NISAR HH change, track 39 ascending frame 5: 28 Jun \u2192 20 Sep",
+   "file": "data/img/nisar_chg_hh_039A005_20260628.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " dB"
+   }
+  },
+  {
+   "id": "nisar_chg_hh_075D086_20260923",
+   "family": "static",
+   "group": "nisar",
+   "label": "NISAR HH change, track 75 descending frame 86: 23 Sep \u2192 17 Oct",
+   "file": "data/img/nisar_chg_hh_075D086_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " dB"
+   }
+  },
+  {
+   "id": "nisar_chg_hv_039A004_20260920",
+   "family": "static",
+   "group": "nisar",
+   "label": "NISAR HV change, track 39 ascending frame 4: 20 Sep \u2192 14 Oct",
+   "file": "data/img/nisar_chg_hv_039A004_20260920.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " dB"
+   }
+  },
+  {
+   "id": "nisar_chg_hv_075D085_20260923",
+   "family": "static",
+   "group": "nisar",
+   "label": "NISAR HV change, track 75 descending frame 85: 23 Sep \u2192 17 Oct",
+   "file": "data/img/nisar_chg_hv_075D085_20260923.webp",
+   "legend": {
+    "type": "ramp",
+    "colors": [
+     "#8c510a",
+     "#d8b365",
+     "#f6e8c3",
+     "#f5f5f5",
+     "#c7eae5",
+     "#5ab4ac",
+     "#01665e"
+    ],
+    "min": -4,
+    "max": 4,
+    "unit": " dB"
+   }
   }
  ],
  "aoi_monthly": [
