@@ -76,6 +76,11 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible,su
 .legend li{display:flex;gap:8px;align-items:center}
 .sw{width:16px;height:16px;border-radius:4px;flex:none;border:1px solid rgba(0,0,0,.18)}
 .vnote{font-size:14px;margin:0}
+.seen{margin:8px 0 0;font-size:12.5px;color:var(--ink2)} .seen b{color:var(--navy)}
+.sats{display:grid;gap:6px}
+.sats div{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start;font-size:13px}
+.sats i{font-style:normal;font-size:18px;text-align:center}
+.sats b{color:var(--navy)}
 .big{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .big div{background:var(--card);border:1px solid #d6c8a6;border-radius:8px;padding:8px 10px}
 .big b{display:block;font:400 24px var(--display);color:var(--quake);font-variant-numeric:tabular-nums}
@@ -267,9 +272,10 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       <div class="views" data-views="radar"></div>
       <div class="box legend" data-legend="radar"></div>
       <p class="vnote" data-vnote="radar"></p>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>NISAR:</b> NASA and India (ISRO), launched 2025. An L-band radar that sees through clouds. Pictures from 28 June to 19 October 2026.</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Its camera pictures taught the AI plant map.</span></div></div></div>
       <details><summary>For grown-ups: how this works</summary>
         <p>NISAR L2 GCOV (NASA-ISRO, provisional): HH and HV backscatter from 10 m multilooked to 30 m. Each month averages every pass in power: September (4 passes) and October (3 dates, 7 frames) each cover both provinces. June (one pass, 28 June) is left out of the monthly view.</p>
-        <p>"What changed" compares two passes on the same orbit track and frame, so the viewing angle is identical. 28 Jun → 20 Sep: HH fell a median 0.55 dB (drying). 20–25 Sep → 14–19 Oct: HH rose by up to 1.05 dB as rain returned (28 mm in August, 68 mm in September, 122 mm in October, GPM IMERG).</p>
+        <p>"What changed" (September → October): for every same-track, same-frame pair (20/23/25 Sep → 14/17/19 Oct), the later pass minus the earlier in dB, then averaged per pixel: 5 HH pairs (99.9% of the area, median +0.46 dB, 10% rose by more than 2 dB) and 3 HV pairs (87%, median +0.34 dB). Same geometry in each pair, so the change is on the ground. It matches the rain record: 28 mm in August, 68 mm in September, 122 mm in October (GPM IMERG). The single-pass pairs from 28 June are in the data repository.</p>
         <p>"AI plant map": gradient-boosted trees learned Landsat EVI and NDMI from NISAR HH/HV, texture and SRTM terrain (168,000 pixels seen by both within 8 days). 5 km block cross-validation:</p>
         <table class="mlt" id="mltable"></table>
         <p>"Land types": a classifier learned the 2020 land-cover map from June–October NISAR statistics plus terrain, then mapped 2026. Confident disagreement with 2020 is shown as possible change.</p>
@@ -313,6 +319,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <text x="20" y="80">sea floor slides under</text><text x="200" y="104">★ quake started here</text><text x="220" y="38">coast pushed up</text>
       </svg>
       </div>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Camera pictures before and after the quake show where hills turned bare (HLS, 30 m).</span></div><div><i>🚀</i><span><b>SRTM:</b> A radar flown on the Space Shuttle Endeavour in 2000. It measured how high and steep the land is.</span></div></div></div>
       <details><summary>For grown-ups: how the landslides were found</summary>
         <p>Landsat HLS EVI before (1 Mar – 7 Jun 2026) and after (9 Jun – 25 Sep 2026). A spot counts when the slope is at least 20°, EVI fell from at least 0.35 to at most 0.20, and the drop is at least 0.25 more than the normal seasonal change seen in 2025 (sieve ≥ 3 pixels). Two thirds of the area is south of 5.9°N, around Glan (about 31 ha) and Jose Abad Santos (about 63 ha). PhilSA estimated about 138 ha. Spots get far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). About 30% of the area could not be checked because every view was cloudy. Not field-checked: heavy rain or land clearing can look like a slide.</p>
         <p>Event: Mw 7.8, epicentre 5.60°N 125.06°E, depth 33 km (PHIVOLCS) or 57 km (USGS), thrust faulting at the Cotabato Trench. Tsunami 1.48 m on the Kiamba tide gauge; about 138,500 homes damaged (NDRRMC, 21 July); more than 8,500 aftershocks.</p>
@@ -343,6 +350,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <svg id="chart" viewBox="0 0 320 150" width="100%" role="img" aria-label="Monthly average plant greenness and ground temperature"></svg>
         <p class="note" style="margin:0">Green line: how green the plants are. Red line: how hot the ground is in the day. In April 2026, plants were the least green and the ground was very hot.</p>
       </div>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Terra (MODIS):</b> A NASA satellite that sees the whole area every day: plant greenness (250 m) and ground heat (1 km).</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> Sharper pictures (30 m) for plant water and water on land.</span></div><div><i>🛰</i><span><b>GPM:</b> NASA and Japan (JAXA) rain satellites: how much rain fell each month.</span></div></div></div>
       <details><summary>For grown-ups: the data</summary>
         <p>Plants: MODIS MOD13Q1 NDVI, monthly maximum, 250 m. Ground heat: MODIS MOD11A2 daytime land surface temperature, 1 km. "Compare with last year" is 2026 minus the same month in 2025. Plant water (NDMI) and water on land (NDWI) are quarterly medians of Landsat HLS L30, 30 m.</p>
       </details>
@@ -366,6 +374,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <p class="note" style="margin:0" id="rainnote"></p>
       </div>
       <div class="box"><h3>💧 Water</h3><p class="note" style="margin:0" id="waternote"></p></div>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Terra (MODIS):</b> 26 years of plant greenness and ground heat, 2000–2026, to learn from past El Niños.</span></div><div><i>🛰</i><span><b>GPM (and TRMM before it):</b> Rain since 1998.</span></div><div><i>🌊</i><span><b>Ocean temperature (NOAA):</b> The El Niño number (ONI) from ships, buoys and satellites over the Pacific.</span></div></div></div>
       <details><summary>For grown-ups: can we trust it?</summary>
         <p>We hid each past El Niño, predicted it from the others, then checked.</p>
         <table class="mlt" id="hindtable"></table>
@@ -461,38 +470,40 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   const CHG=M.layers.filter(l=>l.group==='nisar'&&/_hh_/.test(l.id)).map(l=>{const m=l.id.match(/_(\d{8})_(\d{8})$/);return {l,a:m[1],b:m[2]}}).sort((x,y)=>(x.a+x.b).localeCompare(y.a+y.b));
   const TOPICS={
     radar:{views:[
-      {id:'hv',chip:'🌳 Trees & plants',steps:monthly('nisarm_hv'),lo:'water, bare ground or shadow',hi:'thick trees and leaves',
+      {id:'hv',chip:'🌳 Trees & plants',sat:'NISAR',steps:monthly('nisarm_hv'),lo:'water, bare ground or shadow',hi:'thick trees and leaves',
         note:'Bright places have lots of trees and leaves. Dark places are water, bare ground, or the shady side of a hill.'},
-      {id:'hh',chip:'💧 Wet ground',steps:monthly('nisarm_hh'),lo:'dry and smooth',hi:'wet or bumpy',
+      {id:'hh',chip:'💧 Wet ground',sat:'NISAR',steps:monthly('nisarm_hh'),lo:'dry and smooth',hi:'wet or bumpy',
         note:'Brighter ground is wetter or bumpier. In October the rain came back, so many places got brighter.'},
-      {id:'ai',chip:'🤖 AI plant map',steps:monthly('mlm_evi'),lo:'few plants',hi:'lots of plants',
+      {id:'ai',chip:'🤖 AI plant map',sat:'NISAR, taught by Landsat 8 & 9',steps:monthly('mlm_evi'),lo:'few plants',hi:'lots of plants',
         note:'A computer learned to turn radar into a plant map, so we can see plants even under the clouds. It gets the big picture right, not every field.'},
-      {id:'chg',chip:'🔄 What changed',steps:()=>CHG.map(c=>({l:c.l,label:`${pairDate(c.a)} → ${pairDate(c.b)}`,short:`${pairDate(c.a)}→${pairDate(c.b)}`,sub:c.l.label.replace(/^NISAR HH change, /,'')})),lo:'got drier',hi:'got wetter',
-        note:'The satellite looked at the same place twice from the same spot in space. Brown got drier; teal got wetter. From June to September the ground dried out; in October it got wet again.'},
-      {id:'lc',chip:'🗺 Land types',steps:()=>[[byId.ml_lc_2020,'2020 map','2020'],[byId.ml_lc_2026,'2026, seen by radar AI','2026'],[byId.ml_lc_change,'What changed since 2020','Changed']].filter(x=>x[0]).map(([l,label,short])=>({l,label,short})),
+      {id:'chg',chip:'🔄 What changed',sat:'NISAR',start:0,steps:()=>[[byId.nisarmchg_hh,'Wet ground: September → October','Wet ground'],[byId.nisarmchg_hv,'Plants: September → October','Plants']].filter(x=>x[0]).map(([l,label,short])=>({l,label,short})),
+        lo:{nisarmchg_hh:'got drier',nisarmchg_hv:'fewer leaves'},hi:{nisarmchg_hh:'got wetter',nisarmchg_hv:'more leaves'},
+        note:{nisarmchg_hh:'How the ground changed from September to October. The satellite looks at each place from the same spot in space both months. Teal got wetter, brown got drier. The rain came back in October, so most of the land got wetter.',
+              nisarmchg_hv:'How the plants changed from September to October. Teal has more leaves and branches echoing back, brown has fewer. Big brown patches can be cleared land or harvested fields.'}},
+      {id:'lc',chip:'🗺 Land types',sat:'NISAR, taught by the 2020 land map',steps:()=>[[byId.ml_lc_2020,'2020 map','2020'],[byId.ml_lc_2026,'2026, seen by radar AI','2026'],[byId.ml_lc_change,'What changed since 2020','Changed']].filter(x=>x[0]).map(([l,label,short])=>({l,label,short})),
         note:'Forest, farms, towns and water. The AI made the 2026 map from radar alone. "What changed" shows places that may be different from 2020; they are places to check, not proof.'}]},
     quake:{views:[
-      {id:'slides',chip:'⛰ Landslides',steps:()=>[[byId.eq_evi_pre,'Before the quake (Mar – 7 Jun)','Before'],[byId.eq_evi_post,'After the quake (9 Jun – Sep)','After'],[byId.eq_evi_excess,'What changed','Changed']].map(([l,label,short])=>({l,label,short})),start:2,
+      {id:'slides',chip:'⛰ Landslides',sat:'Landsat 8 & 9',steps:()=>[[byId.eq_evi_pre,'Before the quake (Mar – 7 Jun)','Before'],[byId.eq_evi_post,'After the quake (9 Jun – Sep)','After'],[byId.eq_evi_excess,'What changed','Changed']].map(([l,label,short])=>({l,label,short})),start:2,
         lo:{eq_evi_excess:'lost plants'}, hi:{eq_evi_excess:'gained plants'}, lo2:'few plants', hi2:'lots of plants',
         note:{eq_evi_pre:'How green the land was before the earthquake.',eq_evi_post:'How green the land was after the earthquake. Look for hills that turned bare.',eq_evi_excess:'Brown shows where plants were lost after the quake, more than in a normal year. The red spots are steep hills that turned bare: possible landslides. Tap one.'}},
-      {id:'slope',chip:'📐 Steep hills',steps:()=>[{l:byId.slope,label:'How steep the land is',short:''}],lo:'flat',hi:'very steep',
+      {id:'slope',chip:'📐 Steep hills',sat:'SRTM (Space Shuttle radar)',steps:()=>[{l:byId.slope,label:'How steep the land is',short:''}],lo:'flat',hi:'very steep',
         note:'Landslides happen most on steep hills (dark red). Most possible slides are on slopes steeper than 25°.'},
-      {id:'check',chip:'☁ Where we could look',steps:()=>[{l:byId.eq_classes,label:'Where the check was possible',short:''}],
+      {id:'check',chip:'☁ Where we could look',sat:'Landsat 8 & 9',steps:()=>[{l:byId.eq_classes,label:'Where the check was possible',short:''}],
         note:'Satellites with cameras cannot see through clouds. Blue places were cloudy every time, so we could not check them.'}]},
     nino:{views:[
-      {id:'green',chip:'🌿 Green plants',steps:monthly('ndvi'),alt:monthly('ndvi_anom'),lo:'few plants',hi:'lots of plants',altlo:'browner than last year',althi:'greener than last year',
+      {id:'green',chip:'🌿 Green plants',sat:'Terra (MODIS)',steps:monthly('ndvi'),alt:monthly('ndvi_anom'),lo:'few plants',hi:'lots of plants',altlo:'browner than last year',althi:'greener than last year',
         note:'Darker green means more healthy plants. Press ▶ and watch April 2026: the land got less green in the dry spell.',altnote:'Brown places are less green than the same month in 2025.'},
-      {id:'heat',chip:'🔥 Hot ground',steps:monthly('lst'),alt:monthly('lst_anom'),lo:'cooler',hi:'hotter',altlo:'cooler than last year',althi:'hotter than last year',
+      {id:'heat',chip:'🔥 Hot ground',sat:'Terra (MODIS)',steps:monthly('lst'),alt:monthly('lst_anom'),lo:'cooler',hi:'hotter',altlo:'cooler than last year',althi:'hotter than last year',
         note:'How hot the ground gets in the daytime. Red is hotter.',altnote:'Red places are hotter than the same month in 2025; blue are cooler.'},
-      {id:'pwater',chip:'🍃 Plant water',steps:()=>fam('ndmi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'thirsty plants',hi:'plants full of water',
+      {id:'pwater',chip:'🍃 Plant water',sat:'Landsat 8 & 9',steps:()=>fam('ndmi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'thirsty plants',hi:'plants full of water',
         note:'Plants hold water in their leaves. Brown plants are thirsty. Each step is three months.'},
-      {id:'water',chip:'🌊 Water on land',steps:()=>fam('ndwi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'dry land',hi:'water',
+      {id:'water',chip:'🌊 Water on land',sat:'Landsat 8 & 9',steps:()=>fam('ndwi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'dry land',hi:'water',
         note:'Dark blue is water: the sea, rivers, ponds and fishponds. Each step is three months.'}]},
     next:{views:[
-      {id:'plants',chip:'🍂 Plants',steps:monthly('out_evi'),start:5,lo:'browner than normal',hi:'greener than normal'},
-      {id:'chance',chip:'🎲 Chance of brown',steps:monthly('out_pb'),start:5,lo:'unlikely',hi:'very likely'},
-      {id:'hot',chip:'🌡 Hot ground',steps:monthly('out_lst'),start:5,lo:'cooler than normal',hi:'hotter than normal'},
-      {id:'risk',chip:'⚠ Dries first',steps:()=>[{l:byId.out_sens,label:'Places that dry out most in El Niño',short:''}],lo:'dries the most',hi:'hardly changes',
+      {id:'plants',chip:'🍂 Plants',sat:'Terra (MODIS), 2000–2026',steps:monthly('out_evi'),start:5,lo:'browner than normal',hi:'greener than normal'},
+      {id:'chance',chip:'🎲 Chance of brown',sat:'Terra (MODIS), 2000–2026',steps:monthly('out_pb'),start:5,lo:'unlikely',hi:'very likely'},
+      {id:'hot',chip:'🌡 Hot ground',sat:'Terra (MODIS), 2000–2026',steps:monthly('out_lst'),start:5,lo:'cooler than normal',hi:'hotter than normal'},
+      {id:'risk',chip:'⚠ Dries first',sat:'Terra (MODIS), 2000–2026',steps:()=>[{l:byId.out_sens,label:'Places that dry out most in El Niño',short:''}],lo:'dries the most',hi:'hardly changes',
         note:'In past El Niños, the brown places lost the most green. Farms, grass and young trees there may need help first.'}]}
   };
   Object.values(TOPICS).forEach(t=>t.views=t.views.filter(v=>{try{const s=v.steps();return s.length&&s.every(x=>x.l)}catch(e){return false}}));
@@ -592,13 +603,13 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     const {t,vi,v,steps,key,useAlt,i}=cur(), s=steps[i], l=s.l, k=state.topic;
     document.querySelectorAll(`[data-views="${k}"] button`).forEach((b,j)=>b.setAttribute('aria-pressed',j===vi));
     const lo=useAlt?v.altlo:(pick(v.lo,l)||v.lo2), hi=useAlt?v.althi:(pick(v.hi,l)||v.hi2);
-    document.querySelector(`[data-legend="${k}"]`).innerHTML=`<h3>What the colours mean</h3>`+legendHTML(l,lo,hi);
+    document.querySelector(`[data-legend="${k}"]`).innerHTML=`<h3>What the colours mean</h3>`+legendHTML(l,lo,hi)+(v.sat?`<p class="seen">🛰 Seen by: <b>${v.sat}</b></p>`:'');
     document.querySelector(`[data-vnote="${k}"]`).textContent=(useAlt?v.altnote:pick(v.note,l))||outlookNote(v.id,i)||'';
     document.getElementById('cmpRow').hidden=!(k==='nino'&&v.alt);
     document.getElementById('spotsRow').hidden=k!=='quake';
     // time frame
     document.getElementById('when').textContent=s.label;
-    document.getElementById('whatnow').textContent=(s.sub?s.sub+' · ':'')+v.chip.replace(/^\S+\s/,'');
+    document.getElementById('whatnow').textContent=v.chip.replace(/^\S+\s/,'')+(v.sat?' · 🛰 '+v.sat.replace(/, .*/,''):'');
     stepsEl.innerHTML=''; const many=steps.length>12;
     steps.forEach((st,j)=>{const b=document.createElement('button');b.setAttribute('aria-current',j===i);b.setAttribute('aria-label',st.label);b.title=st.label;
       const show=!many||j===0||j===steps.length-1||j===i||/^Jan/.test(st.short);
