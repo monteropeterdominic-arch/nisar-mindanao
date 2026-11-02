@@ -19,7 +19,7 @@
 <style>
 /* Layout (from the team's sketch): a framed full-screen 3D map; a left column of four topic cards (F1–F4);
    compass top-right; a 3D button and a TIMEFRAME bar along the bottom of the map; About in the bottom-left corner.
-   Words are written so a child can follow; the science sits in "For grown-ups" boxes. */
+   Words are written so a child can follow; the science sits in "More info" boxes. */
 :root{
   --parch:#ece5d8; --parch2:#e2d9c6; --card:#f6f1e6; --ink:#3b4255; --ink2:#5f6575; --navy:#283044; --navy2:#1c2232;
   --gold:#d3bc8e; --gold2:#b89a5e; --teal:#3fb7b0; --quake:#d0453a; --leaf:#4f9a4a; --sun:#e8a33a; --sky:#5aa9d6;
@@ -286,7 +286,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       <div class="box legend" data-legend="radar"></div>
       <p class="vnote" data-vnote="radar"></p>
       <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>NISAR:</b> NASA and India (ISRO), launched 2025. An L-band radar that sees through clouds. Pictures from 28 June to 19 October 2026.</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Its camera pictures taught the AI plant map.</span></div></div></div>
-      <details><summary>For grown-ups: how this works</summary>
+      <details><summary>ℹ More info: how it works</summary>
         <p>NISAR L2 GCOV (NASA-ISRO, provisional): HH and HV backscatter from 10 m multilooked to 30 m. Each month averages every pass in power: September (4 passes) and October (3 dates, 7 frames) each cover both provinces. June (one pass, 28 June) is left out of the monthly view.</p>
         <p>"What changed" (September → October): for every same-track, same-frame pair (20/23/25 Sep → 14/17/19 Oct), the later pass minus the earlier in dB, then averaged per pixel: 5 HH pairs (99.9% of the area, median +0.46 dB, 10% rose by more than 2 dB) and 3 HV pairs (87%, median +0.34 dB). Same geometry in each pair, so the change is on the ground. It matches the rain record: 28 mm in August, 68 mm in September, 122 mm in October (GPM IMERG). The single-pass pairs from 28 June are in the data repository.</p>
         <p>"AI plant map": gradient-boosted trees learned Landsat EVI and NDMI from NISAR HH/HV, texture and SRTM terrain (168,000 pixels seen by both within 8 days). 5 km block cross-validation:</p>
@@ -333,7 +333,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       </svg>
       </div>
       <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Camera pictures before and after the quake show where hills turned bare (HLS, 30 m).</span></div><div><i>🚀</i><span><b>SRTM:</b> A radar flown on the Space Shuttle Endeavour in 2000. It measured how high and steep the land is.</span></div></div></div>
-      <details><summary>For grown-ups: how the landslides were found</summary>
+      <details><summary>ℹ More info: how we found the landslides</summary>
         <p>Landsat HLS EVI before (1 Mar – 7 Jun 2026) and after (9 Jun – 25 Sep 2026). A spot counts when the slope is at least 20°, EVI fell from at least 0.35 to at most 0.20, and the drop is at least 0.25 more than the normal seasonal change seen in 2025 (sieve ≥ 3 pixels). Two thirds of the area is south of 5.9°N, around Glan (about 31 ha) and Jose Abad Santos (about 63 ha). PhilSA estimated about 138 ha. Spots get far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). About 30% of the area could not be checked because every view was cloudy. Not field-checked: heavy rain or land clearing can look like a slide.</p>
         <p>Event: Mw 7.8, epicentre 5.60°N 125.06°E, depth 33 km (PHIVOLCS) or 57 km (USGS), thrust faulting at the Cotabato Trench. Tsunami 1.48 m on the Kiamba tide gauge; about 138,500 homes damaged (NDRRMC, 21 July); more than 8,500 aftershocks.</p>
       </details>
@@ -364,7 +364,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <p class="note" style="margin:0">Green line: how green the plants are. Red line: how hot the ground is in the day. In April 2026, plants were the least green and the ground was very hot.</p>
       </div>
       <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Terra (MODIS):</b> A NASA satellite that sees the whole area every day: plant greenness (250 m) and ground heat (1 km).</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> Sharper pictures (30 m) for plant water and water on land.</span></div><div><i>🛰</i><span><b>GPM:</b> NASA and Japan (JAXA) rain satellites: how much rain fell each month.</span></div></div></div>
-      <details><summary>For grown-ups: the data</summary>
+      <details><summary>ℹ More info: the data</summary>
         <p>Plants: MODIS MOD13Q1 NDVI, monthly maximum, 250 m. Ground heat: MODIS MOD11A2 daytime land surface temperature, 1 km. "Compare with last year" is 2026 minus the same month in 2025. Plant water (NDMI) and water on land (NDWI) are quarterly medians of Landsat HLS L30, 30 m.</p>
       </details>
     </div>
@@ -388,7 +388,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       </div>
       <div class="box"><h3>💧 Water</h3><p class="note" style="margin:0" id="waternote"></p></div>
       <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Terra (MODIS):</b> 26 years of plant greenness and ground heat, 2000–2026, to learn from past El Niños.</span></div><div><i>🛰</i><span><b>GPM (and TRMM before it):</b> Rain since 1998.</span></div><div><i>🌊</i><span><b>Ocean temperature (NOAA):</b> The El Niño number (ONI) from ships, buoys and satellites over the Pacific.</span></div></div></div>
-      <details><summary>For grown-ups: can we trust it?</summary>
+      <details><summary>ℹ More info: can we trust it?</summary>
         <p>We hid each past El Niño, predicted it from the others, then checked.</p>
         <table class="mlt" id="hindtable"></table>
         <p id="hindnote"></p>
@@ -662,7 +662,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     play.textContent='❚❚'; play.setAttribute('aria-label','Pause');
     timer=setInterval(()=>{const c=cur(); state.idx[c.key]=(c.i+1)%c.steps.length; render()},1300)});
 
-  // ---------- AI scores (grown-up boxes) ----------
+  // ---------- AI scores (More info boxes) ----------
   if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td>`:'<td>–</td>'};
     document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>NDMI R²</th></tr>'+
       ['Terrain only','NISAR only','NISAR + terrain'].map(k=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td>${row('EVI',k)}${row('NDMI',k)}</tr>`).join(''); }
