@@ -1,0 +1,17 @@
+{
+ "name": "Sarangani & Davao Occidental Land Watch",
+ "short_name": "Land Watch",
+ "start_url": "./",
+ "display": "fullscreen",
+ "orientation": "any",
+ "background_color": "#283044",
+ "theme_color": "#283044",
+ "icons": [
+  {
+   "src": "icon.svg",
+   "sizes": "any",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  }
+ ]
+}

@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#283044">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Sarangani & Davao Occidental Land Watch</title>
 <meta name="description" content="An easy map of Sarangani and Davao Occidental: NASA-ISRO NISAR space radar, the 8 June 2026 earthquake, the El Niño dry spell and what may happen in the next 12 months. NASA Space Apps 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +32,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none}
+body{position:fixed;inset:0;width:100%;height:100%;height:100dvh}
 body{font:15px/1.45 var(--body);color:var(--ink);background:#9fd3e6}
 #map{position:absolute;inset:0;overflow:hidden}
 #fx{position:absolute;inset:0;pointer-events:none;z-index:1}
@@ -196,6 +202,13 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   .mapboxgl-ctrl-top-right{top:116px!important}
   .mapboxgl-ctrl-bottom-left,.mapboxgl-ctrl-bottom-right{bottom:calc(var(--sheet) + var(--barH) + 22px)!important;left:8px!important}
 }
+@media (min-width:761px) and (max-height:820px){
+  .card:not(.open) .card-h{grid-template-columns:38px 1fr 14px;padding:6px 10px}
+  .card:not(.open) .card-h .ic{width:38px;height:38px} .card:not(.open) .card-h .ic svg{width:26px;height:26px}
+  .card:not(.open) .card-h b{font-size:16px} .card:not(.open) .card-h span span{display:none}
+  .rail{gap:8px} .foot button,.foot a{padding:6px}
+}
+.fshint{position:absolute;left:calc(var(--railW) + var(--gap)*2 + (100vw - var(--railW) - var(--gap)*3)/2);top:76px;transform:translateX(-50%);z-index:5;background:var(--navy);color:#f2ead9;border:2px solid var(--gold);border-radius:999px;padding:8px 16px;font:800 14px var(--body);cursor:pointer;box-shadow:0 8px 20px rgba(20,25,40,.4)}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
 </head>
@@ -398,8 +411,9 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     <div class="tl-top"><span class="tag">Time frame</span><b id="when">—</b><span id="whatnow"></span></div>
     <div class="steps" id="steps"></div>
   </div>
-  <button class="round sm" id="gear" aria-label="Map settings" aria-expanded="false" aria-controls="setpop" title="Map settings">⚙</button>
+  <div style="display:flex;gap:8px"><button class="round sm" id="fs" aria-label="Full screen" title="Full screen">⛶</button><button class="round sm" id="gear" aria-label="Map settings" aria-expanded="false" aria-controls="setpop" title="Map settings">⚙</button></div>
 </div>
+<button class="fshint" id="fshint" hidden>⛶ Go full screen</button>
 
 <dialog id="about">
   <div class="in">
@@ -552,6 +566,23 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   });
   addEventListener('resize',()=>map.setPadding(pad()));
 
+
+  // ---------- full screen and always-fill sizing ----------
+  const root=document.documentElement, fsBtn=document.getElementById('fs'), fsHint=document.getElementById('fshint');
+  const canFS=!!(root.requestFullscreen||root.webkitRequestFullscreen);
+  const isFS=()=>!!(document.fullscreenElement||document.webkitFullscreenElement);
+  function goFS(){ try{ if(isFS()){ (document.exitFullscreen||document.webkitExitFullscreen).call(document) } else { (root.requestFullscreen||root.webkitRequestFullscreen).call(root,{navigationUI:'hide'}) } }catch(e){} fsHint.hidden=true; }
+  if(!canFS){ fsBtn.hidden=true } else {
+    fsBtn.addEventListener('click',goFS); fsHint.addEventListener('click',goFS);
+    const standalone=matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches;
+    if(!standalone && !store.get('fsHintSeen')){ fsHint.hidden=false; setTimeout(()=>{fsHint.hidden=true},9000); store.set('fsHintSeen','1'); }
+    addEventListener('keydown',e=>{ if((e.key==='f'||e.key==='F')&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) goFS(); });
+  }
+  const fit=()=>{ try{ map.resize(); map.setPadding(pad()); }catch(e){} fsBtn.textContent=isFS()?'🗗':'⛶'; fsBtn.setAttribute('aria-label',isFS()?'Leave full screen':'Full screen'); };
+  ['fullscreenchange','webkitfullscreenchange','orientationchange'].forEach(ev=>addEventListener(ev,()=>setTimeout(fit,150)));
+  if(window.ResizeObserver) new ResizeObserver(()=>fit()).observe(document.getElementById('map'));
+  if(window.visualViewport) visualViewport.addEventListener('resize',()=>setTimeout(fit,100));
+  map.on('load',()=>setTimeout(fit,200));
   // ---------- town markers and epicentre ----------
   function wpSVG(fill){return `<svg class="wp" viewBox="0 0 34 46"><defs><radialGradient id="g${fill.slice(1)}" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="${fill}"/><stop offset="1" stop-color="#1c2232"/></radialGradient></defs>
     <path d="M17 2 L31 17 L17 32 L3 17 Z" fill="url(#g${fill.slice(1)})" stroke="#d3bc8e" stroke-width="2.2"/><path d="M17 8 L25 17 L17 26 L9 17 Z" fill="none" stroke="#fff6d8" stroke-width="1.2" opacity=".8"/>
