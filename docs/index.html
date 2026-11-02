@@ -171,11 +171,11 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
           <button class="play" id="nplay" aria-label="Play">▶</button>
           <div><input type="range" id="nslider" min="0" max="0" value="0" aria-label="Radar date"><div class="ticks"><span id="nt0"></span><span id="nt1"></span></div></div>
         </div>
-        <p class="note">Each month combines every NISAR pass in that month (averaged in power), so September (4 passes) and October (3 dates, 7 frames) each cover the whole of both provinces. June has a single pass (28 June), so it covers about a third. The downloads have no July or August passes. Dark slate shows very weak echoes: water, smooth bare ground, or slopes facing away from the satellite (radar shadow).</p>
+        <p class="note">Each month combines every NISAR pass in that month (averaged in power), so September (4 passes) and October (3 dates, 7 frames) each cover the whole of both provinces. June (a single pass on 28 June, about a third of the area) is left out of this view; it is still used in the change pairs. Dark slate shows very weak echoes: water, smooth bare ground, or slopes facing away from the satellite (radar shadow).</p>
       </section>
       <section id="n-ml-box" hidden>
         <h2>Radar sees through clouds</h2>
-        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation for June (one pass), September (all of both provinces) and October (14, 17 and 19 October passes), including places hidden by cloud. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
+        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation for September and October (every pass, all of both provinces), including places hidden by cloud. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
         <select id="mlfam" aria-label="Estimated variable"><option value="mlm_evi">Estimated vegetation (EVI)</option><option value="mlm_ndmi">Estimated plant moisture (NDMI)</option></select>
         <div class="when" id="mlwhen">—</div>
         <input type="range" id="mlslider" min="0" max="0" value="0" aria-label="Month">
