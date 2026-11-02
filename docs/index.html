@@ -3,114 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sarangani–Davao Occidental Change Map</title>
-<meta name="description" content="Earthquake and El Niño change layers for Sarangani and Davao Occidental, 2025–2026, with live weather, from NASA HLS and MODIS. NASA Space Apps 2026.">
+<title>Sarangani & Davao Occidental Land Watch</title>
+<meta name="description" content="An easy map of Sarangani and Davao Occidental: NASA-ISRO NISAR space radar, the 8 June 2026 earthquake, the El Niño dry spell and what may happen in the next 12 months. NASA Space Apps 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800;6..12,900&family=IBM+Plex+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
 <script src="config.js"></script>
 <style>
-/* Layout: full-bleed 3D map; parchment journal panel framed in navy and gold on the left (bottom sheet on phones);
-   compass and weather chip float top-right. One committed look (bright fantasy-atlas), not theme-switched. */
+/* Layout (from the team's sketch): a framed full-screen 3D map; a left column of four topic cards (F1–F4);
+   compass top-right; a 3D button and a TIMEFRAME bar along the bottom of the map; About in the bottom-left corner.
+   Words are written so a child can follow; the science sits in "For grown-ups" boxes. */
 :root{
-  --parch:#ece5d8; --parch2:#e2d9c6; --ink:#3b4255; --ink2:#6a6f7c; --navy:#283044; --navy2:#1c2232;
-  --gold:#d3bc8e; --gold2:#b89a5e; --teal:#3fb7b0; --quake:#d0453a; --leaf:#4f9a4a;
+  --parch:#ece5d8; --parch2:#e2d9c6; --card:#f6f1e6; --ink:#3b4255; --ink2:#5f6575; --navy:#283044; --navy2:#1c2232;
+  --gold:#d3bc8e; --gold2:#b89a5e; --teal:#3fb7b0; --quake:#d0453a; --leaf:#4f9a4a; --sun:#e8a33a; --sky:#5aa9d6;
   --display:"Marcellus", "Palatino Linotype", Georgia, serif;
   --body:"Nunito Sans", "Segoe UI", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --railW:330px; --gap:16px; --barH:92px;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none}
-body{font:15px/1.45 var(--body);color:var(--ink);background:#9fd3e6;overflow:hidden}
+body{font:15px/1.45 var(--body);color:var(--ink);background:#9fd3e6}
 #map{position:absolute;inset:0;overflow:hidden}
 #fx{position:absolute;inset:0;pointer-events:none;z-index:1}
+button{font-family:var(--body)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 
-/* ---------- journal panel ---------- */
-.panel{position:absolute;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));bottom:14px;width:372px;max-width:calc(100vw - 28px);
-  z-index:3;display:flex;flex-direction:column;background:var(--parch);border-radius:6px;
-  box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 14px 40px rgba(20,25,40,.45);overflow:hidden}
-.panel::before,.panel::after{content:"";position:absolute;width:14px;height:14px;transform:rotate(45deg);background:var(--gold);border:2px solid var(--navy);z-index:4}
-.panel::before{top:-8px;left:calc(50% - 7px)} .panel::after{bottom:-8px;left:calc(50% - 7px)}
-.panel header{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#f2ead9;padding:16px 18px 14px;border-bottom:2px solid var(--gold)}
-.eyebrow{font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
-h1{font:400 23px/1.12 var(--display);margin:7px 0 5px;letter-spacing:.01em;text-wrap:balance}
-.sub{color:#c9c2b2;font-size:13px;margin:0}
-.tabs{display:flex;gap:6px;padding:12px 12px 4px;background:var(--parch2);border-bottom:1px solid #cdbf9f}
-.tabs button{flex:1;border:1px solid transparent;background:transparent;color:var(--ink2);font:800 12.5px var(--body);padding:8px 4px;border-radius:999px;cursor:pointer;letter-spacing:.02em}
-.tabs button[aria-selected="true"]{background:var(--navy);color:#f2ead9;border-color:var(--gold)}
-.body{overflow-y:auto;overscroll-behavior:contain;padding:14px 18px 22px;display:flex;flex-direction:column;gap:18px;flex:1;min-height:0}
-section h2{font:400 15px var(--display);margin:0 0 8px;color:var(--navy);display:flex;align-items:center;gap:8px}
-section h2::before{content:"";width:7px;height:7px;transform:rotate(45deg);background:var(--gold2);flex:none}
-label.row{display:flex;align-items:flex-start;gap:9px;padding:4px 0;cursor:pointer;font-size:14px}
-label.row input{margin-top:3px;accent-color:var(--navy)}
-select{width:100%;font:600 14px var(--body);padding:8px 10px;border-radius:6px;border:1px solid #c7b893;background:#f6f1e6;color:var(--ink)}
-input[type=range]{width:100%;accent-color:var(--gold2)}
-.when{font:400 22px var(--display);margin-top:8px;color:var(--navy)}
-.timebar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:6px}
-.play{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;font-size:14px;cursor:pointer}
-.ticks{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink2)}
-.legend .bar{height:12px;border-radius:3px;margin:6px 0 3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
-.legend .ends{display:flex;justify-content:space-between;font:11.5px var(--mono);color:var(--ink2);font-variant-numeric:tabular-nums}
-.legend ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px;font-size:13px}
+/* frame corners */
+.corner{position:absolute;width:34px;height:34px;z-index:2;pointer-events:none;border:5px solid var(--navy)}
+.corner::after{content:"";position:absolute;inset:-5px;border:inherit;border-color:var(--gold);transform:translate(4px,4px);opacity:.9}
+.c-tl{top:6px;left:6px;border-right:none;border-bottom:none}.c-tr{top:6px;right:6px;border-left:none;border-bottom:none}
+.c-bl{bottom:6px;left:6px;border-right:none;border-top:none}.c-br{bottom:6px;right:6px;border-left:none;border-top:none}
+.c-tr::after,.c-br::after{transform:translate(-4px,4px)} .c-bl::after{transform:translate(4px,-4px)} .c-br::after{transform:translate(-4px,-4px)}
+
+/* title plate (top centre of the map) */
+.plate{position:absolute;top:14px;left:calc(var(--railW) + var(--gap)*2 + (100vw - var(--railW) - var(--gap)*3)/2);transform:translateX(-50%);z-index:3;
+  background:linear-gradient(180deg,var(--navy),var(--navy2));color:#f2ead9;border:2px solid var(--gold);border-radius:8px;padding:6px 18px 7px;text-align:center;
+  box-shadow:0 8px 20px rgba(20,25,40,.35);white-space:nowrap}
+.plate small{display:block;font:500 9.5px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.plate b{font:400 19px/1.25 var(--display);letter-spacing:.01em}
+
+/* left column of topic cards */
+.rail{position:absolute;top:var(--gap);left:var(--gap);bottom:var(--gap);width:var(--railW);z-index:3;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--parch);border-radius:8px;box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 10px 26px rgba(20,25,40,.35);display:flex;flex-direction:column;min-height:0;flex:none;overflow:hidden}
+.card.open{flex:1}
+.card-h{all:unset;cursor:pointer;display:grid;grid-template-columns:52px 1fr 18px;gap:10px;align-items:center;padding:9px 12px;background:var(--parch2)}
+.card.open .card-h{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#f2ead9}
+.card-h .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:2px solid var(--gold);box-shadow:inset 0 0 0 2px #fff6}
+.card-h .ic svg{width:34px;height:34px}
+.card-h b{display:block;font:400 19px/1.15 var(--display)}
+.card-h span{display:block;font-size:13px;color:var(--ink2)}
+.card.open .card-h span{color:#cfc7b6}
+.card-h .chev{font-size:13px;color:var(--gold2);transition:transform .2s}
+.card.open .card-h .chev{transform:rotate(90deg);color:var(--gold)}
+.card-b{display:none;overflow-y:auto;overscroll-behavior:contain;padding:12px 14px 16px;min-height:0;flex:1}
+.card.open .card-b{display:flex;flex-direction:column;gap:12px}
+.lead{font-size:15px;margin:0}
+.views{display:flex;flex-wrap:wrap;gap:6px}
+.views button{border:2px solid #cdbf9f;background:var(--card);color:var(--ink);border-radius:999px;padding:6px 11px;font:800 13px var(--body);cursor:pointer;display:flex;gap:6px;align-items:center}
+.views button[aria-pressed="true"]{background:var(--navy);border-color:var(--gold);color:#f2ead9}
+.box{background:var(--card);border:1px solid #d6c8a6;border-radius:8px;padding:10px 12px}
+.box h3{font:400 15px var(--display);color:var(--navy);margin:0 0 6px}
+.legend .ramp{height:16px;border-radius:999px;margin:4px 0 4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.legend .ends{display:flex;justify-content:space-between;gap:10px;font:800 12.5px var(--body);color:var(--ink)}
+.legend .ends span:last-child{text-align:right}
+.legend .nums{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--ink2);margin-top:2px}
+.legend ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13.5px}
 .legend li{display:flex;gap:8px;align-items:center}
-.sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.18)}
+.sw{width:16px;height:16px;border-radius:4px;flex:none;border:1px solid rgba(0,0,0,.18)}
+.vnote{font-size:14px;margin:0}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.big div{background:var(--card);border:1px solid #d6c8a6;border-radius:8px;padding:8px 10px}
+.big b{display:block;font:400 24px var(--display);color:var(--quake);font-variant-numeric:tabular-nums}
+.big span{font-size:12.5px;color:var(--ink2)}
+.big .wide{grid-column:1/-1}
+.facts{display:grid;gap:6px;margin:0}
+.facts div{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start;font-size:14px}
+.facts i{font-style:normal;font-size:20px;line-height:1.2;text-align:center}
+.facts b{color:var(--navy)}
+details{border:1px dashed #c7b893;border-radius:8px;padding:6px 10px;background:#f3ecdd}
+summary{cursor:pointer;font:800 13px var(--body);color:var(--navy)}
+details p,details li{font-size:13px;color:var(--ink2)}
+details ul{padding-left:18px;margin:6px 0}
 .note{font-size:13px;color:var(--ink2);margin:6px 0 0}
-.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat div{background:#f6f1e6;border:1px solid #d6c8a6;border-radius:6px;padding:8px 10px}
-.stat b{display:block;font:400 22px var(--display);color:var(--quake);font-variant-numeric:tabular-nums}
-.stat span{font-size:12px;color:var(--ink2)}
 svg text{fill:var(--ink2);font:10px var(--mono)}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chips button{border:1px solid #c7b893;background:#f6f1e6;color:var(--ink);border-radius:999px;padding:5px 11px;font:700 12px var(--body);cursor:pointer}
-.chips button[aria-pressed="true"]{background:var(--navy);border-color:var(--gold);color:#f2ead9}
-.wx{display:grid;gap:6px}
-.wx button{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid #d6c8a6;background:#f6f1e6;border-radius:6px;padding:7px 10px;cursor:pointer;font:14px var(--body);color:var(--ink)}
-.wx b{font-weight:800}.wx small{display:block;color:var(--ink2);font-size:12px}
-.wx .t{font:400 20px var(--display);color:var(--navy);font-variant-numeric:tabular-nums}
-.file{display:grid;grid-template-columns:62px 1fr;gap:5px 10px;margin:0;font-size:13.5px}
-.file dt{font:400 13px var(--display);color:var(--gold2);text-transform:uppercase;letter-spacing:.06em;padding-top:1px}
-.file dd{margin:0}
-.xsec{width:100%;height:auto;margin-top:10px;border:1px solid #d6c8a6;border-radius:6px}
+.xsec{width:100%;height:auto;border:1px solid #d6c8a6;border-radius:6px}
 .xsec text{font:9.5px var(--mono);fill:#3b4255}
-.mlt{width:100%;border-collapse:collapse;margin-top:10px;font-size:12.5px}.mlt th,.mlt td{border-bottom:1px solid #d6c8a6;padding:4px 6px;text-align:left}.mlt td.n{text-align:right;font-variant-numeric:tabular-nums}.mlt tr.best td{font-weight:800;color:var(--navy)}
+.mlt{width:100%;border-collapse:collapse;margin-top:6px;font-size:12.5px}.mlt th,.mlt td{border-bottom:1px solid #d6c8a6;padding:4px 6px;text-align:left}.mlt td.n{text-align:right;font-variant-numeric:tabular-nums}.mlt tr.best td{font-weight:800;color:var(--navy)}
 .news{display:grid;gap:6px}
-.news a{display:block;text-decoration:none;color:var(--ink);background:#f6f1e6;border:1px solid #d6c8a6;border-left:3px solid var(--gold2);border-radius:6px;padding:7px 10px}
-.news a:hover{border-color:var(--gold2)}
-.news span{display:block;font:11px var(--mono);color:var(--ink2)}
-.news b{font-weight:700;font-size:13.5px}
-ul.plain{margin:0;padding-left:18px}
-button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.news a{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid #d6c8a6;border-left:3px solid var(--gold2);border-radius:6px;padding:7px 10px}
+.news span{display:block;font:11px var(--mono);color:var(--ink2)} .news b{font-weight:700;font-size:13.5px}
+.toggle{display:flex;gap:8px;align-items:center;font:700 14px var(--body);cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--navy)}
+.foot{display:flex;gap:8px;flex:none}
+.foot button,.foot a{flex:1;display:flex;gap:6px;align-items:center;justify-content:center;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;border-radius:8px;padding:8px;font:800 13px var(--body);cursor:pointer;text-decoration:none}
 
-/* ---------- floating instruments ---------- */
-.compass{position:absolute;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));width:84px;height:84px;z-index:3;cursor:pointer;border:none;background:none;padding:0;filter:drop-shadow(0 6px 10px rgba(20,25,40,.4))}
+/* bottom TIMEFRAME bar */
+.bar{position:absolute;left:calc(var(--railW) + var(--gap)*2);right:var(--gap);bottom:var(--gap);height:var(--barH);z-index:3;display:grid;grid-template-columns:auto auto 1fr auto;gap:10px;align-items:center}
+.round{width:58px;height:58px;border-radius:50%;border:3px solid var(--gold);background:var(--navy);color:#f2ead9;font:900 17px var(--body);cursor:pointer;box-shadow:0 8px 18px rgba(20,25,40,.4);display:grid;place-items:center}
+.round[aria-pressed="false"]{background:var(--card);color:var(--navy)}
+.round.sm{width:46px;height:46px;font-size:18px}
+.tl{background:rgba(236,229,216,.97);border-radius:10px;box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 10px 24px rgba(20,25,40,.35);padding:8px 14px 8px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;min-width:0}
+.tl .play{grid-row:1/3;width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;font-size:15px;cursor:pointer}
+.tl .play:disabled{opacity:.35;cursor:default}
+.tl-top{display:flex;gap:10px;align-items:baseline;min-width:0}
+.tl-top b{font:400 21px/1.1 var(--display);color:var(--navy);white-space:nowrap}
+.tl-top span{font-size:12.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-top .tag{font:500 10px var(--mono);letter-spacing:.14em;color:var(--gold2);text-transform:uppercase}
+.steps{display:flex;align-items:flex-end;min-width:0;height:30px;position:relative}
+.steps::before{content:"";position:absolute;left:6px;right:6px;bottom:8px;height:4px;border-radius:2px;background:#d6c8a6}
+.steps button{all:unset;flex:1;min-width:0;position:relative;height:30px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.steps button i{width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--gold2);margin-bottom:4px;z-index:1}
+.steps button[aria-current="true"] i{width:18px;height:18px;background:var(--navy);border-color:var(--gold);margin-bottom:1px}
+.steps button span{position:absolute;top:-2px;font:700 10.5px var(--body);color:var(--ink2);white-space:nowrap}
+.steps button[aria-current="true"] span{color:var(--navy)}
+
+/* floating instruments */
+.compass{position:absolute;top:max(18px,env(safe-area-inset-top));right:max(18px,env(safe-area-inset-right));width:84px;height:84px;z-index:3;cursor:pointer;border:none;background:none;padding:0;filter:drop-shadow(0 6px 10px rgba(20,25,40,.4))}
 .compass svg{width:100%;height:100%;transition:transform .15s linear}
-.wxchip{position:absolute;top:max(110px,calc(env(safe-area-inset-top) + 96px));right:max(16px,env(safe-area-inset-right));z-index:3;background:rgba(40,48,68,.88);color:#f2ead9;border:1px solid var(--gold);border-radius:999px;padding:6px 14px;font:700 12.5px var(--body);display:flex;gap:8px;align-items:center}
-.wxchip i{font-style:normal;color:var(--gold)}
-.mapboxgl-ctrl-group{border:1px solid var(--gold)!important;background:#f6f1e6!important}
-.mapboxgl-ctrl-top-right{top:206px!important}
-/* waypoint marker */
+.wxchip{position:absolute;top:112px;right:18px;z-index:3;background:rgba(40,48,68,.92);color:#f2ead9;border:2px solid var(--gold);border-radius:999px;padding:6px 14px;font:800 13px var(--body);display:flex;gap:8px;align-items:center;cursor:pointer}
+.wxchip i{font-style:normal}
+.pop{position:absolute;right:18px;z-index:4;width:310px;max-width:calc(100vw - 36px);max-height:calc(100vh - 170px - var(--barH));overflow-y:auto;background:var(--parch);border-radius:8px;box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 12px 30px rgba(20,25,40,.4);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.pop h3{font:400 17px var(--display);color:var(--navy);margin:0;display:flex;justify-content:space-between;align-items:center}
+.pop h3 button{all:unset;cursor:pointer;font-size:18px;color:var(--ink2);padding:0 4px}
+#wxpop{top:156px} #setpop{bottom:calc(var(--barH) + var(--gap) + 10px)}
+.wx{display:grid;gap:6px}
+.wx button{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid #d6c8a6;background:var(--card);border-radius:6px;padding:7px 10px;cursor:pointer;font:14px var(--body);color:var(--ink)}
+.wx b{font-weight:800}.wx small{display:block;color:var(--ink2);font-size:12px}
+.wx .t{font:400 20px var(--display);color:var(--navy)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1px solid #c7b893;background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;font:700 12.5px var(--body);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--navy);border-color:var(--gold);color:#f2ead9}
+input[type=range]{width:100%;accent-color:var(--gold2)}
+.mapboxgl-ctrl-group{border:1px solid var(--gold)!important;background:var(--card)!important}
+.mapboxgl-ctrl-top-right{top:150px!important;right:8px!important}
+.mapboxgl-ctrl-bottom-right{bottom:calc(var(--barH) + var(--gap) + 4px)!important}
+.mapboxgl-ctrl-bottom-left{left:calc(var(--railW) + var(--gap)*2)!important;bottom:calc(var(--barH) + var(--gap) + 4px)!important}
+/* markers */
 .mapboxgl-marker{position:absolute;top:0;left:0}
 .wp{width:34px;height:46px;cursor:pointer;filter:drop-shadow(0 3px 4px rgba(10,20,40,.5))}
-.wp:hover{transform:translateY(-2px)}
 .wp-label{position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;font:800 11.5px var(--body);color:#fff;text-shadow:0 1px 2px #1c2232,0 0 6px #1c2232}
 .mapboxgl-popup-content{font:13.5px var(--body);color:var(--ink);background:var(--parch);border:2px solid var(--gold);border-radius:6px;padding:12px 14px;box-shadow:0 8px 24px rgba(20,25,40,.35)}
 .mapboxgl-popup-content b{font:400 16px var(--display);color:var(--navy)}
 .mapboxgl-popup-tip{border-top-color:var(--gold)!important;border-bottom-color:var(--gold)!important}
+/* about dialog and token */
+dialog{border:none;border-radius:10px;padding:0;max-width:640px;width:calc(100vw - 32px);background:var(--parch);color:var(--ink);box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 20px 50px rgba(20,25,40,.5)}
+dialog::backdrop{background:rgba(20,25,40,.45)}
+dialog .in{padding:18px 20px;max-height:80vh;overflow-y:auto}
+dialog h2{font:400 22px var(--display);color:var(--navy);margin:0 0 8px}
+dialog h3{font:400 16px var(--display);color:var(--navy);margin:14px 0 4px}
+dialog ul{padding-left:18px;margin:4px 0;font-size:13.5px}
+dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;border-radius:999px;padding:4px 12px;font:800 13px var(--body);cursor:pointer}
 #token{position:absolute;inset:0;display:grid;place-items:center;background:var(--parch);z-index:9;padding:16px}
 #token form{max-width:460px;display:grid;gap:10px}
-#token input{font:14px var(--mono);padding:9px;border-radius:6px;border:1px solid #c7b893;background:#f6f1e6}
+#token input{font:14px var(--mono);padding:9px;border-radius:6px;border:1px solid #c7b893;background:var(--card)}
 #token button{padding:10px;border-radius:6px;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;font:800 14px var(--body);cursor:pointer}
-@media (max-width:640px){
-  .panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-width:none;height:50vh;padding-bottom:env(safe-area-inset-bottom)}
-  .panel header .sub,.panel header .eyebrow{display:none}
-  h1{font-size:18px;margin:0}
-  .compass{width:62px;height:62px}
-  .wxchip{top:max(84px,calc(env(safe-area-inset-top) + 74px))}
-  .mapboxgl-ctrl-top-right{top:126px!important}
+.topicnav{display:none}
+
+/* phones: topic icons in a row, the open card as a bottom sheet, the time bar just above it */
+@media (max-width:760px){
+  :root{--railW:0px;--gap:8px;--barH:74px;--sheet:44vh}
+  .corner,.plate{display:none}
+  .rail{top:auto;left:8px;right:8px;width:auto;bottom:8px;height:var(--sheet);gap:0;background:var(--parch);border-radius:10px;box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--gold),0 10px 26px rgba(20,25,40,.35);overflow:hidden}
+  .topicnav{display:flex;gap:4px;padding:6px;background:var(--navy);flex:none}
+  .topicnav button{flex:1;border:2px solid transparent;background:transparent;color:#f2ead9;border-radius:8px;padding:4px 2px;font:800 11px var(--body);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+  .topicnav button svg{width:26px;height:26px}
+  .topicnav button[aria-selected="true"]{background:var(--parch);color:var(--navy);border-color:var(--gold)}
+  .card{box-shadow:none;border-radius:0;display:none}
+  .card.open{display:flex}
+  .card-h{display:none}
+  .foot{padding:6px 8px 8px;background:var(--parch)}
+  .bar{left:8px;right:8px;bottom:calc(var(--sheet) + 16px);grid-template-columns:auto 1fr auto;gap:6px}
+  .bar #home{display:none}
+  .round{width:48px;height:48px;font-size:14px}
+  .round.sm{width:40px;height:40px}
+  .tl{padding:6px 10px;gap:2px 8px}
+  .tl .play{width:36px;height:36px}
+  .tl-top b{font-size:16px} .tl-top .tag{display:none}
+  .steps button:not([aria-current="true"]) span{display:none}
+  .compass{width:60px;height:60px}
+  .wxchip{top:80px;right:10px;font-size:12px}
+  #wxpop{top:118px}
+  .mapboxgl-ctrl-top-right{top:116px!important}
+  .mapboxgl-ctrl-bottom-left,.mapboxgl-ctrl-bottom-right{bottom:calc(var(--sheet) + var(--barH) + 22px)!important;left:8px!important}
 }
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 </style>
@@ -118,18 +197,20 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 <body>
 <div id="map" role="region" aria-label="3D map of Sarangani and Davao Occidental"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
+<div class="corner c-tl"></div><div class="corner c-tr"></div><div class="corner c-bl"></div><div class="corner c-br"></div>
 
 <div id="token" hidden>
   <form id="tokenForm">
-    <div class="eyebrow" style="color:var(--gold2)">Mapbox access token needed</div>
-    <h1 style="color:var(--navy)">Paste your public Mapbox token</h1>
+    <b style="font:400 22px var(--display);color:var(--navy)">Paste your public Mapbox token</b>
     <p class="note">Paste a public token (starts with <code>pk.</code>) from account.mapbox.com. It is kept only in this browser.</p>
     <input id="tokenInput" placeholder="pk.eyJ1Ijoi…" autocomplete="off" spellcheck="false" required>
     <button type="submit">Open the map</button>
   </form>
 </div>
 
-<button class="compass" id="compass" aria-label="Reset to north">
+<div class="plate"><small>NASA Space Apps 2026</small><b>Sarangani &amp; Davao Occidental Land Watch</b></div>
+
+<button class="compass" id="compass" aria-label="Turn the map so north is up">
   <svg viewBox="0 0 100 100" id="rose">
     <circle cx="50" cy="50" r="46" fill="#283044" stroke="#d3bc8e" stroke-width="3"/>
     <circle cx="50" cy="50" r="38" fill="none" stroke="#d3bc8e" stroke-width="1" stroke-dasharray="2 4"/>
@@ -138,118 +219,105 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     <polygon points="10,50 50,45 44,50 50,55" fill="#b89a5e"/>
     <polygon points="90,50 50,45 56,50 50,55" fill="#b89a5e"/>
     <circle cx="50" cy="50" r="5" fill="#d3bc8e" stroke="#283044" stroke-width="2"/>
-    <text x="50" y="24" text-anchor="middle" font-family="Marcellus, Georgia, serif" font-size="11" fill="#ece5d8" style="font:11px Marcellus,Georgia,serif;fill:#ece5d8">N</text>
+    <text x="50" y="24" text-anchor="middle" style="font:11px Marcellus,Georgia,serif;fill:#ece5d8">N</text>
+    <text x="50" y="86" text-anchor="middle" style="font:9px Marcellus,Georgia,serif;fill:#283044">S</text>
+    <text x="17" y="47" text-anchor="middle" style="font:9px Marcellus,Georgia,serif;fill:#ece5d8">W</text>
+    <text x="83" y="47" text-anchor="middle" style="font:9px Marcellus,Georgia,serif;fill:#ece5d8">E</text>
   </svg>
 </button>
-<div class="wxchip" id="wxchip" aria-live="polite"><i>◆</i><span>Loading weather…</span></div>
+<button class="wxchip" id="wxchip" aria-expanded="false" aria-controls="wxpop"><i>⛅</i><span>Loading weather…</span></button>
 
-<aside class="panel" aria-label="Map journal">
-  <header>
-    <div class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs</div>
-    <h1>Sarangani–Davao Occidental Change Map</h1>
-    <p class="sub">The ground and its forests around the M7.8 earthquake of 8 June 2026, and the slide into El Niño.</p>
-  </header>
-  <div class="tabs" role="tablist">
-    <button role="tab" id="tab-nisar" aria-selected="true">NISAR</button>
-    <button role="tab" id="tab-quake" aria-selected="false">Quake</button>
-    <button role="tab" id="tab-nino" aria-selected="false">El Niño</button>
-    <button role="tab" id="tab-out" aria-selected="false">Outlook</button>
-    <button role="tab" id="tab-wx" aria-selected="false">Weather</button>
-    <button role="tab" id="tab-about" aria-selected="false">About</button>
+<div class="pop" id="wxpop" hidden>
+  <h3>Weather right now <button aria-label="Close" data-close="wxpop">✕</button></h3>
+  <div class="wx" id="wxlist"><p class="note">Loading live weather…</p></div>
+  <p class="note" id="wxtime" style="margin:0"></p>
+  <div class="chips">
+    <button id="fx-clouds" aria-pressed="true">☁ Clouds</button>
+    <button id="fx-rain" aria-pressed="false">🌧 Rain</button>
+    <button id="fx-live" aria-pressed="true">Follow real weather</button>
   </div>
-  <div class="body">
-    <div id="pane-nisar">
-      <section>
-        <h2>Radar through the clouds</h2>
-        <p class="note" style="margin-top:0">NISAR's L-band radar sees through cloud, day and night. HV (cross-pol) brightens with leafy, woody vegetation; HH (co-pol) reacts to soil moisture, rough ground and flooding. Brighter means stronger echo.</p>
-        <div class="chips" style="margin-top:8px"><button id="n-date" aria-pressed="true">By month</button><button id="n-chg" aria-pressed="false">Change between passes</button><button id="n-ml" aria-pressed="false">AI: radar → vegetation</button><button id="n-lc" aria-pressed="false">AI: land-cover change</button></div>
-      </section>
-      <section id="n-date-box">
-        <h2>Radar by month</h2>
-        <select id="nfam" aria-label="Radar polarisation"><option value="nisarm_hv">HV backscatter (vegetation)</option><option value="nisarm_hh">HH backscatter (moisture, roughness)</option></select>
-        <div class="when" id="nwhen">—</div>
-        <div class="timebar">
-          <button class="play" id="nplay" aria-label="Play">▶</button>
-          <div><input type="range" id="nslider" min="0" max="0" value="0" aria-label="Radar date"><div class="ticks"><span id="nt0"></span><span id="nt1"></span></div></div>
-        </div>
-        <p class="note">Each month combines every NISAR pass in that month (averaged in power), so September (4 passes) and October (3 dates, 7 frames) each cover the whole of both provinces. June (a single pass on 28 June, about a third of the area) is left out of this view; it is still used in the change pairs. Dark slate shows very weak echoes: water, smooth bare ground, or slopes facing away from the satellite (radar shadow).</p>
-      </section>
-      <section id="n-ml-box" hidden>
-        <h2>Radar sees through clouds</h2>
-        <p class="note" style="margin-top:0">A machine-learning model (gradient-boosted trees) learned how NISAR HH/HV and terrain relate to Landsat vegetation and plant moisture, using 168,000 pixels where both satellites saw the ground within 8 days. It then maps vegetation for September and October (every pass, all of both provinces), including places hidden by cloud. On 23 September, Landsat saw clear ground over only 15% of the land NISAR imaged; the model filled in the other 85%.</p>
-        <select id="mlfam" aria-label="Estimated variable"><option value="mlm_evi">Estimated vegetation (EVI)</option><option value="mlm_ndmi">Estimated plant moisture (NDMI)</option></select>
-        <div class="when" id="mlwhen">—</div>
-        <input type="range" id="mlslider" min="0" max="0" value="0" aria-label="Month">
-        <div class="ticks"><span id="mlt0"></span><span id="mlt1"></span></div>
-        <table class="mlt" id="mltable"></table>
-        <p class="note">Scores come from 5 km block cross-validation: the model is graded only on areas it never trained on. R² 0.37 means radar plus terrain explain about a third of what Landsat sees, good for broad patterns under clouds, not exact field values. Terrain alone barely predicts moisture (R² 0.01); the moisture signal comes from the radar.</p>
-      </section>
-      <section id="n-lc-box" hidden>
-        <h2>What covers the land now, by radar</h2>
-        <p class="note" style="margin-top:0">A second model learned the 2020 land-cover map (forest, brush, grassland, crops, built-up, water) from NISAR's June–October radar, then mapped 2026 land cover on its own. Where it confidently disagrees with 2020, something may have changed.</p>
-        <label class="row"><input type="radio" name="nlc" value="ml_lc_change" checked> Possible change since 2020</label>
-        <label class="row"><input type="radio" name="nlc" value="ml_lc_2026"> NISAR land cover 2026</label>
-        <label class="row"><input type="radio" name="nlc" value="ml_lc_2020"> 2020 land-cover map (training labels)</label>
-        <table class="mlt" id="lctable"></table>
-        <p class="note" id="lcnote"></p>
-      </section>
-      <section id="n-chg-box" hidden>
-        <h2>Same-track change</h2>
-        <div id="nchglist"></div>
-        <p class="note">Each pair compares two passes on the same orbit track, so the viewing angle is identical and the change is on the ground. 28 Jun → 20 Sep: HH fell by a median 0.55 dB and 1.5% of the land dropped sharply, consistent with drying into El Niño. 20–25 Sep → 14–19 Oct: HH rose by a median 0.1–1.05 dB on four of five tracks, matching the rain record: only 28 mm fell in August and 68 mm in September, then 122 mm in October (GPM IMERG). 28 Jun → 14 Oct shows almost no net HH change: the ground got back to about where it was in June.</p>
-      </section>
-    </div>
+  <p class="note" style="margin:0">Tap a town to fly there. The clouds and rain on the map follow the real weather in these towns.</p>
+</div>
 
-    <div id="pane-quake" hidden>
-      <section>
-        <h2>Event file · 8 June 2026</h2>
-        <dl class="file">
-          <dt>When</dt><dd>Monday 8 June 2026, 7:37 am, the first day of classes</dd>
-          <dt>Where</dt><dd>Offshore, about 32 km south of Maasim, Sarangani (5.60°N, 125.06°E)</dd>
-          <dt>Size</dt><dd>Magnitude 7.8. Shaking up to Intensity VIII (PHIVOLCS) and IX (USGS)</dd>
-          <dt>Depth</dt><dd>33 km (PHIVOLCS) · 57 km (USGS)</dd>
-          <dt>Type</dt><dd>Tectonic, thrust faulting (USGS)</dd>
-          <dt>Cause</dt><dd>The Celebes Sea floor slipping down beneath Mindanao at the <b>Cotabato Trench</b>, a subduction zone (PHIVOLCS). The rupture may also have reached the northern Sangihe Trench.</dd>
-        </dl>
-        <svg class="xsec" viewBox="0 0 320 132" role="img" aria-label="Cross-section: the Celebes Sea plate sinks eastward under Mindanao at the Cotabato Trench; the quake started where the plates are locked.">
-          <rect x="0" y="0" width="320" height="132" fill="#f6f1e6"/>
-          <path d="M0 40 H120 L132 46" fill="none" stroke="#56c3d6" stroke-width="2"/>
-          <path d="M0 40 H118 L140 52 L320 128" fill="none"/>
-          <path d="M0 44 L118 44 L136 54 L320 120 L320 132 L0 132 Z" fill="#c9b78f"/>
-          <path d="M0 44 L118 44 L136 54 L320 120" fill="none" stroke="#7c6a45" stroke-width="2"/>
-          <path d="M136 54 L150 38 L200 26 L260 20 L320 18 L320 120 Z" fill="#9fc98a" opacity=".9"/>
-          <path d="M150 38 L200 26 L260 20 L320 18" fill="none" stroke="#4f9a4a" stroke-width="2"/>
-          <path d="M0 40 H132" stroke="#56c3d6" stroke-width="5" opacity=".5"/>
-          <polygon points="186,74 189,82 197,82 191,87 193,95 186,90 179,95 181,87 175,82 183,82" fill="#d0453a" stroke="#fff6d8"/>
-          <path d="M60 60 L100 70" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
-          <path d="M214 34 V22" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
-          <defs><marker id="ar" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#283044"/></marker></defs>
-          <text x="6" y="34">Celebes Sea</text><text x="104" y="35">Cotabato Trench</text><text x="246" y="13">Mindanao</text>
-          <text x="20" y="80">plate sinks east</text><text x="200" y="104">quake ~33–57 km deep</text><text x="220" y="38">coast lifted</text>
-        </svg>
-        <p class="note">Effects: tsunami 1.48 m on the Kiamba tide gauge and up to 2.5 m run-up at Lebak; coast lifted up to 2 m along about 100 km; many landslides, mainly in Glan and Jose Abad Santos (PhilSA estimate about 138 ha); at least 106 deaths and about 138,500 homes damaged (NDRRMC, 21 July). More than 8,500 aftershocks, including M6.6 on 26 June and M6.4 on 8 October.</p>
-      </section>
-      <section>
-        <h2>What this map found</h2>
-        <div class="stat">
-          <div><b>305</b><span>possible new slides</span></div>
-          <div><b>165 ha</b><span>bare ground on slopes ≥ 20°</span></div>
-        </div>
-        <p class="note">Steep, vegetated ground that turned bare after 8 June, beyond the normal seasonal change seen in 2025. Two thirds of it (121 ha) is south of 5.9°N, clustered around Glan (about 31 ha) and Jose Abad Santos (about 63 ha), the two towns news reports named as worst hit; PhilSA estimated about 138 ha of landslides in total. Patches become far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). Not field-checked; area figures for the two towns use rough map boxes.</p>
-      </section>
-      <section>
-        <h2>Layers</h2>
-        <label class="row"><input type="checkbox" id="q-cand" checked> Possible landslides (click a patch)</label>
-        <label class="row"><input type="radio" name="qbg" value="eq_evi_excess" checked> Vegetation loss beyond normal season</label>
-        <label class="row"><input type="radio" name="qbg" value="eq_evi_pre"> Vegetation before (Mar–7 Jun 2026)</label>
-        <label class="row"><input type="radio" name="qbg" value="eq_evi_post"> Vegetation after (9 Jun–Sep 2026)</label>
-        <label class="row"><input type="radio" name="qbg" value="eq_classes"> Where the check was possible (70% of the area)</label>
-        <label class="row"><input type="radio" name="qbg" value="slope"> Slope</label>
-        <label class="row"><input type="radio" name="qbg" value=""> None (just the land)</label>
-      </section>
-      <section>
-        <h2>In the news</h2>
-        <p class="note" style="margin:0 0 8px">Photos and videos are on the original pages. Each opens in a new tab.</p>
+<div class="pop" id="setpop" hidden>
+  <h3>Map settings <button aria-label="Close" data-close="setpop">✕</button></h3>
+  <label class="note" for="opacity" style="margin:0">See-through colours</label>
+  <input type="range" id="opacity" min="0" max="100" value="80">
+  <div class="chips">
+    <button data-light="dawn" aria-pressed="false">🌅 Dawn</button>
+    <button data-light="day" aria-pressed="true">☀ Day</button>
+    <button data-light="dusk" aria-pressed="false">🌇 Dusk</button>
+    <button data-light="night" aria-pressed="false">🌙 Night</button>
+  </div>
+  <div class="chips">
+    <button id="b3dobj" aria-pressed="true">🏠 3D buildings</button>
+    <button id="labels" aria-pressed="true">🔤 Place names</button>
+    <button id="roadsTop" aria-pressed="true">🛣 Roads on top</button>
+  </div>
+  <div class="chips" id="towns"></div>
+</div>
+
+<aside class="rail" id="rail" aria-label="Topics">
+  <nav class="topicnav" id="topicnav" role="tablist" aria-label="Topics"></nav>
+
+  <section class="card open" data-topic="radar">
+    <button class="card-h" aria-expanded="true"><span class="ic" data-icon="radar"></span><span><b>Space Radar</b><span>A satellite that sees through clouds</span></span><span class="chev">▶</span></button>
+    <div class="card-b">
+      <p class="lead"><b>NISAR</b> is a new satellite from NASA and India. It shines radio waves at the ground and listens for the echo, so it can see day or night, even through clouds.</p>
+      <div class="views" data-views="radar"></div>
+      <div class="box legend" data-legend="radar"></div>
+      <p class="vnote" data-vnote="radar"></p>
+      <details><summary>For grown-ups: how this works</summary>
+        <p>NISAR L2 GCOV (NASA-ISRO, provisional): HH and HV backscatter from 10 m multilooked to 30 m. Each month averages every pass in power: September (4 passes) and October (3 dates, 7 frames) each cover both provinces. June (one pass, 28 June) is left out of the monthly view.</p>
+        <p>"What changed" compares two passes on the same orbit track and frame, so the viewing angle is identical. 28 Jun → 20 Sep: HH fell a median 0.55 dB (drying). 20–25 Sep → 14–19 Oct: HH rose by up to 1.05 dB as rain returned (28 mm in August, 68 mm in September, 122 mm in October, GPM IMERG).</p>
+        <p>"AI plant map": gradient-boosted trees learned Landsat EVI and NDMI from NISAR HH/HV, texture and SRTM terrain (168,000 pixels seen by both within 8 days). 5 km block cross-validation:</p>
+        <table class="mlt" id="mltable"></table>
+        <p>"Land types": a classifier learned the 2020 land-cover map from June–October NISAR statistics plus terrain, then mapped 2026. Confident disagreement with 2020 is shown as possible change.</p>
+        <table class="mlt" id="lctable"></table>
+      </details>
+    </div>
+  </section>
+
+  <section class="card" data-topic="quake">
+    <button class="card-h" aria-expanded="false"><span class="ic" data-icon="quake"></span><span><b>Earthquake</b><span>The big shake of 8 June 2026</span></span><span class="chev">▶</span></button>
+    <div class="card-b">
+      <p class="lead">A very strong earthquake shook the area. See where hills may have slid.</p>
+      <div class="views" data-views="quake"></div>
+      <div class="box legend" data-legend="quake"></div>
+      <p class="vnote" data-vnote="quake"></p>
+      <label class="toggle" id="spotsRow"><input type="checkbox" id="spots" checked> 🔴 Show possible landslide spots</label>
+      <div class="big">
+        <div><b>305</b><span>spots where a hill may have slid</span></div>
+        <div><b>165 ha</b><span>of bare ground, about 230 football fields</span></div>
+      </div>
+      <div class="box"><h3>🌏 What happened</h3>
+<div class="facts">
+        <div><i>🕖</i><span><b>When:</b> Monday 8 June 2026, 7:37 in the morning, the first day of school.</span></div>
+        <div><i>📍</i><span><b>Where:</b> under the sea, about 32 km south of Maasim (the red circle on the map).</span></div>
+        <div><i>💥</i><span><b>How strong:</b> magnitude 7.8. That is a very big earthquake.</span></div>
+        <div><i>❓</i><span><b>Why:</b> the sea floor slowly slides under Mindanao at the <b>Cotabato Trench</b>. It got stuck, then suddenly slipped.</span></div>
+        <div><i>🌊</i><span><b>What happened:</b> a tsunami (up to 2.5 m), parts of the coast pushed up by up to 2 m, hills slid, many houses broke. At least 106 people died.</span></div>
+      </div>
+      <svg class="xsec" viewBox="0 0 320 132" role="img" aria-label="Drawing: the sea floor sinks under Mindanao at the Cotabato Trench; the earthquake started where they were stuck.">
+        <rect x="0" y="0" width="320" height="132" fill="#f6f1e6"/>
+        <path d="M0 44 L118 44 L136 54 L320 120 L320 132 L0 132 Z" fill="#c9b78f"/>
+        <path d="M0 44 L118 44 L136 54 L320 120" fill="none" stroke="#7c6a45" stroke-width="2"/>
+        <path d="M136 54 L150 38 L200 26 L260 20 L320 18 L320 120 Z" fill="#9fc98a" opacity=".9"/>
+        <path d="M150 38 L200 26 L260 20 L320 18" fill="none" stroke="#4f9a4a" stroke-width="2"/>
+        <path d="M0 40 H132" stroke="#56c3d6" stroke-width="5" opacity=".5"/>
+        <polygon points="186,74 189,82 197,82 191,87 193,95 186,90 179,95 181,87 175,82 183,82" fill="#d0453a" stroke="#fff6d8"/>
+        <path d="M60 60 L100 70" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
+        <path d="M214 34 V22" stroke="#283044" stroke-width="1.5" marker-end="url(#ar)"/>
+        <defs><marker id="ar" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#283044"/></marker></defs>
+        <text x="6" y="34">sea</text><text x="104" y="35">trench</text><text x="246" y="13">Mindanao</text>
+        <text x="20" y="80">sea floor slides under</text><text x="200" y="104">★ quake started here</text><text x="220" y="38">coast pushed up</text>
+      </svg>
+      </div>
+      <details><summary>For grown-ups: how the landslides were found</summary>
+        <p>Landsat HLS EVI before (1 Mar – 7 Jun 2026) and after (9 Jun – 25 Sep 2026). A spot counts when the slope is at least 20°, EVI fell from at least 0.35 to at most 0.20, and the drop is at least 0.25 more than the normal seasonal change seen in 2025 (sieve ≥ 3 pixels). Two thirds of the area is south of 5.9°N, around Glan (about 31 ha) and Jose Abad Santos (about 63 ha). PhilSA estimated about 138 ha. Spots get far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). About 30% of the area could not be checked because every view was cloudy. Not field-checked: heavy rain or land clearing can look like a slide.</p>
+        <p>Event: Mw 7.8, epicentre 5.60°N 125.06°E, depth 33 km (PHIVOLCS) or 57 km (USGS), thrust faulting at the Cotabato Trench. Tsunami 1.48 m on the Kiamba tide gauge; about 138,500 homes damaged (NDRRMC, 21 July); more than 8,500 aftershocks.</p>
+      </details>
+      <div class="box"><h3>📰 In the news</h3>
         <div class="news">
           <a href="https://www.phivolcs.dost.gov.ph/primer-on-the-08-june-2026-magnitude-mw-7-8-offshore-sarangani-earthquake/" target="_blank" rel="noopener"><span>PHIVOLCS · 8 Jun 2026</span><b>Primer on the Mw 7.8 offshore Sarangani earthquake</b></a>
           <a href="https://www.pbs.org/newshour/world/a-7-8-magnitude-quake-in-the-philippines-kills-at-least-32-collapses-buildings-and-triggers-tsun" target="_blank" rel="noopener"><span>PBS NewsHour / AP · 8 Jun 2026</span><b>A 7.8 magnitude quake in the Philippines collapses buildings and triggers tsunami</b></a>
@@ -259,155 +327,102 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
           <a href="https://adinet.ahacentre.org/report/philippines-m78-earthquake-in-regions-ix-xi-xii-and-barmm-20260608" target="_blank" rel="noopener"><span>AHA Centre · situation report</span><b>Philippines, M7.8 earthquake in Regions IX, XI, XII and BARMM</b></a>
           <a href="https://en.wikipedia.org/wiki/2026_Mindanao_earthquake" target="_blank" rel="noopener"><span>Wikipedia · summary with sources</span><b>2026 Mindanao earthquake</b></a>
         </div>
-      </section>
+      </div>
     </div>
+  </section>
 
-    <div id="pane-nino" hidden>
-      <section>
-        <h2>Time series</h2>
-        <select id="family" aria-label="Choose a time series">
-          <option value="ndvi">Vegetation greenness, monthly (MODIS NDVI, 250 m)</option>
-          <option value="ndvi_anom">Greenness vs same month 2025</option>
-          <option value="lst">Daytime ground temperature, monthly (MODIS, 1 km)</option>
-          <option value="lst_anom">Ground temperature vs same month 2025</option>
-          <option value="evi">Vegetation, quarterly (Landsat HLS EVI, 30 m)</option>
-          <option value="ndmi">Plant moisture, quarterly (HLS NDMI)</option>
-          <option value="ndwi">Surface water, quarterly (HLS NDWI)</option>
-        </select>
-        <div class="when" id="when">—</div>
-        <div class="timebar">
-          <button class="play" id="play" aria-label="Play">▶</button>
-          <div>
-            <input type="range" id="slider" min="0" max="0" value="0" aria-label="Date">
-            <div class="ticks"><span id="t0"></span><span id="t1"></span></div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h2>Area average, Jan 2025 – Oct 2026</h2>
-        <svg id="chart" viewBox="0 0 320 150" width="100%" role="img" aria-label="Monthly average NDVI and land temperature"></svg>
-        <p class="note">Green: greenness (NDVI). Red: daytime ground temperature. April 2026 had the lowest greenness and one of the hottest months, during PAGASA's April dry spell.</p>
-      </section>
+  <section class="card" data-topic="nino">
+    <button class="card-h" aria-expanded="false"><span class="ic" data-icon="nino"></span><span><b>El Niño Dry Spell</b><span>Hot, dry months in 2026</span></span><span class="chev">▶</span></button>
+    <div class="card-b">
+      <p class="lead"><b>El Niño</b> is when the Pacific Ocean gets warmer than usual. Here it means <b>less rain</b>, so plants get thirsty and the ground gets hotter.</p>
+      <div class="views" data-views="nino"></div>
+      <label class="toggle" id="cmpRow"><input type="checkbox" id="cmp"> Compare with the same month last year</label>
+      <div class="box legend" data-legend="nino"></div>
+      <p class="vnote" data-vnote="nino"></p>
+      <div class="box"><h3>📈 The whole area, month by month</h3>
+        <svg id="chart" viewBox="0 0 320 150" width="100%" role="img" aria-label="Monthly average plant greenness and ground temperature"></svg>
+        <p class="note" style="margin:0">Green line: how green the plants are. Red line: how hot the ground is in the day. In April 2026, plants were the least green and the ground was very hot.</p>
+      </div>
+      <details><summary>For grown-ups: the data</summary>
+        <p>Plants: MODIS MOD13Q1 NDVI, monthly maximum, 250 m. Ground heat: MODIS MOD11A2 daytime land surface temperature, 1 km. "Compare with last year" is 2026 minus the same month in 2025. Plant water (NDMI) and water on land (NDWI) are quarterly medians of Landsat HLS L30, 30 m.</p>
+      </details>
     </div>
+  </section>
 
-    <div id="pane-out" hidden>
-      <section>
-        <h2>The next 12 months</h2>
-        <p class="note" style="margin-top:0">NOAA (8 Oct 2026) expects a <b>strong to very strong El Niño</b> through early 2027. This outlook learns how Davao Occidental and Sarangani responded to every El Niño and La Niña since 2000 (MODIS, 26 years) and since 1998 (GPM rainfall), then applies that to this one. It is a scenario, not a weather forecast.</p>
-        <div class="stat" style="margin-top:8px">
-          <div><b id="o-rain">–</b><span>of normal rain expected, Nov 2026 – Apr 2027</span></div>
-          <div><b id="o-land">–</b><span id="o-land-t">of the land likely below-normal greenness, Apr 2027</span></div>
-        </div>
-      </section>
-      <section>
-        <h2>Rainfall: observed and expected</h2>
-        <svg id="rainchart" viewBox="0 0 320 176" width="100%" role="img" aria-label="Monthly rainfall, observed January 2025 to October 2026 and expected November 2026 to October 2027"></svg>
-        <p class="note" id="rainnote"></p>
-      </section>
-      <section>
-        <h2>Map</h2>
-        <select id="ofam" aria-label="Outlook layer">
-          <option value="out_evi">Expected greenness change vs normal (EVI)</option>
-          <option value="out_pb">Chance of below-normal greenness</option>
-          <option value="out_lst">Expected daytime ground temperature vs normal</option>
-          <option value="out_sens">Where El Niño hits vegetation hardest (past 26 years)</option>
-        </select>
-        <div id="o-time">
-          <div class="when" id="owhen">—</div>
-          <div class="timebar">
-            <button class="play" id="oplay" aria-label="Play">▶</button>
-            <div><input type="range" id="oslider" min="0" max="11" value="5" aria-label="Outlook month"><div class="ticks"><span>Nov 2026</span><span>Oct 2027</span></div></div>
-          </div>
-        </div>
-        <p class="note" id="omapnote"></p>
-      </section>
-      <section>
-        <h2>Water</h2>
-        <p class="note" id="waternote" style="margin-top:0"></p>
-      </section>
-      <section>
-        <h2>Does it work? Tested on past El Niños</h2>
+  <section class="card" data-topic="next">
+    <button class="card-h" aria-expanded="false"><span class="ic" data-icon="next"></span><span><b>The Next 12 Months</b><span>What may happen next</span></span><span class="chev">▶</span></button>
+    <div class="card-b">
+      <p class="lead">Scientists expect a <b>strong El Niño</b> until early 2027. We looked at what happened in every El Niño since 2000 to guess what may come next.</p>
+      <div class="big">
+        <div class="wide"><b id="o-rain">–</b><span id="o-rain-t">of the normal rain, from November to April</span></div>
+        <div><b id="o-land">–</b><span id="o-land-t">of the land may be browner than normal</span></div>
+        <div><b id="o-heat">–</b><span id="o-heat-t">hotter ground in April 2027</span></div>
+      </div>
+      <div class="views" data-views="next"></div>
+      <div class="box legend" data-legend="next"></div>
+      <p class="vnote" data-vnote="next"></p>
+      <div class="box"><h3>🌧 Rain: what fell and what we expect</h3>
+        <svg id="rainchart" viewBox="0 0 320 176" width="100%" role="img" aria-label="Monthly rain, January 2025 to October 2027"></svg>
+        <p class="note" style="margin:0" id="rainnote"></p>
+      </div>
+      <div class="box"><h3>💧 Water</h3><p class="note" style="margin:0" id="waternote"></p></div>
+      <details><summary>For grown-ups: can we trust it?</summary>
+        <p>We hid each past El Niño, predicted it from the others, then checked.</p>
         <table class="mlt" id="hindtable"></table>
-        <p class="note" id="hindnote"></p>
-      </section>
-      <section>
-        <h2>How it was made</h2>
-        <p class="note" style="margin-top:0">For every 250 m pixel and every month ahead, a small regression links the greenness anomaly to El Niño strength (ONI, Nov–Jan) and to how green the pixel was in Sep–Oct, after removing the normal season and the long-term trend. Rainfall uses the same idea on 28 years of GPM IMERG over the two provinces. The scenario uses ONI +2.5 °C (range +2.0 to +3.0). Every El Niño year was hidden in turn and predicted from the others to test it. Spatial detail is the weakest part: the area-wide timing and size are more reliable than the exact pixels.</p>
-      </section>
+        <p id="hindnote"></p>
+        <p>Method: for every 250 m MODIS pixel and every month ahead, the EVI anomaly (after removing that pixel's seasons and 2000–2026 trend) is modelled as a + b·ONI(Nov–Jan) + c·(Sep–Oct anomaly). Rainfall uses 28 years of GPM IMERG V07 over the two provinces. The scenario uses ONI +2.5 °C (range +2.0 to +3.0), following NOAA CPC on 8 Oct 2026. This is a scenario, not a weather forecast. It cannot know about typhoons, fires or land clearing.</p>
+      </details>
     </div>
+  </section>
 
-    <div id="pane-wx" hidden>
-      <section>
-        <h2>Weather right now</h2>
-        <div class="wx" id="wxlist"><p class="note">Loading live weather from Open-Meteo…</p></div>
-        <p class="note" id="wxtime"></p>
-      </section>
-      <section>
-        <h2>Sky effects</h2>
-        <div class="chips">
-          <button id="fx-clouds" aria-pressed="true">Clouds</button>
-          <button id="fx-rain" aria-pressed="false">Rain</button>
-          <button id="fx-live" aria-pressed="true">Follow live weather</button>
-        </div>
-        <p class="note">With "Follow live weather" on, cloud cover, rain and drift direction come from the current forecast for these towns. Turn it off to set the sky yourself.</p>
-      </section>
-    </div>
-
-    <div id="pane-about" hidden>
-      <section>
-        <h2>Data</h2>
-        <ul class="note plain">
-          <li>Landsat HLS L30 vegetation indices (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
-          <li>MODIS MOD13Q1 NDVI/EVI (250 m, Feb 2000 – Oct 2026) and MOD11A2 daytime land temperature (1 km, 2000–2026)</li>
-          <li>Rainfall: NASA GPM IMERG V07, monthly Final Run 1998 – Sep 2025 and daily Late Run to 30 Oct 2026 (GIOVANNI area averages)</li>
-          <li>El Niño: NOAA CPC Oceanic Niño Index (ERSSTv5) to Jul 2026; CPC ENSO discussion of 8 Oct 2026 and IRI forecast of 21 Sep 2026</li>
-          <li>SRTM 30 m elevation; 2020 regional land cover (province outlines)</li>
-          <li>Earthquake facts: PHIVOLCS, USGS (via Wikipedia), NDRRMC, AHA Centre, AP</li>
-          <li>NISAR L2 GCOV (NASA-ISRO, provisional), HH and HV, multilooked from 10 m to 30 m; 8 dates and 18 frame files, 28 Jun – 19 Oct 2026</li>
-          <li>Live weather: Open-Meteo forecast API. Basemap, 3D buildings and terrain: Mapbox Standard.</li>
-        </ul>
-      </section>
-      <section>
-        <h2>Limits</h2>
-        <ul class="note plain">
-          <li>NISAR's earliest scene here is 28 June, after the earthquake, so radar cannot show the quake itself; it shows the months after.</li>
-          <li>About 30% of the area could not be checked for slides because every Landsat view in the before or after window was cloudy.</li>
-          <li>Heavy rain or land clearing can look like a landslide. Treat patches as places to check.</li>
-          <li>Surface change only, not ground uplift. Uplift needs NISAR interferometry (GUNW) spanning 8 June.</li>
-          <li>The 12-month outlook is a scenario conditioned on a strong El Niño (ONI +2.0 to +3.0 °C), built from 26 past years. It does not know about typhoons, fires or land clearing ahead.</li>
-          <li>Clouds and rain are an illustration driven by forecast numbers, not satellite cloud images.</li>
-        </ul>
-      </section>
-    </div>
-
-    <section>
-      <h2>Legend</h2>
-      <div class="legend" id="legend"></div>
-    </section>
-    <section>
-      <h2>Travel</h2>
-      <div class="chips" id="towns"></div>
-    </section>
-    <section>
-      <h2>View</h2>
-      <label for="opacity" class="note" style="margin:0">Overlay opacity</label>
-      <input type="range" id="opacity" min="0" max="100" value="80">
-      <div class="chips" style="margin-top:10px">
-        <button data-light="dawn" aria-pressed="false">Dawn</button>
-        <button data-light="day" aria-pressed="true">Day</button>
-        <button data-light="dusk" aria-pressed="false">Dusk</button>
-        <button data-light="night" aria-pressed="false">Night</button>
-      </div>
-      <div class="chips" style="margin-top:8px">
-        <button id="b3d" aria-pressed="true">3D buildings</button>
-        <button id="terrain" aria-pressed="true">3D terrain</button>
-        <button id="tilt" aria-pressed="true">Tilted view</button>
-        <button id="roadsTop" aria-pressed="true">Roads over data</button>
-        <button id="labels" aria-pressed="true">Names</button>
-      </div>
-    </section>
+  <div class="foot">
+    <button id="aboutBtn">ⓘ About this map</button>
+    <a href="https://github.com/monteropeterdominic-arch/sarangani-davao-occidental-nisar" target="_blank" rel="noopener">⬇ Get the data</a>
   </div>
 </aside>
+
+<div class="bar" role="group" aria-label="Time frame">
+  <button class="round" id="b3d" aria-pressed="true" title="3D view on or off">3D</button>
+  <button class="round sm" id="home" aria-label="Show the whole area" title="Whole area">⌂</button>
+  <div class="tl">
+    <button class="play" id="play" aria-label="Play">▶</button>
+    <div class="tl-top"><span class="tag">Time frame</span><b id="when">—</b><span id="whatnow"></span></div>
+    <div class="steps" id="steps"></div>
+  </div>
+  <button class="round sm" id="gear" aria-label="Map settings" aria-expanded="false" aria-controls="setpop" title="Map settings">⚙</button>
+</div>
+
+<dialog id="about">
+  <div class="in">
+    <button class="close" id="aboutClose">Close</button>
+    <h2>About this map</h2>
+    <p>This map shows how the land in <b>Sarangani</b> and <b>Davao Occidental</b> changed after the big earthquake of 8 June 2026 and during the 2026 El Niño, and what may happen next. It was made for the NASA Space Apps Challenge 2026.</p>
+    <h3>How to use it</h3>
+    <ul>
+      <li>Pick a topic on the left. Then pick what to look at (the round buttons).</li>
+      <li>Use the <b>time frame</b> at the bottom to move through the months. ▶ plays them like a movie.</li>
+      <li>Drag to move, scroll to zoom, right-click and drag (or two fingers) to turn and tilt. The <b>3D</b> button flattens or tilts the map. The compass turns north back up.</li>
+    </ul>
+    <h3>Where the data comes from</h3>
+    <ul>
+      <li>NISAR L2 GCOV radar (NASA-ISRO, provisional), HH and HV, 30 m; 28 Jun – 19 Oct 2026</li>
+      <li>Landsat HLS L30 (EVI, NBR, NDMI, NDWI), 30 m, Jan 2025 – Sep 2026</li>
+      <li>MODIS MOD13Q1 NDVI/EVI (250 m) and MOD11A2 land temperature (1 km), 2000 – Oct 2026</li>
+      <li>Rain: NASA GPM IMERG V07, 1998 – Oct 2026. El Niño: NOAA CPC Oceanic Niño Index and ENSO discussion (8 Oct 2026), IRI forecast</li>
+      <li>SRTM 30 m elevation; 2020 regional land cover (province outlines)</li>
+      <li>Earthquake facts: PHIVOLCS, USGS, NDRRMC, AHA Centre, AP</li>
+      <li>Live weather: Open-Meteo. Basemap, 3D buildings and terrain: Mapbox Standard</li>
+    </ul>
+    <h3>Things to know</h3>
+    <ul>
+      <li>NISAR's first picture here is 28 June, after the earthquake, so the radar shows the months after, not the shaking itself. Ground lifting needs NISAR interferometry (GUNW) spanning 8 June.</li>
+      <li>About 30% of the area could not be checked for landslides because it was cloudy in every Landsat view.</li>
+      <li>The 12-month outlook is a scenario based on a strong El Niño, not a weather forecast.</li>
+      <li>The clouds and rain on the map are a drawing driven by the real weather numbers, not satellite cloud pictures.</li>
+    </ul>
+    <p class="note">All layers as GeoTIFFs: <a href="https://github.com/monteropeterdominic-arch/sarangani-davao-occidental-nisar" target="_blank" rel="noopener">github.com/monteropeterdominic-arch/sarangani-davao-occidental-nisar</a></p>
+  </div>
+</dialog>
 
 <script>
 (async function(){
@@ -421,31 +436,96 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   const M=await (await fetch('data/manifest.json')).json();
   const byFam={}; M.layers.forEach(l=>{(byFam[l.family]=byFam[l.family]||[]).push(l)});
   const byId=Object.fromEntries(M.layers.map(l=>[l.id,l]));
-  const wide=window.innerWidth>640;
+  const phone=()=>window.innerWidth<=760;
+  const pad=()=>phone()?{left:0,top:60,right:0,bottom:Math.round(window.innerHeight*0.44)+90}:{left:350,top:60,right:90,bottom:110};
   // towns: approximate town-centre coordinates, for navigation and weather points
   const TOWNS=[['Maasim',125.0017,5.8608],['Kiamba',124.6247,5.9894],['Alabel',125.2903,6.1017],['Glan',125.2047,5.8222],['Malita',125.6111,6.4133],['General Santos',125.1716,6.1164]];
-  const HOME={center:[125.12,6.02],zoom:wide?8.7:8.0,pitch:62,bearing:-28,padding:{left:wide?380:0,top:0,right:0,bottom:wide?0:window.innerHeight*0.45}};
+  const HOME={center:[125.12,6.02],zoom:phone()?7.9:8.5,pitch:62,bearing:-28};
 
+  // ---------- icons ----------
+  const ICON={
+    radar:`<svg viewBox="0 0 40 40"><rect x="15" y="15" width="10" height="10" rx="2" fill="#283044" stroke="#d3bc8e" stroke-width="1.5" transform="rotate(-30 20 20)"/><g transform="rotate(-30 20 20)"><rect x="3" y="17" width="10" height="6" fill="#5aa9d6" stroke="#283044" stroke-width="1.2"/><rect x="27" y="17" width="10" height="6" fill="#5aa9d6" stroke="#283044" stroke-width="1.2"/></g><path d="M12 32 q4 4 8 0 M9 35 q7 6 14 0" fill="none" stroke="#3fb7b0" stroke-width="2" stroke-linecap="round"/></svg>`,
+    quake:`<svg viewBox="0 0 40 40"><path d="M3 27 H11 L14 18 L18 34 L22 10 L26 30 L29 22 H37" fill="none" stroke="#d0453a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 35 H34" stroke="#7c6a45" stroke-width="2" stroke-linecap="round"/></svg>`,
+    nino:`<svg viewBox="0 0 40 40"><circle cx="20" cy="17" r="7" fill="#f2c46d" stroke="#b89a5e" stroke-width="1.5"/><g stroke="#e8a33a" stroke-width="2" stroke-linecap="round"><path d="M20 4v3M20 27v3M7 17h3M30 17h3M10.5 7.5l2 2M27.5 7.5l-2 2M10.5 26.5l2-2M27.5 26.5l-2-2"/></g><path d="M8 35 q3-3 6 0 q3 3 6 0 q3-3 6 0 q3 3 6 0" fill="none" stroke="#b89a5e" stroke-width="2" stroke-linecap="round"/></svg>`,
+    next:`<svg viewBox="0 0 40 40"><rect x="6" y="9" width="24" height="23" rx="3" fill="#f6f1e6" stroke="#283044" stroke-width="2"/><path d="M6 15 H30" stroke="#283044" stroke-width="2"/><path d="M12 6v6M24 6v6" stroke="#283044" stroke-width="2" stroke-linecap="round"/><path d="M11 25 q5-7 11-3" fill="none" stroke="#3fb7b0" stroke-width="2.2" stroke-linecap="round"/><path d="M26 18 l8 7 -8 7z" fill="#d0453a"/></svg>`};
+  document.querySelectorAll('[data-icon]').forEach(e=>e.innerHTML=ICON[e.dataset.icon]);
+
+  // ---------- topics, views and their time steps ----------
+  const mo=l=>new Date(l.start+'T00:00:00').toLocaleString('en',{month:'short'});
+  const moY=l=>new Date(l.start+'T00:00:00').toLocaleString('en',{month:'long',year:'numeric'});
+  const shortY=l=>{const d=new Date(l.start+'T00:00:00');return d.toLocaleString('en',{month:'short'})+" '"+String(d.getFullYear()).slice(2)};
+  const qtr=l=>{const a=new Date(l.start+'T00:00:00'),b=new Date(l.end+'T00:00:00');return `${a.toLocaleString('en',{month:'short'})}–${b.toLocaleString('en',{month:'short'})} ${b.getFullYear()}`};
+  const fam=f=>byFam[f]||[];
+  const monthly=(f,label=moY)=>()=>fam(f).map(l=>({l,label:label(l),short:shortY(l)}));
+  const pairDate=s=>{const d=new Date(s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6)+'T00:00:00');return d.getDate()+' '+d.toLocaleString('en',{month:'short'})};
+  const CHG=M.layers.filter(l=>l.group==='nisar'&&/_hh_/.test(l.id)).map(l=>{const m=l.id.match(/_(\d{8})_(\d{8})$/);return {l,a:m[1],b:m[2]}}).sort((x,y)=>(x.a+x.b).localeCompare(y.a+y.b));
+  const TOPICS={
+    radar:{views:[
+      {id:'hv',chip:'🌳 Trees & plants',steps:monthly('nisarm_hv'),lo:'water, bare ground or shadow',hi:'thick trees and leaves',
+        note:'Bright places have lots of trees and leaves. Dark places are water, bare ground, or the shady side of a hill.'},
+      {id:'hh',chip:'💧 Wet ground',steps:monthly('nisarm_hh'),lo:'dry and smooth',hi:'wet or bumpy',
+        note:'Brighter ground is wetter or bumpier. In October the rain came back, so many places got brighter.'},
+      {id:'ai',chip:'🤖 AI plant map',steps:monthly('mlm_evi'),lo:'few plants',hi:'lots of plants',
+        note:'A computer learned to turn radar into a plant map, so we can see plants even under the clouds. It gets the big picture right, not every field.'},
+      {id:'chg',chip:'🔄 What changed',steps:()=>CHG.map(c=>({l:c.l,label:`${pairDate(c.a)} → ${pairDate(c.b)}`,short:`${pairDate(c.a)}→${pairDate(c.b)}`,sub:c.l.label.replace(/^NISAR HH change, /,'')})),lo:'got drier',hi:'got wetter',
+        note:'The satellite looked at the same place twice from the same spot in space. Brown got drier; teal got wetter. From June to September the ground dried out; in October it got wet again.'},
+      {id:'lc',chip:'🗺 Land types',steps:()=>[[byId.ml_lc_2020,'2020 map','2020'],[byId.ml_lc_2026,'2026, seen by radar AI','2026'],[byId.ml_lc_change,'What changed since 2020','Changed']].filter(x=>x[0]).map(([l,label,short])=>({l,label,short})),
+        note:'Forest, farms, towns and water. The AI made the 2026 map from radar alone. "What changed" shows places that may be different from 2020; they are places to check, not proof.'}]},
+    quake:{views:[
+      {id:'slides',chip:'⛰ Landslides',steps:()=>[[byId.eq_evi_pre,'Before the quake (Mar – 7 Jun)','Before'],[byId.eq_evi_post,'After the quake (9 Jun – Sep)','After'],[byId.eq_evi_excess,'What changed','Changed']].map(([l,label,short])=>({l,label,short})),start:2,
+        lo:{eq_evi_excess:'lost plants'}, hi:{eq_evi_excess:'gained plants'}, lo2:'few plants', hi2:'lots of plants',
+        note:{eq_evi_pre:'How green the land was before the earthquake.',eq_evi_post:'How green the land was after the earthquake. Look for hills that turned bare.',eq_evi_excess:'Brown shows where plants were lost after the quake, more than in a normal year. The red spots are steep hills that turned bare: possible landslides. Tap one.'}},
+      {id:'slope',chip:'📐 Steep hills',steps:()=>[{l:byId.slope,label:'How steep the land is',short:''}],lo:'flat',hi:'very steep',
+        note:'Landslides happen most on steep hills (dark red). Most possible slides are on slopes steeper than 25°.'},
+      {id:'check',chip:'☁ Where we could look',steps:()=>[{l:byId.eq_classes,label:'Where the check was possible',short:''}],
+        note:'Satellites with cameras cannot see through clouds. Blue places were cloudy every time, so we could not check them.'}]},
+    nino:{views:[
+      {id:'green',chip:'🌿 Green plants',steps:monthly('ndvi'),alt:monthly('ndvi_anom'),lo:'few plants',hi:'lots of plants',altlo:'browner than last year',althi:'greener than last year',
+        note:'Darker green means more healthy plants. Press ▶ and watch April 2026: the land got less green in the dry spell.',altnote:'Brown places are less green than the same month in 2025.'},
+      {id:'heat',chip:'🔥 Hot ground',steps:monthly('lst'),alt:monthly('lst_anom'),lo:'cooler',hi:'hotter',altlo:'cooler than last year',althi:'hotter than last year',
+        note:'How hot the ground gets in the daytime. Red is hotter.',altnote:'Red places are hotter than the same month in 2025; blue are cooler.'},
+      {id:'pwater',chip:'🍃 Plant water',steps:()=>fam('ndmi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'thirsty plants',hi:'plants full of water',
+        note:'Plants hold water in their leaves. Brown plants are thirsty. Each step is three months.'},
+      {id:'water',chip:'🌊 Water on land',steps:()=>fam('ndwi').map(l=>({l,label:qtr(l),short:qtr(l).replace(/ 20(\d\d)$/," '$1")})),lo:'dry land',hi:'water',
+        note:'Dark blue is water: the sea, rivers, ponds and fishponds. Each step is three months.'}]},
+    next:{views:[
+      {id:'plants',chip:'🍂 Plants',steps:monthly('out_evi'),start:5,lo:'browner than normal',hi:'greener than normal'},
+      {id:'chance',chip:'🎲 Chance of brown',steps:monthly('out_pb'),start:5,lo:'unlikely',hi:'very likely'},
+      {id:'hot',chip:'🌡 Hot ground',steps:monthly('out_lst'),start:5,lo:'cooler than normal',hi:'hotter than normal'},
+      {id:'risk',chip:'⚠ Dries first',steps:()=>[{l:byId.out_sens,label:'Places that dry out most in El Niño',short:''}],lo:'dries the most',hi:'hardly changes',
+        note:'In past El Niños, the brown places lost the most green. Farms, grass and young trees there may need help first.'}]}
+  };
+  Object.values(TOPICS).forEach(t=>t.views=t.views.filter(v=>{try{const s=v.steps();return s.length&&s.every(x=>x.l)}catch(e){return false}}));
+  const state={topic:'radar',view:{radar:0,quake:0,nino:0,next:0},idx:{},cmp:false};
+
+  // view chips
+  Object.entries(TOPICS).forEach(([k,t])=>{const box=document.querySelector(`[data-views="${k}"]`);
+    t.views.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v.chip;b.setAttribute('aria-pressed',i===0);b.addEventListener('click',()=>{state.view[k]=i;delete state.idx[k+i];render()});box.appendChild(b)})});
+  // topic cards and phone tabs
+  const cards=[...document.querySelectorAll('.card')], nav=document.getElementById('topicnav');
+  const NAMES={radar:'Radar',quake:'Quake',nino:'El Niño',next:'Next 12 mo'};
+  cards.forEach(c=>{const k=c.dataset.topic;c.querySelector('.card-h').addEventListener('click',()=>openTopic(k));
+    const b=document.createElement('button');b.setAttribute('role','tab');b.dataset.topic=k;b.innerHTML=ICON[k]+NAMES[k];b.addEventListener('click',()=>openTopic(k));nav.appendChild(b)});
+  function openTopic(k){state.topic=k; stop(); cards.forEach(c=>{const on=c.dataset.topic===k;c.classList.toggle('open',on);c.querySelector('.card-h').setAttribute('aria-expanded',on)});
+    nav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.topic===k)); render();}
+
+  // ---------- map ----------
   const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',center:HOME.center,zoom:HOME.zoom,pitch:HOME.pitch,bearing:HOME.bearing,maxPitch:80,antialias:true,
     config:{basemap:{lightPreset:'day',show3dObjects:true,showPlaceLabels:true,showRoadLabels:true,showPointOfInterestLabels:true,showTransitLabels:false,
       colorWater:'#56c3d6',colorGreenspace:'#8fd178',colorLand:'#efe6cf',colorMotorways:'#f2c46d',colorTrunks:'#f5d58f',colorRoads:'#fbf3df'}}});
   map.addControl(new mapboxgl.NavigationControl({showCompass:false}),'top-right');
-  map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-right');
-
-  let opacity=0.8, mode='nisar', rasterSlot='bottom';
+  map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-left');
+  let opacity=0.8, rasterSlot='bottom';
   function rasterLayer(id){return {id,type:'raster',source:id,slot:rasterSlot,paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
-  function painterlySky(){
-    try{ map.setFog({range:[0.8,9],color:'#f6eadf','high-color':'#8cc6ee','horizon-blend':0.18,'space-color':'#bfe3ff','star-intensity':0}); }catch(e){}
-  }
+  function painterlySky(){ try{ map.setFog({range:[0.8,9],color:'#f6eadf','high-color':'#8cc6ee','horizon-blend':0.18,'space-color':'#bfe3ff','star-intensity':0}); }catch(e){} }
   map.on('style.load',()=>{
     if(!map.getSource('dem')) map.addSource('dem',{type:'raster-dem',url:'mapbox://mapbox.mapbox-terrain-dem-v1',tileSize:512,maxzoom:14});
-    map.setTerrain({source:'dem',exaggeration:1.5});
-    painterlySky();
-    map.jumpTo(HOME);
+    map.setTerrain({source:'dem',exaggeration:1.5}); painterlySky();
+    map.jumpTo({...HOME,padding:pad()});
   });
   map.on('load',()=>{
-    map.addSource('series',{type:'image',url:byFam.ndvi[0].file,coordinates:M.image_corners}); map.addLayer(rasterLayer('series'));
-    map.addSource('static',{type:'image',url:byId.eq_evi_excess.file,coordinates:M.image_corners}); map.addLayer(rasterLayer('static'));
+    const first=TOPICS.radar.views[0].steps();
+    map.addSource('series',{type:'image',url:first[first.length-1].l.file,coordinates:M.image_corners}); map.addLayer(rasterLayer('series'));
     map.addSource('aoi',{type:'geojson',data:'data/boundary.geojson'});
     map.addLayer({id:'aoi-glow',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#fff6d8','line-width':6,'line-opacity':0.55,'line-blur':3}});
     map.addLayer({id:'aoi-line',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#b8902f','line-width':2,'line-dasharray':[3,1.5]}});
@@ -453,14 +533,15 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     map.addLayer({id:'cand-fill',type:'fill',source:'cand',slot:'top',paint:{'fill-color':'#d0453a','fill-opacity':0.9}});
     map.addLayer({id:'cand-halo',type:'circle',source:'cand',slot:'top',maxzoom:12,paint:{'circle-radius':['interpolate',['linear'],['zoom'],7,3,11,6],'circle-color':'#d0453a','circle-stroke-color':'#fff6d8','circle-stroke-width':1.5}});
     const pop=e=>{const p=e.features[0].properties;new mapboxgl.Popup({maxWidth:'260px',focusAfterOpen:false}).setLngLat(e.lngLat).setHTML(
-      `<b>Possible landslide</b><br>${p.province||''}<br>Area ${(+p.area_ha).toFixed(2)} ha · slope ${(+p.slope_mean).toFixed(0)}°<br>`+
-      `Elevation ${(+p.elev_mean).toFixed(0)} m · ${(+p.dist_epi_km).toFixed(0)} km from epicentre<br>Vegetation (EVI) ${(+p.evipre_mean).toFixed(2)} → ${(+p.evipost_mean).toFixed(2)}`).addTo(map)};
+      `<b>Possible landslide</b><br>${p.province||''}<br>Size ${(+p.area_ha).toFixed(2)} ha · hill ${(+p.slope_mean).toFixed(0)}° steep<br>`+
+      `${(+p.elev_mean).toFixed(0)} m high · ${(+p.dist_epi_km).toFixed(0)} km from the quake<br>Plants (EVI) ${(+p.evipre_mean).toFixed(2)} → ${(+p.evipost_mean).toFixed(2)}`).addTo(map)};
     map.on('click','cand-fill',pop); map.on('click','cand-halo',pop);
     ['cand-fill','cand-halo'].forEach(id=>{map.on('mouseenter',id,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',id,()=>map.getCanvas().style.cursor='')});
-    addMarkers(); setMode('nisar'); loadWeather();
+    addMarkers(); render(); loadWeather();
   });
+  addEventListener('resize',()=>map.setPadding(pad()));
 
-  // ---------- waypoint markers (towns) and epicentre sigil ----------
+  // ---------- town markers and epicentre ----------
   function wpSVG(fill){return `<svg class="wp" viewBox="0 0 34 46"><defs><radialGradient id="g${fill.slice(1)}" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="${fill}"/><stop offset="1" stop-color="#1c2232"/></radialGradient></defs>
     <path d="M17 2 L31 17 L17 32 L3 17 Z" fill="url(#g${fill.slice(1)})" stroke="#d3bc8e" stroke-width="2.2"/><path d="M17 8 L25 17 L17 26 L9 17 Z" fill="none" stroke="#fff6d8" stroke-width="1.2" opacity=".8"/>
     <path d="M17 32 L17 44" stroke="#d3bc8e" stroke-width="2"/><circle cx="17" cy="44" r="2" fill="#d3bc8e"/></svg>`}
@@ -471,199 +552,162 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       el.addEventListener('click',ev=>{ev.stopPropagation();flyTown(n,x,y)});
       new mapboxgl.Marker({element:el,anchor:'bottom'}).setLngLat([x,y]).addTo(map);
     });
-    const ep=document.createElement('div'); ep.innerHTML=`<svg width="58" height="58" viewBox="0 0 58 58" style="cursor:pointer;overflow:visible"><circle cx="29" cy="29" r="26" fill="rgba(208,69,58,.16)" stroke="#d0453a" stroke-width="2" stroke-dasharray="5 4"><animateTransform attributeName="transform" type="rotate" from="0 29 29" to="360 29 29" dur="18s" repeatCount="indefinite"/></circle><circle cx="29" cy="29" r="15" fill="none" stroke="#d3bc8e" stroke-width="2"/><path d="M29 17 L33 29 L29 41 L25 29Z" fill="#d0453a" stroke="#fff6d8" stroke-width="1"/></svg>`;
-    ep.setAttribute('role','button'); ep.setAttribute('aria-label','Earthquake epicentre');
-    const epPop=new mapboxgl.Popup({offset:24,maxWidth:'260px',focusAfterOpen:false}).setHTML(`<b>Epicentre · M7.8</b><br>8 June 2026, 7:37 am · 33 km deep (PHIVOLCS)<br>About 32 km south of Maasim, Sarangani. Thrust faulting at the Cotabato Trench subduction zone. At least 106 deaths (NDRRMC).`);
+    const ep=document.createElement('div'); ep.innerHTML=`<svg width="58" height="58" viewBox="0 0 58 58" style="cursor:pointer;overflow:visible;display:block"><circle cx="29" cy="29" r="26" fill="rgba(208,69,58,.16)" stroke="#d0453a" stroke-width="2" stroke-dasharray="5 4"><animateTransform attributeName="transform" type="rotate" from="0 29 29" to="360 29 29" dur="18s" repeatCount="indefinite"/></circle><circle cx="29" cy="29" r="15" fill="none" stroke="#d3bc8e" stroke-width="2"/><path d="M29 17 L33 29 L29 41 L25 29Z" fill="#d0453a" stroke="#fff6d8" stroke-width="1"/></svg>`;
+    ep.setAttribute('role','button'); ep.setAttribute('aria-label','Where the earthquake started');
+    const epPop=new mapboxgl.Popup({offset:24,maxWidth:'260px',focusAfterOpen:false}).setHTML(`<b>The earthquake started here</b><br>8 June 2026, 7:37 am · magnitude 7.8<br>About 33 km under the sea floor, 32 km south of Maasim, at the Cotabato Trench.`);
     new mapboxgl.Marker({element:ep}).setLngLat([M.epicentre.lng,M.epicentre.lat]).setPopup(epPop).addTo(map);
   }
   // keep the page and the map container from ever scrolling (focus or popups can scroll overflow:hidden boxes)
   const mc=document.getElementById('map'); mc.addEventListener('scroll',()=>{mc.scrollTop=0;mc.scrollLeft=0});
   addEventListener('scroll',()=>{if(scrollY||scrollX)scrollTo(0,0)});
   function flyTown(n,x,y){
-    map.flyTo({center:[x,y],zoom:15.8,pitch:65,bearing:-30,duration:3000,padding:{left:wide?380:0,top:0,right:0,bottom:wide?0:window.innerHeight*0.45}});
-    setPressed('tilt',true);
+    map.flyTo({center:[x,y],zoom:15.8,pitch:65,bearing:-30,duration:3000,padding:pad()}); set3D(true);
     const w=townWx[n]; new mapboxgl.Popup({offset:44,maxWidth:'240px',focusAfterOpen:false}).setLngLat([x,y]).setHTML(`<b>${n}</b><br>`+(w?`${w.desc}, ${Math.round(w.t)} °C<br>Clouds ${w.cc}% · rain ${w.p} mm · wind ${Math.round(w.ws)} km/h`:'Weather not loaded')).addTo(map);
   }
   const tw=document.getElementById('towns');
-  TOWNS.forEach(([n,x,y])=>{const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>flyTown(n,x,y));tw.appendChild(b)});
-  const hb=document.createElement('button');hb.textContent='Whole area';hb.addEventListener('click',()=>{map.flyTo({...HOME,duration:2200});setPressed('tilt',true)});tw.appendChild(hb);
+  TOWNS.forEach(([n,x,y])=>{const b=document.createElement('button');b.textContent='📍 '+n;b.addEventListener('click',()=>flyTown(n,x,y));tw.appendChild(b)});
 
-  // ---------- compass ----------
+  // ---------- compass, 3D, home ----------
   const rose=document.getElementById('rose');
   map.on('rotate',()=>rose.style.transform=`rotate(${-map.getBearing()}deg)`); rose.style.transform=`rotate(${-HOME.bearing}deg)`;
   document.getElementById('compass').addEventListener('click',()=>map.easeTo({bearing:0,duration:900}));
+  const b3d=document.getElementById('b3d');
+  function set3D(on){b3d.setAttribute('aria-pressed',on); b3d.textContent=on?'3D':'2D';}
+  b3d.addEventListener('click',()=>{const on=b3d.getAttribute('aria-pressed')!=='true'; set3D(on);
+    map.setTerrain(on?{source:'dem',exaggeration:1.5}:null); map.easeTo({pitch:on?62:0,bearing:on?-28:0,duration:900});});
+  document.getElementById('home').addEventListener('click',()=>{map.flyTo({...HOME,padding:pad(),duration:2200}); if(b3d.getAttribute('aria-pressed')!=='true'){set3D(true);map.setTerrain({source:'dem',exaggeration:1.5})}});
 
-  // ---------- legend / modes ----------
-  function legend(l){
-    const el=document.getElementById('legend'); if(!l){el.innerHTML='<p class="note">No overlay selected.</p>';return}
-    const g=l.legend;
-    if(g.type==='ramp'){
-      el.innerHTML=`<div style="font-weight:700;font-size:13px">${l.label}</div><div class="bar" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div>`+
-      `<div class="ends"><span>${g.min}${g.unit||''}</span><span>${((g.min+g.max)/2)}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`+
-      (l.family==='out_evi'||l.id==='out_sens'?'<p class="note">Brown = less green than normal, teal = greener.</p>':l.family==='out_pb'?'<p class="note">Above 0.5 (brown): below-normal greenness is more likely than not.</p>':l.family==='out_lst'?'<p class="note">Blue cooler, red hotter than the normal for that month (scale ±4 °C).</p>':'')+(l.family.endsWith('anom')||l.id==='eq_evi_excess'?'<p class="note">'+(l.family==='lst_anom'?'Blue cooler, red hotter than 2025.':'Brown = lost greenness, teal = gained.')+'</p>':'');
-    }else{
-      el.innerHTML=`<div style="font-weight:700;font-size:13px">${l.label}</div><ul>`+g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')+'</ul>';
-    }
-  }
-  const panes=['nisar','quake','nino','out','wx','about'];
-  let nsub='date';
-  function setMode(m){
-    if(m==='quake'||m==='nino'||m==='nisar'||m==='out') mode=m;
-    panes.forEach(k=>{document.getElementById('pane-'+k).hidden=k!==m;document.getElementById('tab-'+k).setAttribute('aria-selected',k===m)});
-    if(!map.getLayer('series'))return;
-    const quake=mode==='quake', sel=document.querySelector('input[name=qbg]:checked').value;
-    let seriesOn=false, staticOn=false, lg=null;
-    if(mode==='nino'){ seriesOn=true; lg=current(); }
-    if(mode==='quake'){ staticOn=!!sel; lg=sel?byId[sel]:null; if(sel) map.getSource('static').updateImage({url:byId[sel].file,coordinates:M.image_corners}); }
-    if(mode==='nisar'){
-      if(nsub==='date'){ seriesOn=true; lg=ncurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
-      else if(nsub==='lc'){ const v=(document.querySelector('input[name=nlc]:checked')||{}).value; staticOn=!!(v&&byId[v]); lg=v?byId[v]:null; if(staticOn) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); }
-      else if(nsub==='ml'){ seriesOn=true; lg=mlcurrent(); if(lg) map.getSource('series').updateImage({url:lg.file,coordinates:M.image_corners}); }
-      else { const v=(document.querySelector('input[name=nchg]:checked')||{}).value; staticOn=!!v; lg=v?byId[v]:null; if(v) map.getSource('static').updateImage({url:byId[v].file,coordinates:M.image_corners}); }
-    }
-    if(mode==='nino'){ const l=current(); if(l) map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners}); }
-    if(mode==='out'){ const l=ocurrent(); lg=l||null; if(l){ if(ofam.value==='out_sens'){ staticOn=true; map.getSource('static').updateImage({url:l.file,coordinates:M.image_corners}); } else { seriesOn=true; map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners}); } } }
-    map.setLayoutProperty('series','visibility',seriesOn?'visible':'none');
-    map.setLayoutProperty('static','visibility',staticOn?'visible':'none');
-    const cand=document.getElementById('q-cand').checked&&quake;
+  // ---------- render the current topic / view / time step ----------
+  const stepsEl=document.getElementById('steps'), play=document.getElementById('play');
+  function cur(){const t=TOPICS[state.topic], vi=Math.min(state.view[state.topic],t.views.length-1), v=t.views[vi];
+    const useAlt=state.topic==='nino'&&state.cmp&&v.alt; const steps=(useAlt?v.alt:v.steps)();
+    const key=state.topic+vi+(useAlt?'a':''); if(state.idx[key]===undefined) state.idx[key]=v.start!==undefined?Math.min(v.start,steps.length-1):steps.length-1;
+    state.idx[key]=Math.max(0,Math.min(state.idx[key],steps.length-1));
+    return {t,vi,v,steps,key,useAlt,i:state.idx[key]};}
+  function legendHTML(l,lo,hi){const g=l.legend;
+    if(g.type==='classes') return `<ul>${g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')}</ul>`;
+    return `<div class="ends"><span>${lo||''}</span><span>${hi||''}</span></div><div class="ramp" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div><div class="nums"><span>${g.min}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`;}
+  const pick=(x,l)=>x&&typeof x==='object'?x[l.id]:x;
+  function render(){
+    const {t,vi,v,steps,key,useAlt,i}=cur(), s=steps[i], l=s.l, k=state.topic;
+    document.querySelectorAll(`[data-views="${k}"] button`).forEach((b,j)=>b.setAttribute('aria-pressed',j===vi));
+    const lo=useAlt?v.altlo:(pick(v.lo,l)||v.lo2), hi=useAlt?v.althi:(pick(v.hi,l)||v.hi2);
+    document.querySelector(`[data-legend="${k}"]`).innerHTML=`<h3>What the colours mean</h3>`+legendHTML(l,lo,hi);
+    document.querySelector(`[data-vnote="${k}"]`).textContent=(useAlt?v.altnote:pick(v.note,l))||outlookNote(v.id,i)||'';
+    document.getElementById('cmpRow').hidden=!(k==='nino'&&v.alt);
+    document.getElementById('spotsRow').hidden=k!=='quake';
+    // time frame
+    document.getElementById('when').textContent=s.label;
+    document.getElementById('whatnow').textContent=(s.sub?s.sub+' · ':'')+v.chip.replace(/^\S+\s/,'');
+    stepsEl.innerHTML=''; const many=steps.length>12;
+    steps.forEach((st,j)=>{const b=document.createElement('button');b.setAttribute('aria-current',j===i);b.setAttribute('aria-label',st.label);b.title=st.label;
+      const show=!many||j===0||j===steps.length-1||j===i||/^Jan/.test(st.short);
+      b.innerHTML=`${steps.length>1&&show&&st.short?`<span>${st.short}</span>`:''}<i></i>`;
+      b.addEventListener('click',()=>{state.idx[key]=j;render()}); stepsEl.appendChild(b)});
+    stepsEl.style.visibility=steps.length>1?'visible':'hidden'; play.disabled=steps.length<2; if(steps.length<2) stop();
+    if(!map.getSource('series')) return;
+    map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners});
+    map.setLayoutProperty('series','visibility','visible');
+    const cand=k==='quake'&&document.getElementById('spots').checked;
     ['cand-fill','cand-halo'].forEach(id=>map.setLayoutProperty(id,'visibility',cand?'visible':'none'));
-    legend(lg);
+    if(k==='nino') drawChart(l);
   }
-  panes.forEach(k=>document.getElementById('tab-'+k).addEventListener('click',()=>setMode(k)));
-  document.querySelectorAll('input[name=qbg]').forEach(r=>r.addEventListener('change',()=>setMode('quake')));
-  document.getElementById('q-cand').addEventListener('change',()=>setMode('quake'));
+  document.getElementById('cmp').addEventListener('change',e=>{state.cmp=e.target.checked;render()});
+  document.getElementById('spots').addEventListener('change',render);
+  let timer=null;
+  function stop(){if(timer){clearInterval(timer);timer=null;play.textContent='▶';play.setAttribute('aria-label','Play')}}
+  play.addEventListener('click',()=>{ if(timer){stop();return}
+    play.textContent='❚❚'; play.setAttribute('aria-label','Pause');
+    timer=setInterval(()=>{const c=cur(); state.idx[c.key]=(c.i+1)%c.steps.length; render()},1300)});
 
-  // ---------- time series ----------
-  const fam=document.getElementById('family'), slider=document.getElementById('slider');
-  function list(){return byFam[fam.value]||[]}
-  function current(){return list()[+slider.value]}
-  function fmt(l){if(!l)return'—';const d=new Date(l.start+'T00:00:00');const q=l.label.match(/Q\d/);
-    return q?`${d.getFullYear()} ${q[0]} (${d.toLocaleString('en',{month:'short'})}–${new Date(l.end+'T00:00:00').toLocaleString('en',{month:'short'})})`:d.toLocaleString('en',{month:'long',year:'numeric'})}
-  function showSeries(){const l=current(); document.getElementById('when').textContent=fmt(l);
-    if(mode==='nino'){ legend(l); if(l&&map.getSource('series')) map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners}); } drawChart(l);}
-  function resetFam(){const L=list(); slider.max=L.length-1; slider.value=L.length-1; document.getElementById('t0').textContent=fmt(L[0]).replace(/\s\(.*/,''); document.getElementById('t1').textContent=fmt(L[L.length-1]).replace(/\s\(.*/,''); showSeries()}
-  fam.addEventListener('change',resetFam); slider.addEventListener('input',showSeries);
-  let timer=null; const play=document.getElementById('play');
-  play.addEventListener('click',()=>{ if(timer){clearInterval(timer);timer=null;play.textContent='▶';play.setAttribute('aria-label','Play');return}
-    play.textContent='❚❚'; play.setAttribute('aria-label','Pause'); timer=setInterval(()=>{slider.value=(+slider.value+1)%list().length;showSeries()},1100)});
-  resetFam();
-
-  // ---------- NISAR controls ----------
-  const nfam=document.getElementById('nfam'), nsl=document.getElementById('nslider');
-  function nlist(){return byFam[nfam.value]||[]}
-  function ncurrent(){return nlist()[+nsl.value]}
-  const dfmt=l=>{ if(!l) return '—'; const d=new Date(l.start+'T00:00:00'); if(/^(nisarm|mlm)_/.test(l.id)){ const p=(l.label.match(/\((\d+ pass(?:es)?)\)/)||[])[1]; return d.toLocaleString('en',{month:'long',year:'numeric'})+(p?' · '+p:''); } return d.toLocaleString('en',{day:'numeric',month:'long',year:'numeric'}); };
-  function nshow(){const l=ncurrent(); document.getElementById('nwhen').textContent=dfmt(l); if(mode==='nisar'&&nsub==='date') setMode('nisar');}
-  function nreset(){const L=nlist(); if(!L.length)return; nsl.max=L.length-1; nsl.value=Math.min(1,L.length-1); document.getElementById('nt0').textContent=dfmt(L[0]).replace(/ 2026.*/,''); document.getElementById('nt1').textContent=dfmt(L[L.length-1]).replace(/ 2026.*/,''); nshow()}
-  nfam.addEventListener('change',nreset); nsl.addEventListener('input',nshow);
-  let ntimer=null; const nplay=document.getElementById('nplay');
-  nplay.addEventListener('click',()=>{ if(ntimer){clearInterval(ntimer);ntimer=null;nplay.textContent='▶';nplay.setAttribute('aria-label','Play');return}
-    nplay.textContent='❚❚'; nplay.setAttribute('aria-label','Pause'); ntimer=setInterval(()=>{nsl.value=(+nsl.value+1)%nlist().length;nshow()},1400)});
-  const chgL=M.layers.filter(l=>l.group==='nisar'), box=document.getElementById('nchglist');
-  chgL.forEach((l,i)=>{const lab=document.createElement('label');lab.className='row';lab.innerHTML=`<input type="radio" name="nchg" value="${l.id}" ${i===0?'checked':''}> ${l.label.replace('NISAR ','')}`;box.appendChild(lab);
-    lab.querySelector('input').addEventListener('change',()=>setMode('nisar'))});
-  function nsubset(v){nsub=v; ['date','chg','ml','lc'].forEach(k=>{document.getElementById('n-'+k).setAttribute('aria-pressed',v===k); document.getElementById('n-'+k+'-box').hidden=v!==k}); setMode('nisar')}
-  document.getElementById('n-ml').addEventListener('click',()=>nsubset('ml'));
-  document.getElementById('n-lc').addEventListener('click',()=>nsubset('lc'));
-  document.querySelectorAll('input[name=nlc]').forEach(r=>r.addEventListener('change',()=>setMode('nisar')));
-  if(!byId.ml_lc_change) document.getElementById('n-lc').hidden=true;
-  if(M.ml_lc){ const r=M.ml_lc, a=r['NISAR only'], b=r['NISAR + terrain'];
-    document.getElementById('lctable').innerHTML='<tr><th>Inputs</th><th>Accuracy</th><th>Kappa</th><th>Macro F1</th></tr>'+
-      [['NISAR only',a],['NISAR + terrain',b]].filter(x=>x[1]).map(([k,v])=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td><td class="n">${Math.round(v.overall_accuracy*100)}%</td><td class="n">${v.kappa.toFixed(2)}</td><td class="n">${v.macro_F1.toFixed(2)}</td></tr>`).join('');
-    if(b&&b.F1_per_class) document.getElementById('lcnote').textContent='Per-class F1 (NISAR + terrain): '+Object.entries(b.F1_per_class).map(([k,v])=>`${k} ${v.toFixed(2)}`).join(' · ')+'. Scores from 5 km block cross-validation. Disagreement can also come from errors in the 2020 map, so treat change pixels as places to check.'+(r.note?' '+r.note:''); }
-  const mlfam=document.getElementById('mlfam'), mlsl=document.getElementById('mlslider');
-  function mllist(){return byFam[mlfam.value]||[]}
-  function mlcurrent(){return mllist()[+mlsl.value]}
-  function mlshow(){document.getElementById('mlwhen').textContent=dfmt(mlcurrent()); if(mode==='nisar'&&nsub==='ml') setMode('nisar')}
-  function mlreset(){const L=mllist(); if(!L.length){document.getElementById('n-ml').hidden=true;return} mlsl.max=L.length-1; mlsl.value=Math.min(1,L.length-1); document.getElementById('mlt0').textContent=dfmt(L[0]).replace(/ 2026.*/,''); document.getElementById('mlt1').textContent=dfmt(L[L.length-1]).replace(/ 2026.*/,''); mlshow()}
-  mlfam.addEventListener('change',mlreset); mlsl.addEventListener('input',mlshow);
-  if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td><td class="n">±${v.MAE.toFixed(3)}</td>`:'<td>–</td><td>–</td>'};
-    document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>EVI error</th><th>NDMI R²</th><th>NDMI error</th></tr>'+
+  // ---------- AI scores (grown-up boxes) ----------
+  if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td>`:'<td>–</td>'};
+    document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>NDMI R²</th></tr>'+
       ['Terrain only','NISAR only','NISAR + terrain'].map(k=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td>${row('EVI',k)}${row('NDMI',k)}</tr>`).join(''); }
-  mlreset();
-  document.getElementById('n-date').addEventListener('click',()=>nsubset('date')); document.getElementById('n-chg').addEventListener('click',()=>nsubset('chg'));
-  nreset();
+  if(M.ml_lc){ const r=M.ml_lc, a=r['NISAR only'], b=r['NISAR + terrain'];
+    document.getElementById('lctable').innerHTML='<tr><th>Inputs</th><th>Accuracy (8 classes)</th><th>Kappa</th></tr>'+
+      [['NISAR only',a],['NISAR + terrain',b]].filter(x=>x[1]).map(([k,v])=>`<tr class="${k==='NISAR + terrain'?'best':''}"><td>${k}</td><td class="n">${Math.round(v.overall_accuracy*100)}%</td><td class="n">${v.kappa.toFixed(2)}</td></tr>`).join(''); }
 
+  // ---------- El Niño chart ----------
   function drawChart(l){
     const rows=M.aoi_monthly.filter(r=>r.ndvi_mean||r.lst_day_mean_C), svg=document.getElementById('chart');
     const W=320,H=150,P={l:30,r:30,t:10,b:22}, n=rows.length, x=i=>P.l+i*(W-P.l-P.r)/(n-1);
     const yN=v=>H-P.b-(v-0.75)/(0.87-0.75)*(H-P.t-P.b), yT=v=>H-P.b-(v-23)/(28-23)*(H-P.t-P.b);
     const path=(k,f)=>rows.map((r,i)=>r[k]?`${i&&rows[i-1][k]?'L':'M'}${x(i).toFixed(1)},${f(+r[k]).toFixed(1)}`:'').join('');
     let s=`<line x1="${P.l}" x2="${W-P.r}" y1="${H-P.b}" y2="${H-P.b}" stroke="#c7b893"/>`;
-    [0.75,0.81,0.87].forEach(v=>s+=`<text x="${P.l-4}" y="${yN(v)+3}" text-anchor="end">${v.toFixed(2)}</text><line x1="${P.l}" x2="${W-P.r}" y1="${yN(v)}" y2="${yN(v)}" stroke="#d6c8a6" stroke-dasharray="2 3"/>`);
+    s+=`<text x="${P.l-4}" y="${yN(0.86)}" text-anchor="end">more</text><text x="${P.l-4}" y="${yN(0.76)}" text-anchor="end">less</text>`;
     [23,28].forEach(v=>s+=`<text x="${W-P.r+4}" y="${yT(v)+3}">${v}°</text>`);
-    rows.forEach((r,i)=>{if(r.month.endsWith('-01')||i===n-1)s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${r.month.slice(2).replace('-','/')}</text>`});
-    s+=`<path d="${path('ndvi_mean',yN)}" fill="none" stroke="#4f9a4a" stroke-width="2.2"/><path d="${path('lst_day_mean_C',yT)}" fill="none" stroke="#d0453a" stroke-width="2.2"/>`;
+    rows.forEach((r,i)=>{if(r.month.endsWith('-01')||i===n-1)s+=`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${r.month.slice(0,4)===r.month.slice(0,4)&&r.month.endsWith('-01')?r.month.slice(0,4):r.month.slice(2).replace('-','/')}</text>`});
+    s+=`<path d="${path('ndvi_mean',yN)}" fill="none" stroke="#4f9a4a" stroke-width="2.4"/><path d="${path('lst_day_mean_C',yT)}" fill="none" stroke="#d0453a" stroke-width="2.4"/>`;
     const k=l&&l.start?l.start.slice(0,7):null, i=rows.findIndex(r=>r.month===k);
-    if(i>=0) s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${P.t}" y2="${H-P.b}" stroke="#283044" stroke-width="1"/>`;
-    const a=rows.findIndex(r=>r.month==='2026-04'); if(a>=0) s+=`<circle cx="${x(a)}" cy="${yN(+rows[a].ndvi_mean)}" r="3.5" fill="#4f9a4a"/><text x="${x(a)}" y="${yN(+rows[a].ndvi_mean)+14}" text-anchor="middle">Apr dry spell</text>`;
+    if(i>=0) s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${P.t}" y2="${H-P.b}" stroke="#283044" stroke-width="1.2"/>`;
+    const a=rows.findIndex(r=>r.month==='2026-04'); if(a>=0) s+=`<circle cx="${x(a)}" cy="${yN(+rows[a].ndvi_mean)}" r="3.5" fill="#4f9a4a"/><text x="${x(a)}" y="${yN(+rows[a].ndvi_mean)+14}" text-anchor="middle">April dry spell</text>`;
     svg.innerHTML=s;
   }
 
-
-  // ---------- 12-month outlook ----------
-  const ofam=document.getElementById('ofam'), osl=document.getElementById('oslider');
-  function olist(){ return ofam.value==='out_sens' ? [byId['out_sens']].filter(Boolean) : (byFam[ofam.value]||[]) }
-  function ocurrent(){ const L=olist(); return L[Math.min(+osl.value,L.length-1)] }
-  function oshow(){ const l=ocurrent(); document.getElementById('o-time').hidden=ofam.value==='out_sens';
-    document.getElementById('owhen').textContent=l&&l.start?new Date(l.start+'T00:00:00').toLocaleString('en',{month:'long',year:'numeric'}):'—';
-    const O=M.outlook, i=+osl.value, n=document.getElementById('omapnote');
-    if(O&&O.evi){ const e=O.evi, t=O.lst;
-      n.textContent = ofam.value==='out_evi' ? `Area average: ${e.anom[i]>=0?'+':''}${e.anom[i].toFixed(3)} EVI vs normal (normal-season value about ${(e.value[i]-e.anom[i]).toFixed(2)}). Sarangani ${e.anom_sarangani[i].toFixed(3)}, Davao Occidental ${e.anom_davocc[i].toFixed(3)}.`
-      : ofam.value==='out_pb' ? `In ${Math.round(100*e['frac_pbelow_gt_0.66'][i])}% of the land, below-normal greenness has at least a 2-in-3 chance this month.`
-      : ofam.value==='out_lst' ? (t?`Area average: ${t.anom[i]>=0?'+':''}${t.anom[i].toFixed(1)} °C vs the normal daytime ground temperature for this month (MODIS, 1 km).`:'')
-      : 'Average change in Feb–May greenness for each +1 °C of El Niño, learned from 2000–2026. Brown areas dried out most in past El Niños; they are where to watch crops, grass and young forest first.'; }
-    if(mode==='out') setMode('out'); }
-  ofam.addEventListener('change',oshow); osl.addEventListener('input',oshow);
-  let otimer=null; const oplay=document.getElementById('oplay');
-  oplay.addEventListener('click',()=>{ if(otimer){clearInterval(otimer);otimer=null;oplay.textContent='▶';oplay.setAttribute('aria-label','Play');return}
-    oplay.textContent='❚❚'; oplay.setAttribute('aria-label','Pause'); otimer=setInterval(()=>{osl.value=(+osl.value+1)%12;oshow()},1200)});
+  // ---------- the next 12 months ----------
+  function outlookNote(id,i){const O=M.outlook; if(!O||!O.evi) return ''; const e=O.evi, t=O.lst;
+    const m=new Date(e.months[i]+'-01T00:00:00').toLocaleString('en',{month:'long',year:'numeric'});
+    if(id==='plants'){const a=e.anom[i]; return a<-0.04?`${m}: the land is expected to be clearly browner than normal, most of all in Sarangani.`:a<-0.015?`${m}: the land is expected to be a little browner than normal.`:`${m}: plants should be about normal.`}
+    if(id==='chance') return `${m}: in ${Math.round(100*e['frac_pbelow_gt_0.66'][i])} out of 100 places, browner-than-normal plants are very likely (2 chances in 3 or more).`;
+    if(id==='hot'&&t){const a=t.anom[i]; return `${m}: the ground in the daytime is expected to be about ${a>=0?'+':''}${a.toFixed(1)} °C compared with normal.`}
+    return '';}
   function rainChart(){
     const R=M.rain; if(!R) return; const obs=Object.entries(R.observed_2025_2026).filter(([k])=>k>='2025-01');
-    const rows=obs.map(([k,v])=>({k,v,obs:true})).concat(R.months.map((k,i)=>({k,v:R.central[i],lo:R.p10[i],hi:R.p90[i],cl:R.clim[i]})));
+    const rows=obs.map(([k,v])=>({k,v,obs:true})).concat(R.months.map((k,i)=>({k,v:R.central[i],lo:R.p10[i],hi:R.p90[i]})));
     const clim=k=>R.clim_by_month[+k.slice(5)-1];
     const W=320,H=176,P={l:30,r:6,t:10,b:24}, n=rows.length, bw=(W-P.l-P.r)/n, x=i=>P.l+i*bw, top=360, y=v=>H-P.b-Math.min(v,top)/top*(H-P.t-P.b);
     let s=''; [0,100,200,300].forEach(v=>s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="#d6c8a6" stroke-dasharray="2 3"/><text x="${P.l-4}" y="${y(v)+3}" text-anchor="end">${v}</text>`);
     s+=`<text x="${P.l-4}" y="${P.t-1}" text-anchor="end">mm</text>`;
-    const fx=x(obs.length); s+=`<rect x="${fx}" y="${P.t}" width="${W-P.r-fx}" height="${H-P.b-P.t}" fill="#efe3c6" opacity=".55"/><text x="${fx+3}" y="${P.t+9}">expected</text>`;
+    const fx=x(obs.length); s+=`<rect x="${fx}" y="${P.t}" width="${W-P.r-fx}" height="${H-P.b-P.t}" fill="#efe3c6" opacity=".55"/><text x="${fx+3}" y="${P.t+9}">what we expect</text>`;
     rows.forEach((r,i)=>{ const c=r.obs?'#5f7fa3':'#c0883a';
-      s+=`<rect x="${(x(i)+1).toFixed(1)}" y="${y(r.v).toFixed(1)}" width="${(bw-2).toFixed(1)}" height="${(H-P.b-y(r.v)).toFixed(1)}" fill="${c}"><title>${r.k}: ${Math.round(r.v)} mm${r.obs?'':` (range ${Math.round(r.lo)}–${Math.round(r.hi)})`}, normal ${Math.round(clim(r.k))} mm</title></rect>`;
+      s+=`<rect x="${(x(i)+1).toFixed(1)}" y="${y(r.v).toFixed(1)}" width="${(bw-2).toFixed(1)}" height="${(H-P.b-y(r.v)).toFixed(1)}" fill="${c}"><title>${r.k}: ${Math.round(r.v)} mm${r.obs?'':` (could be ${Math.round(r.lo)}–${Math.round(r.hi)})`}, normal ${Math.round(clim(r.k))} mm</title></rect>`;
       if(!r.obs) s+=`<line x1="${x(i)+bw/2}" x2="${x(i)+bw/2}" y1="${y(r.lo)}" y2="${y(r.hi)}" stroke="#6b4a1c" stroke-width="1"/>`;
       if(r.k.endsWith('-01')) s+=`<text x="${x(i)+bw/2}" y="${H-8}" text-anchor="middle">${r.k.slice(0,4)}</text>`; });
     s+=`<path d="${rows.map((r,i)=>(i?'L':'M')+(x(i)+bw/2).toFixed(1)+','+y(clim(r.k)).toFixed(1)).join('')}" fill="none" stroke="#283044" stroke-width="1.6"/>`;
-    s+=`<text x="${P.l+4}" y="${P.t+9}" fill="#283044">— normal (2001–2025)</text>`;
+    s+=`<text x="${P.l+4}" y="${P.t+9}" fill="#283044">— a normal year</text>`;
     document.getElementById('rainchart').innerHTML=s;
-    document.getElementById('o-rain').textContent=R.NovApr.pct+'%';
-    document.getElementById('rainnote').textContent=`Blue: observed (GPM IMERG; Aug–Sep 2026 got only ${Math.round(R.observed_2025_2026['2026-08'])} and ${Math.round(R.observed_2025_2026['2026-09'])} mm). Orange: expected, with a 10–90% range. Nov–Apr normally brings about ${R.NovApr.normal} mm; the scenario gives about ${R.NovApr.central} mm. Past El Niños explain much of the dry-season rain: r = ${R.cv_NovApr.r} when each year is predicted without seeing it. From May the El Niño effect fades and rain returns to about ${R.MayOct.pct}% of normal.`;
+    const tenths=Math.round(R.NovApr.pct/10);
+    document.getElementById('o-rain').textContent=`${tenths} out of 10`;
+    document.getElementById('o-rain-t').textContent=`buckets of the normal rain may fall from November to April (about ${R.NovApr.pct}%).`;
+    document.getElementById('rainnote').textContent=`Blue bars: rain that fell. Orange bars: rain we expect (the thin lines show how much it could really be). Black line: a normal year. August and September 2026 were very dry (${Math.round(R.observed_2025_2026['2026-08'])} and ${Math.round(R.observed_2025_2026['2026-09'])} mm). From May 2027 the rain should come back to almost normal.`;
   }
   function outlookText(){
     const O=M.outlook, R=M.rain; if(!O||!O.evi) return; const e=O.evi;
-    const k=e['frac_pbelow_gt_0.66'].indexOf(Math.max(...e['frac_pbelow_gt_0.66']));
-    document.getElementById('o-land').textContent=Math.round(100*e['frac_pbelow_gt_0.66'][k])+'%';
-    document.getElementById('o-land-t').textContent='of the land likely below-normal greenness by '+new Date(e.months[k]+'-01T00:00:00').toLocaleString('en',{month:'short',year:'numeric'});
-    const ev=[['2002','2002–03'],['2009','2009–10'],['2015','2015–16'],['2023','2023–24']];
-    const mn=a=>Math.min(...a);
-    document.getElementById('hindtable').innerHTML='<tr><th>El Niño</th><th>Rain Nov–Apr (mm)<br>expected / actual</th><th>Lowest greenness<br>expected / actual</th><th>Hottest ground<br>expected / actual</th></tr>'+
+    const f=e['frac_pbelow_gt_0.66'], k=f.indexOf(Math.max(...f));
+    document.getElementById('o-land').textContent=Math.round(100*f[k])+'%';
+    document.getElementById('o-land-t').textContent='of the land likely browner than normal by '+new Date(e.months[k]+'-01T00:00:00').toLocaleString('en',{month:'long',year:'numeric'});
+    if(O.lst){const a=O.lst.anom, j=a.indexOf(Math.max(...a)); document.getElementById('o-heat').textContent='+'+a[j].toFixed(1)+' °C';
+      document.getElementById('o-heat-t').textContent='hotter ground than normal in '+new Date(O.lst.months[j]+'-01T00:00:00').toLocaleString('en',{month:'long',year:'numeric'});}
+    const ev=[['2002','2002–03'],['2009','2009–10'],['2015','2015–16'],['2023','2023–24']], mn=a=>Math.min(...a);
+    document.getElementById('hindtable').innerHTML='<tr><th>El Niño</th><th>Rain Nov–Apr (mm)<br>guessed / real</th><th>Lowest greenness (EVI)<br>guessed / real</th><th>Hottest ground<br>guessed / real</th></tr>'+
       ev.map(([y,l])=>{const h=e.hindcast[y], r=R&&R.hindcast[y], t=O.lst&&O.lst.hindcast[y]; return `<tr><td>${l}</td><td class="n">${r?Math.round(r.pred_NovApr_mm)+' / '+Math.round(r.obs_NovApr_mm):'–'}</td><td class="n">${mn(h.pred_mean).toFixed(3)} / ${mn(h.obs_mean).toFixed(3)}</td><td class="n">${t?'+'+Math.max(...t.pred_mean).toFixed(1)+' / +'+Math.max(...t.obs_mean).toFixed(1)+' °C':'–'}</td></tr>`}).join('');
-    document.getElementById('hindnote').textContent=`Each row was predicted without that year (normal Nov–Apr rain is ${R?R.NovApr.normal:'–'} mm). Greenness is the area-average EVI difference from normal in its lowest month; ground temperature is the hottest month's difference from normal (MODIS daytime). The model gets the timing (Feb–Jun) and usually the size of the dip, but it underestimated 2015–16, the strongest event (greenness −0.063 expected vs −0.119 actual; ground +2.4 vs +3.9 °C), so a very strong 2026–27 event could hit harder than shown. Pixel patterns were predictable only in strong events (2015–16 March–April: r ≈ 0.4 for greenness, 0.8 for ground temperature), so read the maps as a guide to where to look.`;
+    document.getElementById('hindnote').textContent=`Normal Nov–Apr rain is ${R?R.NovApr.normal:'–'} mm. Rain: El Niño strength explains dry-season rain well (r = ${R?R.cv_NovApr.r:'–'} when each year is hidden). Plants and heat: timing (Feb–Jun) and size are usually right, but the strongest event, 2015–16, was worse than guessed (EVI −0.063 vs −0.119; ground +2.4 vs +3.9 °C), so a very strong 2026–27 event could be worse than shown. Pixel patterns are only a guide to where to look.`;
     const q=(a,b)=>{let s=0,c=0;for(let i=a;i<=b;i++){s+=R.central[i];c+=R.clim[i]}return Math.round(100*s/c)};
-    document.getElementById('waternote').textContent=R?`Rivers, irrigation and small reservoirs depend on this rain. Expected rain as % of normal: Nov–Jan ${q(0,2)}%, Feb–Apr ${q(3,5)}%, May–Jul ${q(6,8)}%, Aug–Oct ${q(9,11)}%. Feb–Apr 2027 is the critical window, after a dry Aug–Sep 2026. NISAR already shows the ground's response: on the same orbit tracks, HH radar (soil wetness) fell 0.55 dB from 28 Jun to 20 Sep and rose by up to 1 dB from 20–25 Sep to 14–19 Oct as rain came back (122 mm in October). Repeating NISAR passes through the dry season can show where fields and wetlands dry first.`:'';
+    document.getElementById('waternote').textContent=R?`Rivers, farms and small dams need this rain. Expected rain compared with normal: Nov–Jan ${q(0,2)}%, Feb–Apr ${q(3,5)}% (the driest time), May–Jul ${q(6,8)}%, Aug–Oct ${q(9,11)}%. The space radar already saw the ground dry out from June to September and get wet again in October when the rain came back. It can keep watching which fields and wetlands dry first.`:'';
   }
-  rainChart(); outlookText(); oshow();
-  // ---------- view controls ----------
+  rainChart(); outlookText();
+
+  // ---------- popovers, settings ----------
+  function popToggle(id,btn,force){const p=document.getElementById(id); const on=force!==undefined?force:p.hidden; p.hidden=!on; if(btn) btn.setAttribute('aria-expanded',on);}
+  const wxchip=document.getElementById('wxchip'), gear=document.getElementById('gear');
+  wxchip.addEventListener('click',()=>{popToggle('setpop',gear,false);popToggle('wxpop',wxchip)});
+  gear.addEventListener('click',()=>{popToggle('wxpop',wxchip,false);popToggle('setpop',gear)});
+  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>popToggle(b.dataset.close,b.dataset.close==='wxpop'?wxchip:gear,false)));
+  const about=document.getElementById('about');
+  document.getElementById('aboutBtn').addEventListener('click',()=>about.showModal?about.showModal():about.setAttribute('open',''));
+  document.getElementById('aboutClose').addEventListener('click',()=>about.close?about.close():about.removeAttribute('open'));
   function setPressed(id,on){document.getElementById(id).setAttribute('aria-pressed',on)}
   function toggle(id,fn){const b=document.getElementById(id);b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);fn(on)})}
-  document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;['series','static'].forEach(id=>map.getLayer(id)&&map.setPaintProperty(id,'raster-opacity',opacity))});
+  document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;map.getLayer('series')&&map.setPaintProperty('series','raster-opacity',opacity)});
   document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b));if(b.dataset.light==='day')painterlySky();}));
-  toggle('b3d',on=>map.setConfigProperty('basemap','show3dObjects',on));
+  toggle('b3dobj',on=>map.setConfigProperty('basemap','show3dObjects',on));
   toggle('labels',on=>['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)));
-  toggle('terrain',on=>map.setTerrain(on?{source:'dem',exaggeration:1.5}:null));
-  toggle('tilt',on=>map.easeTo({pitch:on?62:0,bearing:on?-28:0,duration:900}));
-  toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle';
-    ['series','static'].forEach(id=>{if(!map.getLayer(id))return;const vis=map.getLayoutProperty(id,'visibility');map.removeLayer(id);map.addLayer(rasterLayer(id),'aoi-glow');if(vis)map.setLayoutProperty(id,'visibility',vis)})});
+  toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle'; if(!map.getLayer('series'))return;
+    const vis=map.getLayoutProperty('series','visibility'); map.removeLayer('series'); map.addLayer(rasterLayer('series'),'aoi-glow'); if(vis) map.setLayoutProperty('series','visibility',vis)});
 
   // ---------- live weather (Open-Meteo) ----------
-  const WMO={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',80:'Rain showers',81:'Rain showers',82:'Violent showers',95:'Thunderstorm',96:'Thunderstorm, hail',99:'Thunderstorm, hail'};
+  const WMO={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Cloudy',45:'Fog',48:'Fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',80:'Rain showers',81:'Rain showers',82:'Very heavy showers',95:'Thunderstorm',96:'Thunderstorm, hail',99:'Thunderstorm, hail'};
   function wxIcon(code){
     const sun='<circle cx="14" cy="14" r="6" fill="#f2c46d" stroke="#b89a5e"/>', cloud='<path d="M7 20h14a4 4 0 0 0 0-8 6 6 0 0 0-11-1 4.5 4.5 0 0 0-3 9z" fill="#f6f1e6" stroke="#6a6f7c" stroke-width="1.2"/>';
     const rain='<path d="M10 23l-1.5 3M15 23l-1.5 3M20 23l-1.5 3" stroke="#3fb7b0" stroke-width="1.6" stroke-linecap="round"/>', bolt='<path d="M15 21l-3 5h3l-2 4" stroke="#d0453a" stroke-width="1.6" fill="none"/>';
@@ -672,7 +716,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   }
   const sky={cloud:0.45,rain:0,windDir:90,windSpeed:12,live:true,clouds:true,rainOn:false};
   async function loadWeather(){
-    const chip=document.getElementById('wxchip').querySelector('span');
+    const chip=wxchip.querySelector('span');
     try{
       const lat=TOWNS.map(t=>t[2]).join(','), lon=TOWNS.map(t=>t[1]).join(',');
       const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,cloud_cover,weather_code,wind_speed_10m,wind_direction_10m&timezone=Asia%2FManila`);
@@ -682,15 +726,16 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
       arr.forEach((o,i)=>{const c=o.current,[n,x,y]=TOWNS[i];
         const w={t:c.temperature_2m,p:c.precipitation,cc:c.cloud_cover,code:c.weather_code,ws:c.wind_speed_10m,wd:c.wind_direction_10m,desc:WMO[c.weather_code]||'—'}; townWx[n]=w;
         cc+=w.cc; pr=Math.max(pr,w.p); wsp+=w.ws; wsx+=Math.sin(w.wd*Math.PI/180); wsy+=Math.cos(w.wd*Math.PI/180);
-        const b=document.createElement('button'); b.innerHTML=`${wxIcon(w.code)}<span><b>${n}</b><small>${w.desc} · clouds ${w.cc}% · ${w.p} mm</small></span><span class="t">${Math.round(w.t)}°</span>`;
+        const b=document.createElement('button'); b.innerHTML=`${wxIcon(w.code)}<span><b>${n}</b><small>${w.desc} · clouds ${w.cc}% · rain ${w.p} mm</small></span><span class="t">${Math.round(w.t)}°</span>`;
         b.addEventListener('click',()=>flyTown(n,x,y)); list.appendChild(b);});
       const N=arr.length; sky.cloud=cc/N/100; sky.rain=pr; sky.windSpeed=wsp/N; sky.windDir=(Math.atan2(wsx,wsy)*180/Math.PI+360)%360;
-      const t=arr[0].current.time; document.getElementById('wxtime').textContent=`Updated ${t.replace('T',' ')} (Philippine time) from Open-Meteo.`;
+      const t=arr[0].current.time; document.getElementById('wxtime').textContent=`Updated ${t.replace('T',' ')} (Philippine time), from Open-Meteo.`;
       const avgT=arr.reduce((s,o)=>s+o.current.temperature_2m,0)/N;
-      chip.textContent=`${Math.round(avgT)} °C · clouds ${Math.round(sky.cloud*100)}% · ${pr>0?'rain '+pr+' mm':'no rain'}`;
+      wxchip.querySelector('i').textContent=pr>0?'🌧':sky.cloud>0.6?'☁':'⛅';
+      chip.textContent=`${Math.round(avgT)} °C · ${pr>0?'raining':sky.cloud>0.6?'cloudy':'some clouds'}`;
       if(sky.live){ sky.rainOn=pr>0; setPressed('fx-rain',sky.rainOn); }
       seedClouds();
-    }catch(e){ chip.textContent='Weather unavailable'; document.getElementById('wxlist').innerHTML='<p class="note">Could not reach the weather service. Sky effects use default values.</p>'; }
+    }catch(e){ chip.textContent='Weather unavailable'; document.getElementById('wxlist').innerHTML='<p class="note">Could not reach the weather service. The sky uses default values.</p>'; }
   }
   toggle('fx-clouds',on=>{sky.clouds=on});
   toggle('fx-rain',on=>{sky.rainOn=on; sky.live=false; setPressed('fx-live',false)});
@@ -717,7 +762,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
   function frame(now){
     const dt=Math.min(0.1,(now-last)/1000); last=now; ctx.setTransform(DPR,0,0,DPR,0,0); ctx.clearRect(0,0,innerWidth,innerHeight);
     const z=map.getZoom(), pitch=map.getPitch()*Math.PI/180;
-    // wind blows FROM windDir; clouds move toward windDir+180. Visual speed exaggerated for readability.
     const mv=reduce?0:(0.004+sky.windSpeed*0.0006)*dt, ang=(sky.windDir+180)*Math.PI/180;
     if(sky.clouds){
       const fade=Math.max(0,Math.min(1,(14-z)/2.5));
@@ -742,6 +786,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+  openTopic('radar');
 })();
 </script>
 </body>
