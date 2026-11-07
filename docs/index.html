@@ -538,6 +538,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   const map=new mapboxgl.Map({container:'map',style:'mapbox://styles/mapbox/standard',center:HOME.center,zoom:HOME.zoom,pitch:HOME.pitch,bearing:HOME.bearing,maxPitch:80,antialias:true,
     config:{basemap:{lightPreset:'day',show3dObjects:true,showPlaceLabels:true,showRoadLabels:true,showPointOfInterestLabels:true,showTransitLabels:false,
       colorWater:'#56c3d6',colorGreenspace:'#8fd178',colorLand:'#efe6cf',colorMotorways:'#f2c46d',colorTrunks:'#f5d58f',colorRoads:'#fbf3df'}}});
+  window.__map=map;
   map.addControl(new mapboxgl.NavigationControl({showCompass:false}),'top-right');
   map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-left');
   let opacity=0.8, rasterSlot='bottom';
