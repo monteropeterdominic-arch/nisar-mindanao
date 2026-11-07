@@ -285,9 +285,9 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       <div class="views" data-views="radar"></div>
       <div class="box legend" data-legend="radar"></div>
       <p class="vnote" data-vnote="radar"></p>
-      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>NISAR:</b> NASA and India (ISRO), launched 2025. An L-band radar that sees through clouds. Pictures from 28 June to 19 October 2026.</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Its camera pictures taught the AI plant map.</span></div></div></div>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>NISAR:</b> NASA and India (ISRO), launched 2025. An L-band radar that sees through clouds. This map uses the passes we have downloaded so far, 28 June to 19 October 2026.</span></div><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Its camera pictures taught the AI plant map.</span></div></div></div>
       <details><summary>ℹ More info: how it works</summary>
-        <p>NISAR L2 GCOV (NASA-ISRO, provisional): HH and HV backscatter from 10 m multilooked to 30 m. Each month averages every pass in power: September (4 passes) and October (3 dates, 7 frames) each cover both provinces. June (one pass, 28 June) is left out of the monthly view.</p>
+        <p>NISAR L2 GCOV (NASA-ISRO, provisional): HH and HV backscatter from 10 m multilooked to 30 m. Each month averages every pass in power: September (4 passes) and October (3 dates, 7 frames) each cover both provinces. June is left out of the monthly view: only one of its four passes (28 June) has been downloaded so far.</p>
         <p>"What changed" (September → October): for every same-track, same-frame pair (20/23/25 Sep → 14/17/19 Oct), the later pass minus the earlier in dB, then averaged per pixel: 5 HH pairs (99.9% of the area, median +0.46 dB, 10% rose by more than 2 dB) and 3 HV pairs (87%, median +0.34 dB). Same geometry in each pair, so the change is on the ground. It matches the rain record: 28 mm in August, 68 mm in September, 122 mm in October (GPM IMERG). The single-pass pairs from 28 June are in the data repository.</p>
         <p>"AI plant map": gradient-boosted trees learned Landsat EVI and NDMI from NISAR HH/HV, texture and SRTM terrain (168,000 pixels seen by both within 8 days). 5 km block cross-validation:</p>
         <table class="mlt" id="mltable"></table>
@@ -438,7 +438,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     </ul>
     <h3>Things to know</h3>
     <ul>
-      <li>NISAR's first picture here is 28 June, after the earthquake, so the radar shows the months after, not the shaking itself. Ground lifting needs NISAR interferometry (GUNW) spanning 8 June.</li>
+      <li>No public NISAR pictures over this area come from before the earthquake yet (the earliest is 19 June), so the radar shows the months after, not the shaking itself. Measuring how much the ground lifted needs Sentinel-1 radar pairs from before and after 8 June.</li>
       <li>About 30% of the area could not be checked for landslides because it was cloudy in every Landsat view.</li>
       <li>The 12-month outlook is a scenario based on a strong El Niño, not a weather forecast.</li>
       <li>The clouds and rain on the map are a drawing driven by the real weather numbers, not satellite cloud pictures.</li>
