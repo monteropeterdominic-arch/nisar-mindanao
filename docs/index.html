@@ -156,8 +156,10 @@ input[type=range]{width:100%;accent-color:var(--gold2)}
 .mapboxgl-ctrl-bottom-left{left:calc(var(--railW) + var(--gap)*2)!important;bottom:calc(var(--barH) + var(--gap) + 4px)!important}
 /* markers */
 .mapboxgl-marker{position:absolute;top:0;left:0}
+body.nolabels .wp-label{display:block}
+.loading{font:700 12px var(--body);color:var(--gold2)}
 .wp{width:34px;height:46px;cursor:pointer;filter:drop-shadow(0 3px 4px rgba(10,20,40,.5))}
-.wp-label{position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;font:800 11.5px var(--body);color:#fff;text-shadow:0 1px 2px #1c2232,0 0 6px #1c2232}
+.wp-label{display:none;position:absolute;top:44px;left:50%;transform:translateX(-50%);white-space:nowrap;font:800 11.5px var(--body);color:#fff;text-shadow:0 1px 2px #1c2232,0 0 6px #1c2232}
 .mapboxgl-popup-content{font:13.5px var(--body);color:var(--ink);background:var(--parch);border:2px solid var(--gold);border-radius:6px;padding:12px 14px;box-shadow:0 8px 24px rgba(20,25,40,.35)}
 .mapboxgl-popup-content b{font:400 16px var(--display);color:var(--navy)}
 .mapboxgl-popup-tip{border-top-color:var(--gold)!important;border-bottom-color:var(--gold)!important}
@@ -168,6 +170,10 @@ dialog .in{padding:18px 20px;max-height:80vh;overflow-y:auto}
 dialog h2{font:400 22px var(--display);color:var(--navy);margin:0 0 8px}
 dialog h3{font:400 16px var(--display);color:var(--navy);margin:14px 0 4px}
 dialog ul{padding-left:18px;margin:4px 0;font-size:13.5px}
+.how{list-style:none;padding:0;margin:10px 0 14px;display:grid;gap:8px}
+.how li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-size:15px}
+.how span{width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font:400 16px var(--display);border:2px solid var(--gold)}
+dialog .close.start{float:none;display:block;width:100%;padding:10px;font-size:15px}
 dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);color:#f2ead9;border-radius:999px;padding:4px 12px;font:800 13px var(--body);cursor:pointer}
 #token{position:absolute;inset:0;display:grid;place-items:center;background:var(--parch);z-index:9;padding:16px}
 #token form{max-width:460px;display:grid;gap:10px}
@@ -408,13 +414,26 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   <button class="round sm" id="home" aria-label="Show the whole area" title="Whole area">⌂</button>
   <div class="tl">
     <button class="play" id="play" aria-label="Play">▶</button>
-    <div class="tl-top"><span class="tag">Time frame</span><b id="when">—</b><span id="whatnow"></span></div>
+    <div class="tl-top"><span class="tag">Time frame</span><b id="when">—</b><span id="whatnow"></span><span class="loading" id="loading" hidden>⏳ loading…</span></div>
     <div class="steps" id="steps"></div>
   </div>
   <div style="display:flex;gap:8px"><button class="round sm" id="fs" aria-label="Full screen" title="Full screen">⛶</button><button class="round sm" id="gear" aria-label="Map settings" aria-expanded="false" aria-controls="setpop" title="Map settings">⚙</button></div>
 </div>
 <button class="fshint" id="fshint" hidden>⛶ Go full screen</button>
 
+<dialog id="welcome" aria-labelledby="wtitle">
+  <div class="in">
+    <h2 id="wtitle">Welcome! 👋</h2>
+    <p>This map shows how the land in <b>Sarangani</b> and <b>Davao Occidental</b> changed in 2026, seen from space.</p>
+    <ol class="how">
+      <li><span>1</span><div><b>Pick a topic</b> on the left: Space Radar, Earthquake, El Niño or the Next 12 Months.</div></li>
+      <li><span>2</span><div><b>Pick what to see</b> with the round buttons, like 🌳 Trees &amp; plants.</div></li>
+      <li><span>3</span><div><b>Move through time</b> with the time frame at the bottom. ▶ plays it like a movie.</div></li>
+      <li><span>4</span><div><b>Tap the map</b> anywhere to ask "what is here?".</div></li>
+    </ol>
+    <button class="close start" id="wstart">Start exploring</button>
+  </div>
+</dialog>
 <dialog id="about">
   <div class="in">
     <button class="close" id="aboutClose">Close</button>
@@ -424,6 +443,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     <ul>
       <li>Pick a topic on the left. Then pick what to look at (the round buttons).</li>
       <li>Use the <b>time frame</b> at the bottom to move through the months. ▶ plays them like a movie.</li>
+      <li>Tap or click the map anywhere to see what is there.</li>
       <li>Drag to move, scroll to zoom, right-click and drag (or two fingers) to turn and tilt. The <b>3D</b> button flattens or tilts the map. The compass turns north back up.</li>
     </ul>
     <h3>Where the data comes from</h3>
@@ -550,8 +570,8 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     map.jumpTo({...HOME,padding:pad()});
   });
   map.on('load',()=>{
-    const first=TOPICS.radar.views[0].steps();
-    map.addSource('series',{type:'image',url:first[first.length-1].l.file,coordinates:M.image_corners}); map.addLayer(rasterLayer('series'));
+    const c0=cur(); curURL=c0.steps[c0.i].l.file;
+    map.addSource('series',{type:'image',url:curURL,coordinates:M.image_corners}); map.addLayer(rasterLayer('series'));
     map.addSource('aoi',{type:'geojson',data:'data/boundary.geojson'});
     map.addLayer({id:'aoi-glow',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#fff6d8','line-width':6,'line-opacity':0.55,'line-blur':3}});
     map.addLayer({id:'aoi-line',type:'line',source:'aoi',slot:'top',paint:{'line-color':'#b8902f','line-width':2,'line-dasharray':[3,1.5]}});
@@ -631,6 +651,9 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     if(g.type==='classes') return `<ul>${g.items.map(([c,t])=>`<li><span class="sw" style="background:${c}"></span>${t}</li>`).join('')}</ul>`;
     return `<div class="ends"><span>${lo||''}</span><span>${hi||''}</span></div><div class="ramp" style="background:linear-gradient(90deg,${g.colors.join(',')})"></div><div class="nums"><span>${g.min}${g.unit||''}</span><span>${g.max}${g.unit||''}</span></div>`;}
   const pick=(x,l)=>x&&typeof x==='object'?x[l.id]:x;
+  let curURL=null; const loadEl=document.getElementById('loading');
+  function loading(on){loadEl.hidden=!on; if(on){clearTimeout(loading.t); loading.t=setTimeout(()=>loadEl.hidden=true,8000)}}
+  map.on('sourcedata',e=>{ if(e.sourceId==='series'&&e.isSourceLoaded) loading(false) });
   function render(){
     const {t,vi,v,steps,key,useAlt,i}=cur(), s=steps[i], l=s.l, k=state.topic;
     document.querySelectorAll(`[data-views="${k}"] button`).forEach((b,j)=>b.setAttribute('aria-pressed',j===vi));
@@ -649,12 +672,43 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       b.addEventListener('click',()=>{state.idx[key]=j;render()}); stepsEl.appendChild(b)});
     stepsEl.style.visibility=steps.length>1?'visible':'hidden'; play.disabled=steps.length<2; if(steps.length<2) stop();
     if(!map.getSource('series')) return;
-    map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners});
+    if(l.file!==curURL){ curURL=l.file; loading(true); map.getSource('series').updateImage({url:l.file,coordinates:M.image_corners}); }
     map.setLayoutProperty('series','visibility','visible');
     const cand=k==='quake'&&document.getElementById('spots').checked;
     ['cand-fill','cand-halo'].forEach(id=>map.setLayoutProperty(id,'visibility',cand?'visible':'none'));
     if(k==='nino') drawChart(l);
   }
+
+  // ---------- tap anywhere: what is here? (reads the colour of the current map picture) ----------
+  const hexRGB=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+  const probe={file:null,ctx:null,w:0,h:0,ready:null};
+  function loadProbe(file){ if(probe.file===file) return probe.ready; probe.file=file;
+    probe.ready=new Promise(res=>{const im=new Image(); im.onload=()=>{const c=document.createElement('canvas'); c.width=im.naturalWidth; c.height=im.naturalHeight;
+      const g=c.getContext('2d',{willReadFrequently:true}); g.drawImage(im,0,0); probe.ctx=g; probe.w=c.width; probe.h=c.height; res(true)}; im.onerror=()=>res(false); im.src=file}); return probe.ready; }
+  function rampValue(rgb,g){ const C=g.colors.map(hexRGB), k=C.length-1; let best=1e9,bt=0;
+    for(let i=0;i<=200;i++){const t=i/200,pos=t*k,j=Math.min(Math.floor(pos),k-1),f=pos-j; let d=0;
+      for(let q=0;q<3;q++){const v=C[j][q]*(1-f)+C[j+1][q]*f; d+=(v-rgb[q])**2} if(d<best){best=d;bt=t}}
+    return {t:bt, v:g.min+bt*(g.max-g.min)}; }
+  function describe(t,lo,hi,div){ if(div){ if(t<0.2) return 'much '+(lo||'lower'); if(t<0.42) return 'a bit '+(lo||'lower'); if(t<=0.58) return 'about the same / normal'; if(t<=0.8) return 'a bit '+(hi||'higher'); return 'much '+(hi||'higher'); }
+    if(t<0.2) return lo||'low'; if(t<0.4) return 'fairly '+(lo||'low'); if(t<=0.6) return 'in between'; if(t<=0.8) return 'fairly '+(hi||'high'); return hi||'high'; }
+  map.on('click',async e=>{
+    if(map.getLayer('cand-fill')&&map.queryRenderedFeatures(e.point,{layers:['cand-fill','cand-halo'].filter(id=>map.getLayoutProperty(id,'visibility')!=='none')}).length) return;
+    const c=cur(), st=c.steps[c.i], l=st.l, g=l.legend; if(!(await loadProbe(l.file))) return;
+    const tl=mapboxgl.MercatorCoordinate.fromLngLat(M.image_corners[0]), br=mapboxgl.MercatorCoordinate.fromLngLat(M.image_corners[2]), p=mapboxgl.MercatorCoordinate.fromLngLat(e.lngLat);
+    const x=Math.floor((p.x-tl.x)/(br.x-tl.x)*probe.w), y=Math.floor((p.y-tl.y)/(br.y-tl.y)*probe.h);
+    let html;
+    if(x<0||y<0||x>=probe.w||y>=probe.h){ html='Outside the map area.' } else {
+      const d=probe.ctx.getImageData(x,y,1,1).data;
+      if(d[3]<20){ html='No colour here: outside the two provinces, or the satellite could not see this spot.' }
+      else if(g.type==='classes'){ let best=1e9,name=''; g.items.forEach(([col,txt])=>{const q=hexRGB(col),dd=(q[0]-d[0])**2+(q[1]-d[1])**2+(q[2]-d[2])**2; if(dd<best){best=dd;name=txt}}); html=`<b>${name}</b>` }
+      else { const r=rampValue([d[0],d[1],d[2]],g), v=c.v, lo=c.useAlt?v.altlo:(pick(v.lo,l)||v.lo2), hi=c.useAlt?v.althi:(pick(v.hi,l)||v.hi2);
+        const div=g.min<0&&g.max>0&&Math.abs(Math.abs(g.min)-Math.abs(g.max))<1e-6;
+        const dec=Math.abs(g.max-g.min)<=2?2:1;
+        html=`<b>${describe(r.t,lo,hi,div)}</b><br><span style="font:12px var(--mono);color:var(--ink2)">about ${r.v>=0&&div?'+':''}${r.v.toFixed(dec)}${g.unit||''}</span>`; } }
+    new mapboxgl.Popup({maxWidth:'260px',focusAfterOpen:false}).setLngLat(e.lngLat)
+      .setHTML(`<span style="font:11px var(--mono);color:var(--ink2)">${v_name(c)} · ${st.label}</span><br>${html}<br><span style="font:11px var(--mono);color:var(--ink2)">${e.lngLat.lat.toFixed(4)}°N, ${e.lngLat.lng.toFixed(4)}°E</span>`).addTo(map);
+  });
+  const v_name=c=>c.v.chip.replace(/^\S+\s/,'');
   document.getElementById('cmp').addEventListener('change',e=>{state.cmp=e.target.checked;render()});
   document.getElementById('spots').addEventListener('change',render);
   let timer=null;
@@ -740,12 +794,15 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   const about=document.getElementById('about');
   document.getElementById('aboutBtn').addEventListener('click',()=>about.showModal?about.showModal():about.setAttribute('open',''));
   document.getElementById('aboutClose').addEventListener('click',()=>about.close?about.close():about.removeAttribute('open'));
+  const welcome=document.getElementById('welcome');
+  document.getElementById('wstart').addEventListener('click',()=>{welcome.close?welcome.close():welcome.removeAttribute('open'); store.set('welcomed','1')});
+  if(!store.get('welcomed')){ if(welcome.showModal) welcome.showModal(); else welcome.setAttribute('open',''); fsHint.hidden=true; }
   function setPressed(id,on){document.getElementById(id).setAttribute('aria-pressed',on)}
   function toggle(id,fn){const b=document.getElementById(id);b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);fn(on)})}
   document.getElementById('opacity').addEventListener('input',e=>{opacity=e.target.value/100;map.getLayer('series')&&map.setPaintProperty('series','raster-opacity',opacity)});
   document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b));if(b.dataset.light==='day')painterlySky();}));
   toggle('b3dobj',on=>map.setConfigProperty('basemap','show3dObjects',on));
-  toggle('labels',on=>['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)));
+  toggle('labels',on=>{['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)); document.body.classList.toggle('nolabels',!on)});
   toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle'; if(!map.getLayer('series'))return;
     const vis=map.getLayoutProperty('series','visibility'); map.removeLayer('series'); map.addLayer(rasterLayer('series'),'aoi-glow'); if(vis) map.setLayoutProperty('series','visibility',vis)});
 
