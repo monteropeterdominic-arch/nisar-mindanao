@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   check:
@@ -23,18 +23,29 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile --filter web
       - name: Type-check
-        run: pnpm --filter web exec tsc --noEmit
+        run: pnpm --filter web exec tsc --noEmit 2>&1 | tee typecheck-output.txt
       - name: Tests
+        if: always()
         run: pnpm --filter web test 2>&1 | tee test-output.txt
       - name: Build (preview base path)
         if: always()
         env:
           VITE_TILE_BASE_URL: https://pub-0ea28e9ddd0848018719aa546b25063b.r2.dev
-        run: pnpm --filter web exec vite build --base=/nisar-mindanao/app-preview/
-      - uses: actions/upload-artifact@v4
+        run: pnpm --filter web exec vite build --base=/nisar-mindanao/app-preview/ 2>&1 | tee build-output.txt
+      - name: Publish preview to main/docs/app-preview
         if: always()
-        with:
-          name: app-preview
-          path: |
-            apps/web/dist
-            test-output.txt
+        run: |
+          git fetch origin main --depth=1
+          git worktree add ../site origin/main
+          rm -rf ../site/docs/app-preview
+          mkdir -p ../site/docs/app-preview
+          if [ -d apps/web/dist ]; then cp -r apps/web/dist/. ../site/docs/app-preview/; fi
+          mkdir -p ../site/docs/app-preview/_check
+          cp typecheck-output.txt test-output.txt build-output.txt ../site/docs/app-preview/_check/ 2>/dev/null || true
+          echo "$GITHUB_SHA" > ../site/docs/app-preview/_check/commit.txt
+          cd ../site
+          git config user.name "Peter Dominic Montero"
+          git config user.email "343299405+monteropeterdominic-arch@users.noreply.github.com"
+          git add docs/app-preview
+          git commit -m "App preview build (check run ${GITHUB_RUN_ID})" || exit 0
+          git push origin HEAD:main
