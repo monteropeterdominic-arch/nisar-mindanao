@@ -590,7 +590,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   window.__map=map;
   map.addControl(new mapboxgl.NavigationControl({showCompass:false}),'top-right');
   map.addControl(new mapboxgl.ScaleControl({unit:'metric'}),'bottom-left');
-  let opacity=0.8, rasterSlot='bottom';
+  let opacity=0.8, rasterSlot='middle';   // Standard style: the 'bottom' slot is hidden under the land when 3D terrain is on
   function rasterLayer(id){return {id,type:'raster',source:id,slot:rasterSlot,paint:{'raster-opacity':opacity,'raster-resampling':'nearest','raster-fade-duration':0}}}
   function painterlySky(){ try{ map.setFog({range:[0.8,9],color:'#f6eadf','high-color':'#8cc6ee','horizon-blend':0.18,'space-color':'#bfe3ff','star-intensity':0}); }catch(e){} }
   map.on('style.load',()=>{
@@ -833,7 +833,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
   document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>{map.setConfigProperty('basemap','lightPreset',b.dataset.light);document.querySelectorAll('[data-light]').forEach(x=>x.setAttribute('aria-pressed',x===b));if(b.dataset.light==='day')painterlySky();}));
   toggle('b3dobj',on=>map.setConfigProperty('basemap','show3dObjects',on));
   toggle('labels',on=>{['showPlaceLabels','showRoadLabels','showPointOfInterestLabels'].forEach(k=>map.setConfigProperty('basemap',k,on)); document.body.classList.toggle('nolabels',!on)});
-  toggle('roadsTop',on=>{rasterSlot=on?'bottom':'middle'; if(!map.getLayer('series'))return;
+  toggle('roadsTop',on=>{rasterSlot=on?'middle':'top'; if(!map.getLayer('series'))return;
     const vis=map.getLayoutProperty('series','visibility'); map.removeLayer('series'); map.addLayer(rasterLayer('series'),'aoi-glow'); if(vis) map.setLayoutProperty('series','visibility',vis)});
 
   // ---------- live weather (Open-Meteo) ----------
