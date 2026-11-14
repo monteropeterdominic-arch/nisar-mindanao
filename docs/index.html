@@ -502,7 +502,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     token=await new Promise(res=>document.getElementById('tokenForm').addEventListener('submit',e=>{e.preventDefault();const v=document.getElementById('tokenInput').value.trim();store.set('mbtoken',v);t.hidden=true;res(v);}));
   }
   mapboxgl.accessToken=token;
-  const M=await (await fetch('data/manifest.json')).json();
+  const M=await (await fetch('data/manifest.json',{cache:'no-cache'})).json();
   const byFam={}; M.layers.forEach(l=>{(byFam[l.family]=byFam[l.family]||[]).push(l)});
   const byId=Object.fromEntries(M.layers.map(l=>[l.id,l]));
   const phone=()=>window.innerWidth<=760;
