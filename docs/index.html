@@ -82,6 +82,12 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible,su
 .legend li{display:flex;gap:8px;align-items:center}
 .sw{width:16px;height:16px;border-radius:4px;flex:none;border:1px solid rgba(0,0,0,.18)}
 .vnote{font-size:14px;margin:0}
+.vs{display:grid;gap:10px}.vs span{display:block;font:700 12.5px var(--body);color:var(--navy);margin-bottom:3px}
+.vbar{position:relative;height:20px;background:#efe6d2;border-radius:5px;margin-bottom:3px;overflow:hidden}.vbar i{position:absolute;inset:0 auto 0 0;border-radius:5px}
+.vbar.ref i{background:#b7ad98}.vbar b{position:absolute;left:8px;top:1px;font:800 12px var(--body);color:var(--navy)}
+.tried{padding-left:18px;margin:8px 0 0;display:grid;gap:10px;font-size:13.5px}
+.tried figure{margin:6px 0 0}.tried img{width:100%;border-radius:6px;border:1px solid #d6c8a6;cursor:zoom-in;background:#fff}
+.tried figcaption{font-size:12px;color:var(--ink2);margin-top:3px}
 .seen{margin:8px 0 0;font-size:12.5px;color:var(--ink2)} .seen b{color:var(--navy)}
 .sats{display:grid;gap:6px}
 .sats div{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start;font-size:13px}
@@ -315,6 +321,24 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <div><b>305</b><span>spots where a hill may have slid</span></div>
         <div><b>165 ha</b><span>of bare ground, about 230 football fields</span></div>
       </div>
+      <div class="box"><h3>🛰 Why NISAR?</h3>
+        <p class="note" style="margin:0 0 8px">Radar waves come in different sizes. Short waves bounce off leaves. Long waves go deeper into the forest. We checked the possible landslide spots with two radar satellites:</p>
+        <div class="vs">
+          <div><span>NISAR (long L-band waves, 24 cm)</span><div class="vbar"><i style="width:55.8%;background:var(--teal)"></i><b>28%</b></div><div class="vbar ref"><i style="width:23.8%"></i><b>12%</b></div></div>
+          <div><span>Sentinel-1 (short C-band waves, 5.5 cm)</span><div class="vbar"><i style="width:4%;background:#c0883a"></i><b>no difference</b></div></div>
+        </div>
+        <p class="note" style="margin:8px 0 0"><b>NISAR</b> saw change on the landslide spots more than twice as often as on other steep hills (top bar: landslide spots, grey bar: other steep hills). <b>Sentinel-1</b> could not tell them apart: on these forest slopes its signal was already just noise, even before the quake.</p>
+      </div>
+      <div class="box"><h3>🔬 What we tried: was the coast pushed up?</h3>
+        <p class="note" style="margin:0">News reports say parts of the coast rose by up to 2 m. Our team tried two ways to see that from space:</p>
+        <ol class="tried">
+          <li><b>Radar before and after (Sentinel-1).</b> Near the epicentre the signal was lost in all 7 pairs, so nothing could be measured there. Near General Santos and Maasim, pairs from <i>before</i> the quake changed just as much, so that was water in the air, not the ground.
+            <figure><img src="data/fig/s1_profile.webp" alt="Chart: change along the General Santos to Maasim line; the before-quake pairs change as much as the pairs spanning the quake" loading="lazy"><figcaption>General Santos → Maasim: dashed lines are from before the quake, yet they move as much as the solid ones.</figcaption></figure></li>
+          <li><b>Coral reefs at the same tide (Sentinel-2).</b> If the coast rose 1–2 m, reef flats would stick out of the water. At matching low tides, Sarangani Island looks the same before and after.
+            <figure><img src="data/fig/s2_lowtide_sarangani.webp" alt="Four satellite pictures of the Sarangani Island coast at low tide, three before and one after the quake, looking the same" loading="lazy"><figcaption>Sarangani Island at low tide: three pictures before the quake, the last one after.</figcaption></figure></li>
+        </ol>
+        <p class="note" style="margin:6px 0 0"><b>Answer:</b> with the free satellite data we have, the push-up of the coast cannot be seen. One clue did show up: muddy river water near Jose Abad Santos after the quake, where there are many possible landslides. Measuring the coast will need NISAR pairs from after 19 June, or survey markers on the ground.</p>
+      </div>
       <div class="box"><h3>🌏 What happened</h3>
 <div class="facts">
         <div><i>🕖</i><span><b>When:</b> Monday 8 June 2026, 7:37 in the morning, the first day of school.</span></div>
@@ -338,9 +362,10 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
         <text x="20" y="80">sea floor slides under</text><text x="200" y="104">★ quake started here</text><text x="220" y="38">coast pushed up</text>
       </svg>
       </div>
-      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Camera pictures before and after the quake show where hills turned bare (HLS, 30 m).</span></div><div><i>🚀</i><span><b>SRTM:</b> A radar flown on the Space Shuttle Endeavour in 2000. It measured how high and steep the land is.</span></div></div></div>
+      <div class="box"><h3>🛰 Satellites used</h3><div class="sats"><div><i>🛰</i><span><b>Landsat 8 & 9:</b> NASA and USGS. Camera pictures before and after the quake show where hills turned bare (HLS, 30 m).</span></div><div><i>🚀</i><span><b>SRTM:</b> A radar flown on the Space Shuttle Endeavour in 2000. It measured how high and steep the land is.</span></div><div><i>🛰</i><span><b>Sentinel-1 and Sentinel-2:</b> European (Copernicus) radar and camera satellites. Our team used them to look for the coast being pushed up, from just before and just after the quake.</span></div></div></div>
       <details><summary>ℹ More info: how we found the landslides</summary>
         <p>Landsat HLS EVI before (1 Mar – 7 Jun 2026) and after (9 Jun – 25 Sep 2026). A spot counts when the slope is at least 20°, EVI fell from at least 0.35 to at most 0.20, and the drop is at least 0.25 more than the normal seasonal change seen in 2025 (sieve ≥ 3 pixels). Two thirds of the area is south of 5.9°N, around Glan (about 31 ha) and Jose Abad Santos (about 63 ha). PhilSA estimated about 138 ha. Spots get far more common on steeper slopes (3, 14 and 30 per 10,000 vegetated pixels at 15–25°, 25–35° and over 35°). About 30% of the area could not be checked because every view was cloudy. Not field-checked: heavy rain or land clearing can look like a slide.</p>
+        <p>Radar cross-check: on the spots, NISAR's land-cover classifier flagged change in 27.9% of pixels, against 11.9% on other checked slopes of 20° or more (that classifier compares with the 2020 map, so part of the change may be older). Sentinel-1 coherence (HyP3, tracks 163 and 69, pre-quake controls) dropped by a median 0.024 and 0.000 on the spots, against 0.025 and −0.003 on other steep land; before the quake only 9% and 2% of spot pixels had coherence above 0.5. Sentinel-1 work, figures and GeoTIFFs: the sentinel1_quake folder of the data repository. Contains modified Copernicus Sentinel data 2024–2026, processed by ASF DAAC HyP3 2026.</p>
         <p>Event: Mw 7.8, epicentre 5.60°N 125.06°E, depth 33 km (PHIVOLCS) or 57 km (USGS), thrust faulting at the Cotabato Trench. Tsunami 1.48 m on the Kiamba tide gauge; about 138,500 homes damaged (NDRRMC, 21 July); more than 8,500 aftershocks.</p>
       </details>
       <div class="box"><h3>📰 In the news</h3>
@@ -453,12 +478,13 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       <li>MODIS MOD13Q1 NDVI/EVI (250 m) and MOD11A2 land temperature (1 km), 2000 – Oct 2026</li>
       <li>Rain: NASA GPM IMERG V07, 1998 – Oct 2026. El Niño: NOAA CPC Oceanic Niño Index and ENSO discussion (8 Oct 2026), IRI forecast</li>
       <li>SRTM 30 m elevation; 2020 regional land cover (province outlines)</li>
+      <li>Copernicus Sentinel-1 radar pairs (ASF DAAC, processed with HyP3) and Sentinel-2 pictures (Element 84 Earth Search), with tides from NASA's GOT4.10c model. Contains modified Copernicus Sentinel data 2024–2026, processed by ASF DAAC HyP3 2026.</li>
       <li>Earthquake facts: PHIVOLCS, USGS, NDRRMC, AHA Centre, AP</li>
       <li>Live weather: Open-Meteo. Basemap, 3D buildings and terrain: Mapbox Standard</li>
     </ul>
     <h3>Things to know</h3>
     <ul>
-      <li>No public NISAR pictures over this area come from before the earthquake yet (the earliest is 19 June), so the radar shows the months after, not the shaking itself. Measuring how much the ground lifted needs Sentinel-1 radar pairs from before and after 8 June.</li>
+      <li>No public NISAR pictures over this area come from before the earthquake yet (the earliest is 19 June), so the radar shows the months after, not the shaking itself. Our team tried Sentinel-1 radar pairs from before and after 8 June, but they could not measure how much the coast was lifted (see Earthquake → What we tried).</li>
       <li>About 30% of the area could not be checked for landslides because it was cloudy in every Landsat view.</li>
       <li>The 12-month outlook is a scenario based on a strong El Niño, not a weather forecast.</li>
       <li>The clouds and rain on the map are a drawing driven by the real weather numbers, not satellite cloud pictures.</li>
@@ -523,7 +549,10 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
       {id:'slope',chip:'📐 Steep hills',sat:'SRTM (Space Shuttle radar)',steps:()=>[{l:byId.slope,label:'How steep the land is',short:''}],lo:'flat',hi:'very steep',
         note:'Landslides happen most on steep hills (dark red). Most possible slides are on slopes steeper than 25°.'},
       {id:'check',chip:'☁ Where we could look',sat:'Landsat 8 & 9',steps:()=>[{l:byId.eq_classes,label:'Where the check was possible',short:''}],
-        note:'Satellites with cameras cannot see through clouds. Blue places were cloudy every time, so we could not check them.'}]},
+        note:'Satellites with cameras cannot see through clouds. Blue places were cloudy every time, so we could not check them.'},
+      {id:'s1',chip:'📡 Radar check',sat:'Sentinel-1 (Europe, Copernicus)',steps:()=>[[byId.s1_cohloss_t163,'Seen from the east, looking west (3 → 10 June)','Looking west'],[byId.s1_cohloss_t069,'Seen from the west, looking east (4 → 16 June)','Looking east']].filter(x=>x[0]).map(([l,label,short])=>({l,label,short})),
+        lo:'signal got steadier',hi:'signal lost',
+        note:'Another radar satellite, Sentinel-1, looked at the area just before and just after the quake. Red shows where its signal stopped matching after the quake. Near Glan this happened from both sides, so something on the ground may have been disturbed. Rain or harvests can do this too, so it is a clue, not proof.'}]},
     nino:{views:[
       {id:'green',chip:'🌿 Green plants',sat:'Terra (MODIS)',steps:monthly('ndvi'),alt:monthly('ndvi_anom'),lo:'few plants',hi:'lots of plants',altlo:'browner than last year',althi:'greener than last year',
         note:'Darker green means more healthy plants. Press ▶ and watch April 2026: the land got less green in the dry spell.',altnote:'Brown places are less green than the same month in 2025.'},
@@ -717,6 +746,7 @@ dialog .close{float:right;border:2px solid var(--gold);background:var(--navy);co
     play.textContent='❚❚'; play.setAttribute('aria-label','Pause');
     timer=setInterval(()=>{const c=cur(); state.idx[c.key]=(c.i+1)%c.steps.length; render()},1300)});
 
+  document.querySelectorAll('.tried img').forEach(im=>im.addEventListener('click',()=>window.open(im.src,'_blank','noopener')));
   // ---------- AI scores (More info boxes) ----------
   if(M.ml){ const r=M.ml, row=(t,k)=>{const v=r[`${t} | ${k}`]; return v?`<td class="n">${v.R2.toFixed(2)}</td>`:'<td>–</td>'};
     document.getElementById('mltable').innerHTML='<tr><th>Inputs</th><th>EVI R²</th><th>NDMI R²</th></tr>'+
