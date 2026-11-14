@@ -1,0 +1,56 @@
+---
+title: Download
+description: Download the NISAR Surface Change Monitor desktop app for Windows, macOS or Linux, or use it in your browser.
+---
+
+import { LinkButton } from "@astrojs/starlight/components";
+import DownloadButtons from "../../../components/DownloadButtons.astro";
+
+## Use in browser
+
+Don't want to install anything? The web version runs the same dashboard in your browser and
+streams the map overlays from the internet. Bookmarks and panel layout are saved in your
+browser. Offline map tiles and automatic updates need the desktop app.
+
+<LinkButton href="/Dancing_with_the_SARs/app/" icon="external">Open the web app</LinkButton>
+
+## Desktop app
+
+The desktop app bundles the dashboard, every layer in the manifest and the pixel inspector.
+Pick the installer for your system. The highlighted buttons match the system you're browsing
+from.
+
+<DownloadButtons />
+
+Every release is built by GitHub Actions from a tagged commit and published on the
+[GitHub Releases page](https://github.com/Drakaniia/Dancing_with_the_SARs/releases).
+
+## First launch
+
+The installers are **not code-signed**, so your system warns you the first time you open the
+app.
+
+- **Windows:** If SmartScreen shows "Windows protected your PC", choose **More info**, then
+  **Run anyway**.
+- **macOS:** Open the `.dmg` and drag the app into **Applications**. The first time you open
+  it, macOS blocks it. Go to **System Settings → Privacy & Security** and choose **Open
+  Anyway**. If macOS says the app "is damaged", run this once in Terminal:
+
+  ```bash
+  xattr -cr "/Applications/NISAR Surface Change Monitor.app"
+  ```
+
+- **Linux:** Make the AppImage executable (`chmod +x *.AppImage`) and run it, or install the
+  `.deb` / `.rpm` with your package manager. The app needs WebKitGTK 4.1, which current
+  Ubuntu, Debian and Fedora releases include.
+
+:::caution[Map overlays in the installers]
+The installers include the layer manifest, legends, timeline and Quick Stats tables. The
+~500 MB of generated map tiles are not bundled. The app streams them from a Cloudflare R2
+bucket, so the raster overlays need an internet connection. To use them offline, open
+**Settings → Offline Map Tiles** and choose **Download for offline**. The source GeoTIFFs the inspector
+reads are not included either, so inspector readings fall back to placeholders.
+
+To use the inspector, build from source and generate the tiles. See
+[Installation](/Dancing_with_the_SARs/getting-started/installation/#load-the-map-tiles).
+:::

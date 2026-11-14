@@ -1,0 +1,94 @@
+---
+title: NISAR Surface Change Monitor
+description: An interactive desktop dashboard that turns NASA-ISRO NISAR radar data into readable surface-change maps for Sarangani and Davao Occidental, Philippines.
+template: splash
+hero:
+  tagline: Radar, vegetation, land cover, earthquake and El Niño layers for Sarangani and Davao Occidental, in one map-first desktop app. Built by The Cartographers for the NASA Space Apps Challenge 2026.
+  image:
+    file: ../../assets/logo.svg
+  actions:
+    - text: Download
+      link: /Dancing_with_the_SARs/getting-started/download/
+      icon: download
+    - text: Get started
+      link: /Dancing_with_the_SARs/getting-started/introduction/
+      icon: right-arrow
+      variant: secondary
+    - text: User guide
+      link: /Dancing_with_the_SARs/guide/interface/
+      variant: minimal
+    - text: View on GitHub
+      link: https://github.com/Drakaniia/Dancing_with_the_SARs
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+![Light dashboard showing the Sarangani and Davao Occidental radar overlay, layer controls, timeline and inspector](../../../../../docs/screenshots/dashboard-light.png)
+
+## What it does
+
+<CardGrid stagger>
+  <Card title="57 real layers, 7 families" icon="seti:image">
+    Every overlay comes from a pinned NISAR release: radar backscatter and
+    change, vegetation, land cover, the 8 June 2026 earthquake, El Niño time
+    series, a 12-month outlook and terrain.
+  </Card>
+  <Card title="81-step timeline" icon="seti:clock">
+    One global timeline covers daily NISAR passes, quarterly Landsat, monthly
+    MODIS and the forecast scenario. Each layer snaps to its nearest available
+    period.
+  </Card>
+  <Card title="Real pixel values" icon="magnifier">
+    Click the map and the Tauri backend reads the source GeoTIFFs directly,
+    returning scaled values, class names, units and caveats.
+  </Card>
+  <Card title="Honest provenance" icon="information">
+    The pinned commit, tile totals and the release's own scientific limits are
+    always one click away in the provenance dialog.
+  </Card>
+</CardGrid>
+
+## Where the data comes from
+
+All real data comes from the team's separate data-processing repository. The app pins one
+commit of it, and every tile, legend and inspector value traces back to that commit.
+
+<CardGrid>
+  <LinkCard
+    title="sarangani-davao-occidental-nisar"
+    description="The team's companion data repo: NISAR, Landsat HLS, MODIS, GPM IMERG, SRTM and NOAA CPC products for Sarangani and Davao Occidental. Pinned at 7ea38ff."
+    href="https://github.com/monteropeterdominic-arch/sarangani-davao-occidental-nisar"
+  />
+  <LinkCard
+    title="Data sources"
+    description="How the two repositories connect, and which upstream products feed each layer."
+    href="/Dancing_with_the_SARs/data/sources/"
+  />
+</CardGrid>
+
+## Where to go next
+
+<CardGrid>
+  <LinkCard
+    title="Installation"
+    description="Install the toolchain and run the desktop app locally."
+    href="/Dancing_with_the_SARs/getting-started/installation/"
+  />
+  <LinkCard
+    title="Layer catalogue"
+    description="Every layer, its units, periods and zoom range."
+    href="/Dancing_with_the_SARs/data/catalogue/"
+  />
+  <LinkCard
+    title="Tile pipeline"
+    description="Turn the upstream GeoTIFF release into map tiles and a manifest."
+    href="/Dancing_with_the_SARs/pipeline/overview/"
+  />
+  <LinkCard
+    title="Architecture"
+    description="How the React frontend, stores and Tauri commands fit together."
+    href="/Dancing_with_the_SARs/architecture/overview/"
+  />
+</CardGrid>

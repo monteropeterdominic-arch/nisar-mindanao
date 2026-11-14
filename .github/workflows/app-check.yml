@@ -1,0 +1,40 @@
+name: App check (preview build)
+
+on:
+  push:
+    branches: [app-check]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile --filter web
+      - name: Type-check
+        run: pnpm --filter web exec tsc --noEmit
+      - name: Tests
+        run: pnpm --filter web test 2>&1 | tee test-output.txt
+      - name: Build (preview base path)
+        if: always()
+        env:
+          VITE_TILE_BASE_URL: https://pub-0ea28e9ddd0848018719aa546b25063b.r2.dev
+        run: pnpm --filter web exec vite build --base=/nisar-mindanao/app-preview/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: app-preview
+          path: |
+            apps/web/dist
+            test-output.txt

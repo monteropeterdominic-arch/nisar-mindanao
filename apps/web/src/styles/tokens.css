@@ -1,0 +1,262 @@
+/**
+ * Design tokens — Cartographic Field Atlas (Sand & Terracotta light + Night Atlas dark mode).
+ *
+ * Reasons (antislop R-31):
+ * - Palette: Warm survey paper (`#efeade`), cartographic ink (`#2e2a1e`), and terracotta (`#a9471c`)
+ *   paired with a deep slate-obsidian Night Atlas (`#14181d`) for low-glare radar inspection.
+ * - Typography: Clean geometric UI sans paired with tabular monospace readouts (`--font-display`)
+ *   for coordinates, dB backscatter, and temporal stamps.
+ * - Hierarchy: Solid structural side rails (`--color-panel`) and 1-2 translucent floating map
+ *   chrome controls (`--material-glass-bg`, R-10 dose cap) so the satellite + radar canvas leads.
+ */
+
+:root,
+[data-theme="light"] {
+  /* ── Primitives: warm sand surfaces ────────────────────────────────────── */
+  --sand-050: #f7f3ea;
+  --sand-100: #efeade;
+  --sand-150: #e7e1d2;
+  --sand-200: #ded8c9;
+  --sand-250: #d6cfbd;
+  --sand-300: #cbc3b0;
+  --sand-tint: #ecdccd;
+  --sand-veil: rgba(239, 234, 222, 0.84);
+
+  /* ── Primitives: warm ink ──────────────────────────────────────────────── */
+  --ink-900: #2e2a1e;
+  --ink-700: #4a4434;
+  --ink-600: #5b5545;
+  --ink-500: #686150;
+  --ink-400: #857e6c;
+  --paper: #fffdf8;
+
+  /* ── Primitives: hairlines & scrim ─────────────────────────────────────── */
+  --line: rgba(46, 42, 30, 0.14);
+  --line-strong: rgba(46, 42, 30, 0.24);
+  --scrim: rgba(26, 23, 16, 0.45);
+
+  /* ── Primitives: hues ──────────────────────────────────────────────────── */
+  --terracotta-500: #b34a1d;
+  --terracotta-600: #a9471c;
+  --terracotta-700: #8f3b16;
+  --ochre-600: #8a5a2b;
+  --olive-600: #3d692c;
+  --brick-600: #a8311c;
+  --amber-700: #8a5a12;
+
+  /* ── Primitives: translucent fills ─────────────────────────────────────── */
+  --ink-a-04: rgba(46, 42, 30, 0.045);
+  --ink-a-06: rgba(46, 42, 30, 0.075);
+  --ink-a-08: rgba(46, 42, 30, 0.11);
+  --ink-a-12: rgba(46, 42, 30, 0.15);
+  --ink-a-14: rgba(46, 42, 30, 0.18);
+  --ink-a-18: rgba(46, 42, 30, 0.24);
+
+  /* ── Semantic: surface & content ───────────────────────────────────────── */
+  --color-bg: var(--sand-200);
+  --color-bg-elevated: var(--sand-150);
+  --color-panel: var(--sand-100);
+  --color-panel-header: var(--sand-250);
+  --color-panel-border: var(--line);
+  --color-chrome: var(--sand-veil);
+  --color-chrome-border: var(--line-strong);
+  --color-scrim: var(--scrim);
+  --color-text: var(--ink-900);
+  --color-text-secondary: var(--ink-700);
+  --color-text-muted: var(--ink-600);
+  --color-accent: var(--terracotta-600);
+  --color-accent-cyan: var(--ochre-600);
+  --color-success: var(--olive-600);
+  --color-danger: var(--brick-600);
+  --color-warning: var(--amber-700);
+  --color-focus: var(--terracotta-600);
+  --color-on-accent: var(--paper);
+
+  /* ── Semantic: translucent fills ───────────────────────────────────────── */
+  --color-fill-1: var(--ink-a-04);
+  --color-fill-2: var(--ink-a-06);
+  --color-fill-3: var(--ink-a-08);
+  --color-fill-4: var(--ink-a-12);
+  --color-fill-track: var(--ink-a-14);
+  --color-control-track: var(--ink-a-18);
+
+  /* ── Materials & elevation ─────────────────────────────────────────────── */
+  --material-rail-bg: var(--color-panel);
+  --material-rail-edge: inset 0 1px 0 rgba(255, 253, 248, 0.7);
+  --material-glass-bg: var(--color-chrome);
+  --material-glass-blur: blur(16px) saturate(140%);
+  --material-glass-edge: inset 0 1px 0 rgba(255, 253, 248, 0.6);
+  --shadow-1: 0 1px 2px rgba(46, 42, 30, 0.1);
+  --shadow-2: 0 6px 18px rgba(46, 42, 30, 0.15);
+  --shadow-pop: 0 12px 36px rgba(46, 42, 30, 0.22);
+}
+
+/* ── Night Atlas dark mode (WCAG AA contrast verified) ─────────────────── */
+[data-theme="dark"] {
+  --color-bg: #11151a;
+  --color-bg-elevated: #171c23;
+  --color-panel: #1b2129;
+  --color-panel-header: #222a34;
+  --color-panel-border: rgba(235, 228, 213, 0.12);
+  --color-chrome: rgba(27, 33, 41, 0.86);
+  --color-chrome-border: rgba(235, 228, 213, 0.22);
+  --color-scrim: rgba(7, 10, 14, 0.68);
+  --color-text: #f2ece1;
+  --color-text-secondary: #c8c0b0;
+  --color-text-muted: #a69d8c;
+  --color-accent: #e06d42;
+  --color-accent-cyan: #d49b58;
+  --color-success: #68b354;
+  --color-danger: #eb5e49;
+  --color-warning: #e0a038;
+  --color-focus: #e06d42;
+  --color-on-accent: #11151a;
+
+  --color-fill-1: rgba(242, 236, 225, 0.05);
+  --color-fill-2: rgba(242, 236, 225, 0.08);
+  --color-fill-3: rgba(242, 236, 225, 0.12);
+  --color-fill-4: rgba(242, 236, 225, 0.18);
+  --color-fill-track: rgba(242, 236, 225, 0.2);
+  --color-control-track: rgba(242, 236, 225, 0.26);
+
+  --material-rail-bg: var(--color-panel);
+  --material-rail-edge: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --material-glass-bg: var(--color-chrome);
+  --material-glass-blur: blur(16px) saturate(140%);
+  --material-glass-edge: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-pop: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+:root {
+  /* ── Typography ────────────────────────────────────────────────────────── */
+  --font-ui: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-display:
+    "Cascadia Mono", "SF Mono", "Segoe UI Mono", ui-monospace, monospace;
+  --numeric-tabular: tabular-nums;
+
+  --text-title: 1.125rem;
+  --text-title-line-height: 1.5rem;
+  --text-title-tracking: -0.02em;
+  --text-title-weight: 600;
+  --text-subtitle: 0.75rem;
+  --text-subtitle-line-height: 1rem;
+  --text-subtitle-tracking: 0;
+  --text-subtitle-weight: 400;
+  --text-panel-header: 0.6875rem;
+  --text-panel-header-line-height: 1rem;
+  --text-panel-header-tracking: 0.05em;
+  --text-panel-header-weight: 600;
+  --text-body: 0.8125rem;
+  --text-body-line-height: 1.125rem;
+  --text-body-tracking: 0;
+  --text-body-weight: 400;
+  --text-label: 0.75rem;
+  --text-label-line-height: 1rem;
+  --text-label-tracking: 0;
+  --text-label-weight: 500;
+  --text-caption: 0.6875rem;
+  --text-caption-line-height: 0.9375rem;
+  --text-caption-tracking: 0.01em;
+  --text-caption-weight: 400;
+  --text-readout: 0.9375rem;
+  --text-readout-line-height: 1.25rem;
+  --text-readout-tracking: -0.01em;
+  --text-readout-weight: 600;
+
+  /* ── Spacing, radius, borders ──────────────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --rail-pad: 0.625rem;
+  --panel-pad: 0.75rem;
+  --panel-gap: 0.5rem;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --hairline: 1px;
+
+  /* ── Fixed control sizes (px, never rem) ───────────────────────────────── */
+  --switch-w: 40px;
+  --switch-h: 24px;
+  --switch-knob: 20px;
+  --switch-inset: 2px;
+  --checkbox-size: 18px;
+  --border-control: 1.5px;
+  --control-inset: 2px;
+  --button-sm-h: 32px;
+  --button-md-h: 36px;
+  --icon-button-sm: 32px;
+  --icon-button-md: 36px;
+  --segment-h: 28px;
+  --slider-thumb-w: 16px;
+  --slider-thumb-active-w: 18px;
+  --slider-track-h: 4px;
+  --slider-hit-h: 24px;
+  --panel-header-h: 38px;
+  --progress-h: 2px;
+  --status-dot: 8px;
+  --hit-target-min: 44px;
+
+  /* ── Motion (Emil Kowalski / Apple fluid springs) ──────────────────────── */
+  --spring-ui-bounce: 0;
+  --spring-ui-duration: 0.35;
+  --spring-momentum-bounce: 0.18;
+  --spring-momentum-duration: 0.38;
+  --spring-drawer-bounce: 0.15;
+  --spring-drawer-duration: 0.3;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-fast: 140ms;
+  --dur-med: 200ms;
+
+  /* ── Z-index scale ─────────────────────────────────────────────────────── */
+  --z-map: 0;
+  --z-map-chrome: 20;
+  --z-animation-bar: 30;
+  --z-rails: 40;
+  --z-topbar: 50;
+  --z-popover: 60;
+  --z-toast: 70;
+
+  /* ── Layout: structural rail widths ───────────────────────────────────── */
+  --rail-left-w-wide: 19.5rem;
+  --rail-left-w-default: 17.5rem;
+  --rail-right-w: 21.5rem;
+  /* Collapsed icon strip: one 32px icon button plus the rail padding on each side. */
+  --rail-collapsed-w: 3.25rem;
+
+  /* ── Breakpoints ───────────────────────────────────────────────────────── */
+  --breakpoint-default: 1024px;
+  --breakpoint-wide: 1440px;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --material-glass-blur: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  [data-theme="light"] {
+    --material-glass-blur: none;
+    --color-panel-border: rgba(46, 42, 30, 0.36);
+    --color-chrome-border: rgba(46, 42, 30, 0.44);
+    --color-text-secondary: var(--ink-900);
+    --color-text-muted: var(--ink-700);
+  }
+  [data-theme="dark"] {
+    --material-glass-blur: none;
+    --color-panel-border: rgba(242, 236, 225, 0.36);
+    --color-chrome-border: rgba(242, 236, 225, 0.44);
+    --color-text-secondary: #f2ece1;
+    --color-text-muted: #d8d0c2;
+  }
+}

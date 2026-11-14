@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-elevated: var(--color-bg-elevated);
+  --color-panel: var(--color-panel);
+  --color-surface-header: var(--color-panel-header);
+  --color-panel-border: var(--color-panel-border);
+  --color-border: var(--color-panel-border);
+  --color-chrome: var(--color-chrome);
+  --color-chrome-border: var(--color-chrome-border);
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-cyan: var(--color-accent-cyan);
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
+  --color-warning: var(--color-warning);
+  --color-focus: var(--color-focus);
+
+  --font-ui: var(--font-ui);
+  --font-display: var(--font-display);
+  --text-title: var(--text-title);
+  --text-title--line-height: var(--text-title-line-height);
+  --text-title--letter-spacing: var(--text-title-tracking);
+  --text-title--font-weight: var(--text-title-weight);
+  --text-subtitle: var(--text-subtitle);
+  --text-subtitle--line-height: var(--text-subtitle-line-height);
+  --text-subtitle--letter-spacing: var(--text-subtitle-tracking);
+  --text-subtitle--font-weight: var(--text-subtitle-weight);
+  --text-panel-header: var(--text-panel-header);
+  --text-panel-header--line-height: var(--text-panel-header-line-height);
+  --text-panel-header--letter-spacing: var(--text-panel-header-tracking);
+  --text-panel-header--font-weight: var(--text-panel-header-weight);
+  --text-body: var(--text-body);
+  --text-body--line-height: var(--text-body-line-height);
+  --text-body--letter-spacing: var(--text-body-tracking);
+  --text-body--font-weight: var(--text-body-weight);
+  --text-label: var(--text-label);
+  --text-label--line-height: var(--text-label-line-height);
+  --text-label--letter-spacing: var(--text-label-tracking);
+  --text-label--font-weight: var(--text-label-weight);
+  --text-caption: var(--text-caption);
+  --text-caption--line-height: var(--text-caption-line-height);
+  --text-caption--letter-spacing: var(--text-caption-tracking);
+  --text-caption--font-weight: var(--text-caption-weight);
+  --text-readout: var(--text-readout);
+  --text-readout--line-height: var(--text-readout-line-height);
+  --text-readout--letter-spacing: var(--text-readout-tracking);
+  --text-readout--font-weight: var(--text-readout-weight);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-pill: var(--radius-pill);
+
+  --spacing-rail: var(--rail-pad);
+  --spacing-panel: var(--panel-pad);
+  --spacing-stack: var(--panel-gap);
+
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-pop: var(--shadow-pop);
+}
+
+@theme {
+  --breakpoint-default: 1024px;
+  --breakpoint-wide: 1440px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-ui);
+  }
+
+  /* Antislop R-39: every enabled interactive element has pointer cursor; disabled has not-allowed */
+  a[href],
+  button:not(:disabled),
+  summary,
+  select:not(:disabled),
+  label[for],
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="switch"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Emil Kowalski tactile button press feedback */
+  button:not(:disabled):active {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@utility rail {
+  background-color: var(--material-rail-bg);
+  box-shadow: var(--material-rail-edge);
+}
+
+@utility glass {
+  background-color: var(--material-glass-bg);
+  backdrop-filter: var(--material-glass-blur);
+}

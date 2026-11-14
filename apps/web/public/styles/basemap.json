@@ -1,0 +1,212 @@
+{
+  "version": 8,
+  "name": "NISAR Surface Change Monitor · Sarangani & Davao Occidental",
+  "glyphs": "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  "sources": {
+    "esri-light-gray": {
+      "type": "raster",
+      "tiles": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "maxzoom": 16,
+      "attribution": "Esri, HERE, Garmin, © OpenStreetMap contributors"
+    },
+    "esri-world-imagery": {
+      "type": "raster",
+      "tiles": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "attribution": "Esri, Maxar, Earthstar Geographics"
+    },
+    "esri-boundaries": {
+      "type": "raster",
+      "tiles": [
+        "https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"
+      ],
+      "tileSize": 256,
+      "attribution": "Esri"
+    },
+    "terrain-dem": {
+      "type": "raster-dem",
+      "tiles": [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
+      ],
+      "encoding": "terrarium",
+      "tileSize": 256,
+      "maxzoom": 14,
+      "attribution": "Terrain Tiles: Mapzen, AWS Open Data"
+    },
+    "reference-labels": {
+      "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [125.056, 5.599]
+            },
+            "properties": {
+              "name": "M7.8 Epicentre (8 Jun 2026)",
+              "kind": "epicentre"
+            }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.2869, 6.1028] },
+            "properties": { "name": "Alabel", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.2044, 5.8247] },
+            "properties": { "name": "Glan", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.2886, 5.9669] },
+            "properties": { "name": "Malapatan", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.0042, 5.8594] },
+            "properties": { "name": "Maasim", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [124.6242, 5.9892] },
+            "properties": { "name": "Kiamba", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [124.4975, 6.0394] },
+            "properties": { "name": "Maitum", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.2764, 6.2994] },
+            "properties": { "name": "Malungon", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.6089, 6.4036] },
+            "properties": { "name": "Malita", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.4714, 6.5519] },
+            "properties": { "name": "Santa Maria", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.6542, 6.1972] },
+            "properties": { "name": "Don Marcelino", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.4728, 5.8644] },
+            "properties": { "name": "Jose Abad Santos", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.405, 5.402] },
+            "properties": { "name": "Sarangani Island", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.1716, 6.1164] },
+            "properties": { "name": "General Santos", "kind": "place" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.11, 5.95] },
+            "properties": { "name": "Sarangani Bay", "kind": "sea" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [124.75, 5.55] },
+            "properties": { "name": "Celebes Sea", "kind": "sea" }
+          },
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [125.85, 6.45] },
+            "properties": { "name": "Davao Gulf", "kind": "sea" }
+          }
+        ]
+      }
+    }
+  },
+  "sky": {
+    "sky-color": "#dfe9f2",
+    "horizon-color": "#f1efe9",
+    "fog-color": "#f4f1ea",
+    "sky-horizon-blend": 0.6,
+    "horizon-fog-blend": 0.6,
+    "fog-ground-blend": 0.9
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#f4f1ea" }
+    },
+    {
+      "id": "light-basemap",
+      "type": "raster",
+      "source": "esri-light-gray",
+      "paint": { "raster-opacity": 1 }
+    },
+    {
+      "id": "basemap",
+      "type": "raster",
+      "source": "esri-world-imagery",
+      "layout": { "visibility": "none" },
+      "paint": { "raster-opacity": 1 }
+    },
+    {
+      "id": "admin-boundaries",
+      "type": "raster",
+      "source": "esri-boundaries",
+      "layout": { "visibility": "none" },
+      "paint": { "raster-opacity": 0.7 }
+    },
+    {
+      "id": "cities-labels",
+      "type": "symbol",
+      "source": "reference-labels",
+      "layout": {
+        "visibility": "visible",
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          5,
+          10,
+          9,
+          12,
+          12,
+          14
+        ],
+        "text-anchor": "center",
+        "text-allow-overlap": false
+      },
+      "paint": {
+        "text-color": [
+          "match",
+          ["get", "kind"],
+          "sea",
+          "#4f7896",
+          "epicentre",
+          "#c0392b",
+          "#2a2620"
+        ],
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.6
+      }
+    }
+  ]
+}
