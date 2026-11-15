@@ -10,7 +10,7 @@ import { usePlayback } from "./usePlayback";
 
 const IDLE_MS = 3000;
 const IDLE_OPACITY = 0.55;
-const MAX_VISIBLE_TICKS = 9;
+const MAX_VISIBLE_TICKS = 6;
 
 export function AnimationBar() {
   const dates = useTimelineSteps();
