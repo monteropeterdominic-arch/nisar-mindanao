@@ -41,10 +41,6 @@ function layerIdFor(id: string): string {
   return `${LAYER_PREFIX}${id}`;
 }
 
-function sourceIdFor(id: string): string {
-  return `${layerIdFor(id)}${SOURCE_SUFFIX}`;
-}
-
 /** Origin plus the Vite base path (e.g. `/Dancing_with_the_SARs/app` on GitHub Pages). */
 function resolveOriginPrefix(): string {
   if (
