@@ -2,35 +2,37 @@ $ vitest run
 
 [1m[30m[46m RUN [49m[39m[22m [36mv5.1.0 [39m[90m/home/runner/work/nisar-mindanao/nisar-mindanao/apps/web[39m
 
- [32m✓[39m tests/shared-ui/slider.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 237[2mms[22m[39m
- [32m✓[39m tests/features/offline/offline.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[32m 143[2mms[22m[39m
- [32m✓[39m tests/shared-ui/primitives-states.test.tsx [2m([22m[2m16 tests[22m[2m)[22m[33m 968[2mms[22m[39m
- [32m✓[39m tests/features/map/map.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 107[2mms[22m[39m
- [32m✓[39m tests/features/panels/panels.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 406[2mms[22m[39m
- [32m✓[39m tests/features/timeline/timelineSteps.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 33[2mms[22m[39m
- [32m✓[39m tests/features/topics/topics.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 549[2mms[22m[39m
- [32m✓[39m tests/shared-ui/panel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 304[2mms[22m[39m
- [32m✓[39m tests/features/timeline/playback.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
- [32m✓[39m tests/features/shell/shell.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 2330[2mms[22m[39m
+ [32m✓[39m tests/shared-ui/slider.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 187[2mms[22m[39m
+ [32m✓[39m tests/features/offline/offline.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[32m 136[2mms[22m[39m
+ [32m✓[39m tests/shared-ui/primitives-states.test.tsx [2m([22m[2m16 tests[22m[2m)[22m[33m 794[2mms[22m[39m
+ [32m✓[39m tests/features/map/map.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 82[2mms[22m[39m
+ [32m✓[39m tests/features/panels/panels.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 384[2mms[22m[39m
+ [32m✓[39m tests/features/timeline/timelineSteps.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 165[2mms[22m[39m
+ [32m✓[39m tests/features/topics/topics.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 441[2mms[22m[39m
+ [32m✓[39m tests/shared-ui/panel.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 289[2mms[22m[39m
+ [32m✓[39m tests/features/shell/shell.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 1945[2mms[22m[39m
    [32m✓[39m AppShell [2m(6)[22m
-     [33m[2m✓[22m[39m starts wide with the left rail open and the right rail collapsed to its icon strip[33m 535[2mms[22m[39m
-     [33m[2m✓[22m[39m expands the right rail in the locked panel order and collapses it again[33m 501[2mms[22m[39m
-     [33m[2m✓[22m[39m turns both rails into overlay sheets in compact mode and pushes nothing[33m 591[2mms[22m[39m
- [32m✓[39m tests/shared-ui/switch.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 634[2mms[22m[39m
+     [33m[2m✓[22m[39m starts wide with the left rail open and the right rail collapsed to its icon strip[33m 405[2mms[22m[39m
+     [33m[2m✓[22m[39m expands the right rail in the locked panel order and collapses it again[33m 492[2mms[22m[39m
+     [33m[2m✓[22m[39m turns both rails into overlay sheets in compact mode and pushes nothing[33m 515[2mms[22m[39m
+ [32m✓[39m tests/shared/utils/dates.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 801[2mms[22m[39m
+   [32m✓[39m dates [2m(2)[22m
+     [33m[2m✓[22m[39m formats date for Philippines locale[33m 794[2mms[22m[39m
+ [32m✓[39m tests/features/timeline/playback.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/shared-ui/switch.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 535[2mms[22m[39m
    [32m✓[39m Switch [2m(5)[22m
-     [33m[2m✓[22m[39m slides the knob by the token travel when checked[33m 428[2mms[22m[39m
- [32m✓[39m tests/shared/utils/colorScales.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
- [32m✓[39m tests/shared/utils/settings.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
- [32m✓[39m tests/features/about/about.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 220[2mms[22m[39m
- [32m✓[39m tests/shared/utils/dates.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 26[2mms[22m[39m
- [32m✓[39m tests/shared/utils/geo.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+     [33m[2m✓[22m[39m slides the knob by the token travel when checked[33m 417[2mms[22m[39m
+ [32m✓[39m tests/shared/utils/colorScales.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m tests/features/about/about.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 158[2mms[22m[39m
+ [32m✓[39m tests/shared/utils/settings.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/shared/utils/geo.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m16 passed[39m[22m[90m (16)[39m
-[2m      Tests [22m [1m[32m100 passed[39m[22m[90m (100)[39m
-[2m   Start at [22m 15:58:03
-[2m   Duration [22m 8.00s[2m (environment 36%, tests 29%, import 16%, setup 12%, transform 7%)[22m
+[2m      Tests [22m [1m[32m109 passed[39m[22m[90m (109)[39m
+[2m   Start at [22m 03:40:07
+[2m   Duration [22m 7.12s[2m (environment 34%, tests 32%, import 15%, setup 11%, transform 8%)[22m
 
-[2mEnvironment [22m [33mjsdom was created 16 times[39m[2m · 7.47s total, 36% of tracked time[22m
+[2mEnvironment [22m [33mjsdom was created 16 times[39m[2m · 6.25s total, 34% of tracked time[22m
 [2m            [22m [2mcreate it once per worker with [22m[33mpool: 'vmThreads'[39m[2m (keeps per-file isolation) or [22m[33misolate: false[39m[2m (shares it across files)[22m
 [2m            [22m [2mlearn more: https://vitest.dev/guide/improving-performance#test-environments[22m
 

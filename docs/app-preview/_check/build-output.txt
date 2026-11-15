@@ -1,17 +1,17 @@
 [36mvite v6.4.6 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 2091 modules transformed.
+[32m✓[39m 2092 modules transformed.
 rendering chunks...
 computing gzip size...
 [2mdist/[22m[32mindex.html                             [39m[1m[2m    0.47 kB[22m[1m[22m[2m │ gzip:   0.30 kB[22m
 [2mdist/[22m[2massets/[22m[32mmaplibre-gl-worker-TSwAE_kT.js  [39m[1m[2m  520.26 kB[22m[1m[22m
-[2mdist/[22m[2massets/[22m[35mindex-BcjTeITR.css              [39m[1m[2m  110.93 kB[22m[1m[22m[2m │ gzip:  18.33 kB[22m
-[2mdist/[22m[2massets/[22m[36mapp-BEYM56tL.js                 [39m[1m[2m    0.25 kB[22m[1m[22m[2m │ gzip:   0.21 kB[22m
-[2mdist/[22m[2massets/[22m[36mdist-js-CCAZ42Qs.js             [39m[1m[2m    2.43 kB[22m[1m[22m[2m │ gzip:   0.92 kB[22m
-[2mdist/[22m[2massets/[22m[36mindex-BqMTfibE.js               [39m[1m[33m1,563.80 kB[39m[22m[2m │ gzip: 450.75 kB[22m
+[2mdist/[22m[2massets/[22m[35mindex-DlVRGqTk.css              [39m[1m[2m  111.94 kB[22m[1m[22m[2m │ gzip:  18.51 kB[22m
+[2mdist/[22m[2massets/[22m[36mapp-D_8yVSUm.js                 [39m[1m[2m    0.25 kB[22m[1m[22m[2m │ gzip:   0.21 kB[22m
+[2mdist/[22m[2massets/[22m[36mdist-js-Cx1ge8Et.js             [39m[1m[2m    2.43 kB[22m[1m[22m[2m │ gzip:   0.92 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-CF-lQ92Z.js               [39m[1m[33m1,568.85 kB[39m[22m[2m │ gzip: 452.42 kB[22m
 [33m
 (!) Some chunks are larger than 500 kB after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
-[32m✓ built in 5.77s[39m
+[32m✓ built in 5.32s[39m
