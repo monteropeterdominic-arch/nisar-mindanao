@@ -75,7 +75,11 @@ export function TimeSeriesPanel() {
       </div>
 
       <div className="flex items-center gap-2">
-        <PlaybackButton playing={playing} onToggle={toggle} />
+        <PlaybackButton
+          playing={playing}
+          onToggle={toggle}
+          disabled={steps.length < 2}
+        />
         <IconButton
           label="Previous date"
           variant="ghost"

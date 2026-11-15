@@ -148,7 +148,28 @@ function nextDateFor(layer: LayerConfig, date: string | null): string | null {
  * date stays on screen meanwhile), and the following date is fetched ahead of time. Reports
  * whether a date is still loading so playback can wait for it.
  */
+let syncing = false;
+let syncAgain = false;
+
 function syncFrames(map: MapLibreMap, pool: SlotPool): void {
+  // Adding a source can fire map events that ask for another sync; run those after this one
+  // instead of inside it.
+  if (syncing) {
+    syncAgain = true;
+    return;
+  }
+  syncing = true;
+  try {
+    do {
+      syncAgain = false;
+      syncFramesOnce(map, pool);
+    } while (syncAgain);
+  } finally {
+    syncing = false;
+  }
+}
+
+function syncFramesOnce(map: MapLibreMap, pool: SlotPool): void {
   const { layers } = useLayerStore.getState();
   const { manifest, currentDate } = useDatasetStore.getState();
   const bounds = manifest?.bounds ?? SARANGANI_DAVOCC_BOUNDS;
@@ -278,6 +299,18 @@ function syncFrames(map: MapLibreMap, pool: SlotPool): void {
       slots.some((s) => s !== show && order.indexOf(s.layerId) > showAt)
     ) {
       map.moveLayer(show.layerId, beforeId);
+    }
+  }
+
+  // Sweep any date layer the pool no longer tracks.
+  const tracked = new Set(
+    Object.values(pool).flatMap((slots) => slots.map((s) => s.layerId)),
+  );
+  for (const id of layerOrder(map)) {
+    if (id.startsWith(LAYER_PREFIX) && id.includes("@") && !tracked.has(id)) {
+      const source = map.getLayer(id)?.source;
+      map.removeLayer(id);
+      if (source && map.getSource(source)) map.removeSource(source);
     }
   }
 
